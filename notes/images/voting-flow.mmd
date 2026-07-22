@@ -1,0 +1,7 @@
+flowchart TB
+  Authority -->|initialize| Poll[Poll PDA]
+  Authority -->|add before start| Candidate[Candidate PDA]
+  Voter -->|vote once| Receipt[VoteReceipt PDA]
+  Receipt --> Poll
+  Candidate --> Poll
+  Voter --> Candidate

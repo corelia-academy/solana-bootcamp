@@ -1,0 +1,9 @@
+flowchart TB
+  Pool[Pool PDA] --> VaultA[Vault A]
+  Pool --> VaultB[Vault B]
+  Pool --> LPMint[LP Mint]
+  LP[Liquidity Provider] -->|A + B| VaultA
+  LP -->|A + B| VaultB
+  LPMint -->|LP shares| LP
+  Trader -->|token in| Pool
+  Pool -->|constant-product output| Trader

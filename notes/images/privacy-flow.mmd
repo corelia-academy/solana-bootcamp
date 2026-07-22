@@ -1,0 +1,6 @@
+flowchart LR
+  Secret[Secret + witness] --> Prover
+  Prover --> Proof[Proof]
+  Public[Commitment + root + nullifier] --> Verifier
+  Proof --> Verifier
+  Verifier --> Used[Consumed nullifier]

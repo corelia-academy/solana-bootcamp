@@ -1,0 +1,7 @@
+flowchart TB
+  Admin -->|set role / pause| Config[Config PDA]
+  Minter -->|authorized mint| Allowance[Minter Allowance PDA]
+  Allowance --> Config
+  Config -->|PDA signer| Mint[Token Mint]
+  Mint --> Holder[Holder Token Account]
+  Holder -->|burn| Mint

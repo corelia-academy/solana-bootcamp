@@ -1,0 +1,10 @@
+flowchart TB
+    T[Trigger] --> P[Perception qua MCP]
+    P --> D[LLM đề xuất action]
+    D --> G[Deterministic Guardrails]
+    G -->|Trong giới hạn| E[Execute]
+    G -->|Vượt ngưỡng| H[Human Approval]
+    H --> E
+    E --> O[Confirm & Observe]
+    O --> L[Action Log PDA]
+    L --> P

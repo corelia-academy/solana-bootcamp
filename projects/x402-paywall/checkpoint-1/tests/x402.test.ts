@@ -1,0 +1,1 @@
+import{describe,expect,it}from"vitest";import{createRequirements}from"../src/x402.js";describe("challenge",()=>{it("complete",()=>expect(createRequirements({network:"solana-devnet",asset:"USDC",amount:"1",recipient:"m",nonce:"n",expiresAt:1,resourceId:"r"}).version).toBe(1));it.skip("Checkpoint 2: verify settlement",()=>{})});

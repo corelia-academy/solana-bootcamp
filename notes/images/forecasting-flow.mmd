@@ -1,0 +1,5 @@
+stateDiagram-v2
+  [*] --> Open
+  Open --> Closed: close time
+  Closed --> Resolved: authority resolves
+  Resolved --> Claimed: user claims once

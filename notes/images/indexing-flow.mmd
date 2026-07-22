@@ -1,0 +1,6 @@
+flowchart LR
+  Logs[RPC / program logs] --> Decoder
+  Decoder --> Upsert[Idempotent upsert]
+  Upsert --> Store[(Event store)]
+  Store --> Cursor[Checkpoint]
+  Store --> API[Bounded REST API]

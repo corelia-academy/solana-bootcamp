@@ -1,0 +1,11 @@
+sequenceDiagram
+    participant M as Maker
+    participant E as Escrow PDA
+    participant V as Vault ATA
+    participant T as Taker
+    M->>E: make offer
+    M->>V: deposit token A
+    T->>M: pay token B
+    E->>V: ký CPI bằng PDA seeds
+    V->>T: release token A
+    E-->>M: close state / rent

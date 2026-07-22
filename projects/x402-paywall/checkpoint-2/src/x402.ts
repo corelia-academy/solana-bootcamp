@@ -1,0 +1,2 @@
+export type PaymentRequirements={version:1;network:"solana-devnet";asset:string;amount:string;recipient:string;nonce:string;expiresAt:number;resourceId:string};export type Settlement={confirmed:boolean;success:boolean;network:string;asset:string;amount:bigint;recipient:string;memo:string};
+export function verifyExact(req:PaymentRequirements,tx:Settlement,now:number):boolean{return now<=req.expiresAt&&tx.confirmed&&tx.success&&tx.network===req.network&&tx.asset===req.asset&&tx.amount===BigInt(req.amount)&&tx.recipient===req.recipient&&tx.memo===req.nonce}

@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant UI as Giao diện
+    participant W as Ví
+    participant C as Anchor Client
+    participant R as RPC
+    participant P as Solana Program
+    UI->>C: Dữ liệu form
+    C->>C: Validate + derive PDA
+    C->>W: Yêu cầu ký transaction
+    W->>R: Gửi transaction đã ký
+    R->>P: Thực thi instruction
+    P-->>R: Logs + state mới
+    R-->>UI: Confirm + refetch account

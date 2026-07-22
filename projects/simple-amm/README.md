@@ -1,0 +1,56 @@
+# Simple AMM / Stable Swap Lite
+
+Bắt đầu bằng constant-product pool. Stable-swap và oracle là phần mở rộng khái niệm, không phải prerequisite của implementation chính.
+
+Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/README.md) → [checkpoint 2](./checkpoint-2/README.md) → [final](./final/README.md).
+
+![AMM flow](../../notes/images/amm-flow.png)
+
+[Mermaid source](../../notes/images/amm-flow.mmd)
+
+## State
+
+| Account | Seeds | Purpose |
+| --- | --- | --- |
+| Pool | `['pool', mint_a, mint_b]` | mints, vaults, fee, bump |
+| Vault A/B | ATA of pool PDA | token reserves |
+| LP mint | controlled by pool PDA | liquidity shares |
+
+```mermaid
+flowchart TB
+    LP[Liquidity provider] --> VA[Vault A]
+    LP --> VB[Vault B]
+    Pool[Pool PDA] --> VA
+    Pool --> VB
+    Pool --> LPMint[LP mint]
+    Trader -->|A in / B out| Pool
+```
+
+## Instructions
+
+- initialize pool;
+- add liquidity and mint LP shares;
+- remove liquidity and burn LP shares;
+- swap with `x * y = k`, fee, and minimum output.
+
+## Signer, writable và owner
+
+| Write path | Signer | State mutable | Kiểm tra quan hệ quan trọng |
+| --- | --- | --- | --- |
+| `initialize_pool` | payer | Pool, vault A/B, LP mint | canonical mint order; vault/LP authority là Pool PDA |
+| `add_liquidity` | provider | vault A/B, LP mint, provider accounts | đúng mint/vault; shares theo reserve hiện tại |
+| `remove_liquidity` | provider | vault A/B, LP mint, provider accounts | burn LP trước khi Pool PDA trả token |
+| `swap` | trader | input/output vault và trader token accounts | đúng direction, fee, `minimum_output` và checked math |
+
+Pool do AMM Program sở hữu; vault, LP mint và user token accounts do SPL Token Program sở hữu.
+
+## Các trạng thái
+
+- `starter`: math worksheet and pool schema
+- `checkpoint-1`: pool/vault initialization
+- `checkpoint-2`: add/remove liquidity
+- `final`: swap, slippage, tests, stable-swap/oracle notes
+
+## Test bắt buộc
+
+Initial/subsequent liquidity, proportional withdrawal, invariant behavior, fee rounding, slippage rejection, wrong mint/vault, zero inputs, and checked arithmetic.

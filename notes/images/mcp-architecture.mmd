@@ -1,0 +1,9 @@
+flowchart TB
+    H[AI Host] --> C[MCP Client]
+    C --> S[MCP Server]
+    S --> A[Authentication & Policy]
+    A --> R[Read-only Tools]
+    A --> W[Signer-gated Write Tools]
+    R --> RPC[Solana RPC]
+    W --> SIM[Simulate]
+    SIM --> RPC

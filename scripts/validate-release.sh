@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+mode="${1:---content}"
+cd "$repo_dir"
+
+require_version() {
+  local label="$1"
+  local actual="$2"
+  local expected="$3"
+  if [[ "$actual" != "$expected"* ]]; then
+    echo "$label không đúng: cần '$expected', nhận '$actual'" >&2
+    exit 1
+  fi
+}
+
+require_version "Rust" "$(rustc --version)" "rustc 1.87.0"
+require_version "Solana CLI" "$(solana --version)" "solana-cli 3.0.10"
+require_version "Anchor CLI" "$(anchor --version)" "anchor-cli 0.31.1"
+require_version "Node.js" "$(node --version)" "v22."
+require_version "pnpm" "$(pnpm --version)" "9."
+
+ruby -rjson -e 'Dir.glob("**/package.json").reject { |p| p.include?("node_modules") }.each { |p| JSON.parse(File.read(p)) }'
+ruby -e '
+require "pathname"
+errors = []
+Dir.glob("**/*.md").reject { |p| p.include?("node_modules") }.each do |file|
+  File.read(file).scan(/\[[^\]]*\]\(([^)]+)\)/).flatten.each do |raw|
+    link = raw.sub(/^</, "").sub(/>$/, "").split("#", 2)[0]
+    next if link.empty? || link.match?(%r{^(https?://|mailto:)})
+    errors << "#{file}: #{raw}" unless Pathname.new(File.dirname(file)).join(link).cleanpath.exist?
+  end
+end
+abort(errors.join("\n")) unless errors.empty?
+'
+
+[[ "$(find curriculum -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')" == "18" ]]
+[[ -z "$(find . -type d -name tests -empty -not -path '*/node_modules/*')" ]]
+[[ -z "$(rg -n '[[:blank:]]+$' --glob '!**/node_modules/**' --glob '!**/target/**' --glob '!**/dist/**' . || true)" ]]
+
+for readme in projects/*/{starter,checkpoint-1,checkpoint-2,final}/README.md; do
+  [[ -f "$readme" ]] || continue
+  for heading in "Mục tiêu state" "Phần đã có" "Học viên cần làm" "Chạy và kiểm tra"; do
+    rg -qF "## $heading" "$readme" || { echo "$readme thiếu '$heading'" >&2; exit 1; }
+  done
+done
+
+git diff --check
+echo "Content audit đạt."
+
+if [[ "$mode" != "--full" ]]; then
+  echo "Chạy '$0 --full' để dry-run các module rủi ro cao."
+  exit 0
+fi
+
+run_pnpm() {
+  local dir="$1"
+  shift
+  pnpm --dir "$dir" install --no-frozen-lockfile
+  pnpm --dir "$dir" "$@"
+}
+
+run_pnpm projects/pda-counter/final test
+run_pnpm projects/voting-frontend/final test
+pnpm --dir projects/voting-frontend/final run build
+run_pnpm projects/stablecoin-lite/final test
+run_pnpm projects/simple-amm/final test
+run_pnpm projects/x402-paywall/final test
+run_pnpm projects/mcp-solana-server/final test
+run_pnpm projects/ai-agent-solana/final test
+
+echo "Instructor dry-run đạt cho Module 5, 9–11 và 15–17."

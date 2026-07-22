@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant C as Client
+    participant S as Paywall Server
+    participant L as Solana
+    C->>S: GET /resource
+    S-->>C: 402 + asset/amount/recipient/nonce/expiry
+    C->>L: Thanh toán token chính xác
+    C->>S: Retry + payment proof
+    S->>L: Verify transaction và chống replay
+    S-->>C: 200 + gated content
