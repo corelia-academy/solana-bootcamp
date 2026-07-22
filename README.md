@@ -70,3 +70,7 @@ Luôn bắt đầu từ `starter`. Checkpoint chỉ dùng để phục hồi khi
 - [Tài liệu tham khảo](./docs/resources.md)
 
 Mỗi lesson đi theo trình tự `Concept > Schema > Code > Test`. Mỗi project phải có sơ đồ accounts, instruction flow, PDA derivation nếu có, transaction account list và luồng client-to-program.
+
+## License
+
+Toàn bộ source code, tài liệu, bài tập và diagram trong repository được phát hành theo [MIT License](./LICENSE), copyright © 2026 Corelia Academy.

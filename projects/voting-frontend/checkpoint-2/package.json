@@ -1,4 +1,4 @@
-{
+{"license":"MIT",
   "name":"solana-bootcamp-voting-frontend-checkpoint-2","private":true,"type":"module",
   "scripts":{"build":"tsc --noEmit","test":"vitest run"},
   "dependencies":{"@solana/wallet-adapter-react":"0.15.39","@solana/wallet-adapter-react-ui":"0.9.39","@solana/web3.js":"1.98.4","react":"19.2.7","react-dom":"19.2.7"},

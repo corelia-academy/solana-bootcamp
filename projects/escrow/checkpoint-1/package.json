@@ -1,4 +1,4 @@
-{
+{"license":"MIT",
   "name": "solana-bootcamp-escrow-checkpoint-1",
   "private": true,
   "scripts": { "test": "anchor test" },

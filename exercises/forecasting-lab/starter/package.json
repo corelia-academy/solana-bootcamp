@@ -1,1 +1,1 @@
-{"name":"forecasting-lab-starter","private":true,"type":"module","scripts":{"check":"tsc --noEmit","test":"vitest run"},"devDependencies":{"typescript":"^5.7.3","vitest":"^3.0.0"}}
+{"license":"MIT","name":"forecasting-lab-starter","private":true,"type":"module","scripts":{"check":"tsc --noEmit","test":"vitest run"},"devDependencies":{"typescript":"^5.7.3","vitest":"^3.0.0"}}
