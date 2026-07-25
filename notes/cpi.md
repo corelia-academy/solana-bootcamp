@@ -1,6 +1,6 @@
-# Cross-program invocations
+# Cross-program invocation (CPI)
 
-A CPI lets one Solana program invoke another.
+CPI cho phép một Solana program gọi program khác.
 
 ```mermaid
 sequenceDiagram
@@ -14,4 +14,4 @@ sequenceDiagram
     E-->>U: settlement complete
 ```
 
-The calling program must validate the target program, account relationships, token mints/owners, amounts, and signer seeds before invoking.
+Trước khi gọi CPI, program phải xác minh target program, quan hệ giữa các account, token mint/owner, số lượng và signer seeds.

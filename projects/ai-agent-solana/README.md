@@ -4,8 +4,6 @@ Agent loop có thể audit: đọc state qua MCP, đề xuất action có giới
 
 ![Agent loop](../../notes/images/agent-loop.png)
 
-[Mermaid source](../../notes/images/agent-loop.mmd)
-
 Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/README.md) → [checkpoint 2](./checkpoint-2/README.md) → [final](./final/README.md).
 
 ## Kiến trúc
@@ -24,31 +22,31 @@ flowchart LR
 
 ## Khả năng bắt buộc
 
-- report balances and selected onchain state;
-- choose an allowlisted vote, transfer, or swap action;
-- buy gated data through x402;
-- enforce per-action/session spending limits;
-- require human approval above threshold;
-- support kill switch;
+- báo cáo số dư và onchain state đã chọn;
+- chọn action vote, transfer hoặc swap trong allowlist;
+- mua dữ liệu được bảo vệ qua x402;
+- áp dụng hạn mức chi tiêu theo action/session;
+- yêu cầu con người phê duyệt khi vượt ngưỡng;
+- hỗ trợ kill switch;
 - ghi proposal, policy result và execution result qua `AuditPort`;
-- handle simulation failure, blockhash expiry, RPC timeout, slippage, and rejected approval.
+- xử lý simulation failure, blockhash hết hạn, RPC timeout, slippage và approval bị từ chối.
 
 ## Các trạng thái
 
-- `starter`: deterministic loop shell and mock tools
-- `checkpoint-1`: perception and structured proposals
-- `checkpoint-2`: guarded execution and confirmations
-- `final`: MCP/x402 adapters, audit log local, session limits, kill switch và red-team tests
+- `starter`: deterministic loop shell và mock tool
+- `checkpoint-1`: perception và proposal có cấu trúc
+- `checkpoint-2`: guarded execution và confirmation
+- `final`: MCP/x402 adapter, audit log local, session limit, kill switch và red-team test
 
 ## Red-team cases
 
-- prompt injection asks for seed/private key;
-- tool output embeds malicious instructions;
-- hallucinated mint/program/recipient;
-- repeated execution after timeout;
-- wallet-draining amount or slippage;
-- kill switch active;
-- memory contains stale or conflicting state.
+- prompt injection yêu cầu seed/private key;
+- tool output chứa instruction độc hại;
+- model bịa mint/program/recipient;
+- thực thi lặp lại sau timeout;
+- amount hoặc slippage có thể rút cạn ví;
+- kill switch đang bật;
+- memory chứa state cũ hoặc xung đột.
 
 ## Authority và mutable state
 
@@ -63,3 +61,7 @@ flowchart LR
 ## State và trust boundary
 
 Core dùng `AuditPort` để mock/local mode chạy không cần chain; bản `final` cung cấp `MemoryAuditStore`. Action Log PDA và dashboard là bài mở rộng production, chưa phải public artifact của project. Model chỉ sinh `Proposal`; deterministic policy và MCP/x402 adapters mới được phép execute. Tool output luôn là untrusted data.
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](../../notes/images/agent-loop.mmd) để chỉnh sửa sơ đồ.

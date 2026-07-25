@@ -1,6 +1,4 @@
-# Frontend-to-program data flow
-
-[Mermaid source](./images/frontend-flow.mmd)
+# Luồng dữ liệu từ frontend đến program
 
 ![Luồng frontend đến Solana program](./images/frontend-flow.png)
 
@@ -20,4 +18,8 @@ sequenceDiagram
     R-->>UI: confirmation and refreshed accounts
 ```
 
-The IDL describes instruction names, arguments, accounts, and account data. It does not remove the need to understand PDAs, signers, confirmations, retries, or errors.
+IDL mô tả tên instruction, arguments, accounts và account data. Tuy vậy, developer vẫn cần hiểu PDA, signer, confirmation, retry và cách xử lý lỗi.
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](./images/frontend-flow.mmd) để chỉnh sửa sơ đồ.

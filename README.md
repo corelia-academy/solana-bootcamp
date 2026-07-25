@@ -12,7 +12,6 @@ Tài liệu học, bài tập code-along, project và tài nguyên dành cho h�
 - [Bài tập thực hành](./exercises/README.md)
 - [Code-along projects](./projects/README.md)
 - [Capstone](./capstones/README.md)
-- [Tài liệu curriculum nguồn](https://docs.google.com/document/d/110W9WiENefZVcSBAfbCP72mjZfFqqxTgCyiIXQdRT6k/edit)
 
 ## Nền tảng
 
@@ -22,7 +21,7 @@ Tài liệu học, bài tập code-along, project và tài nguyên dành cho h�
 - [Module 4 — Anchor Fundamentals](./curriculum/module-04-anchor/README.md)
 - [Module 5 — Testing Stack](./curriculum/module-05-testing/README.md)
 
-## Core projects
+## Project cốt lõi
 
 - [Module 6 — Voting App](./curriculum/module-06-voting/README.md)
 - [Module 7 — SPL Token Basics](./curriculum/module-07-spl-token/README.md)
@@ -39,7 +38,7 @@ Tài liệu học, bài tập code-along, project và tài nguyên dành cho h�
 
 Đây là ba module độc lập. Học viên có thể chọn một hướng chuyên sâu.
 
-## AI và production
+## AI và triển khai thực tế
 
 - [Module 15 — x402 Payments](./curriculum/module-15-x402/README.md)
 - [Module 16 — Model Context Protocol](./curriculum/module-16-mcp/README.md)
@@ -58,18 +57,15 @@ project-name
 
 Luôn bắt đầu từ `starter`. Checkpoint chỉ dùng để phục hồi khi bị kẹt. `final` là tài liệu đối chiếu sau khi đã nộp bài.
 
-## Tài nguyên học viên
+## Tài nguyên hỗ trợ
 
 - [Cách vận hành khóa học](./docs/course-operations.md)
-- [Checklist phát hành khóa quay sẵn](./docs/release-checklist.md)
-- [Mapping curriculum nguồn sang 18 module](./docs/curriculum-map.md)
 - [Bản đồ phụ thuộc giữa các module](./docs/module-dependencies.md)
-- [Quy ước repository](./docs/repository-conventions.md)
 - [Xử lý lỗi cài đặt](./docs/troubleshooting.md)
 - [Security checklist](./docs/security-checklist.md)
 - [Tài liệu tham khảo](./docs/resources.md)
 
-Mỗi lesson đi theo trình tự `Concept > Schema > Code > Test`. Mỗi project phải có sơ đồ accounts, instruction flow, PDA derivation nếu có, transaction account list và luồng client-to-program.
+Mỗi bài học đi theo trình tự `Khái niệm → Mô hình → Code → Kiểm thử`. Mỗi project đi kèm sơ đồ account, luồng instruction, cách derive PDA nếu có, danh sách account trong transaction và luồng từ client đến program.
 
 ## License
 

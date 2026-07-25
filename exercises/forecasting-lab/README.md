@@ -4,6 +4,8 @@ State machine dùng **điểm giả lập, không phải tiền thật**: Open �
 
 ![Forecasting state](../../notes/images/forecasting-flow.png)
 
-[Mermaid source](../../notes/images/forecasting-flow.mmd)
-
 Bắt đầu tại [starter](./starter/src/market.ts), đối chiếu [solution](./solution/src/market.ts).
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](../../notes/images/forecasting-flow.mmd) để chỉnh sửa sơ đồ.

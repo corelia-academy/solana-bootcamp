@@ -1,10 +1,8 @@
-# Program Derived Addresses
+# Program Derived Address (PDA)
 
 ![Sơ đồ PDA](./images/pda.png)
 
-[Mở source Excalidraw](./images/pda.excalidraw)
-
-A PDA is a deterministic address derived from seeds and a program ID. It has no private key; the owning program can sign for it during a CPI by providing the original seeds and bump.
+PDA là địa chỉ được derive tất định từ seeds và program ID. PDA không có private key; owner program có thể ký thay PDA trong CPI bằng cách cung cấp lại seeds và bump ban đầu.
 
 ```mermaid
 flowchart LR
@@ -14,10 +12,14 @@ flowchart LR
     Derive --> Bump[Bump]
 ```
 
-## Rules
+## Quy tắc
 
-- Seeds must be stable, bounded, and unambiguous.
-- Include namespace prefixes such as `b"poll"`.
-- Validate the PDA in every instruction that depends on its identity.
-- Never treat the bump alone as proof of identity.
-- Frontend and tests must derive the same address from the same bytes.
+- Seeds phải ổn định, có giới hạn và không mơ hồ.
+- Dùng namespace prefix như `b"poll"`.
+- Xác minh PDA trong mọi instruction phụ thuộc vào danh tính của nó.
+- Không xem riêng bump là bằng chứng về danh tính.
+- Frontend và test phải derive cùng địa chỉ từ cùng chuỗi byte.
+
+## Tài nguyên sơ đồ
+
+[Mở bản Excalidraw](./images/pda.excalidraw) để chỉnh sửa sơ đồ.

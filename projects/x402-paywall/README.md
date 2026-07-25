@@ -4,18 +4,16 @@ Bảo vệ JSON data endpoint giáo dục bằng Devnet token micropayment.
 
 ![x402 flow](../../notes/images/x402-flow.png)
 
-[Mermaid source](../../notes/images/x402-flow.mmd)
-
 Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/README.md) → [checkpoint 2](./checkpoint-2/README.md) → [final](./final/README.md).
 
 ## Thành phần
 
-- resource server returning a 402 challenge;
-- payment requirements schema;
-- client that constructs/signs payment and retries;
-- verifier/facilitator that confirms exact settlement;
-- replay store for nonce/idempotency;
-- tests for success, invalid proof, replay, expiry, and concurrency.
+- resource server trả về 402 challenge;
+- schema mô tả yêu cầu thanh toán;
+- client tạo, ký thanh toán và gửi lại request;
+- verifier/facilitator xác nhận settlement chính xác;
+- replay store cho nonce/idempotency;
+- test success, proof không hợp lệ, replay, expiry và concurrency.
 
 ```mermaid
 sequenceDiagram
@@ -35,14 +33,14 @@ sequenceDiagram
 
 ## Các trạng thái
 
-- `starter`: endpoint and challenge types
-- `checkpoint-1`: 402 response and paying client
-- `checkpoint-2`: onchain verifier and replay store
-- `final`: rate limits, concurrency tests, agent-facing client
+- `starter`: endpoint và challenge types
+- `checkpoint-1`: 402 response và paying client
+- `checkpoint-2`: onchain verifier và replay store
+- `final`: rate limit, concurrency test và client cho agent
 
 ## Security invariants
 
-Validate network, asset, amount, recipient, memo/nonce, expiry, confirmation, transaction success, and single use. Never trust a signature string without inspecting the confirmed transaction.
+Xác minh network, asset, amount, recipient, memo/nonce, expiry, confirmation, transaction thành công và tính single-use. Không tin một signature string nếu chưa kiểm tra transaction đã confirm.
 
 ## Trust boundary và mutable state
 
@@ -59,10 +57,14 @@ Mock/local verifier không cần custom PDA: replay state nằm sau `ReplayStore
 
 ## Test bắt buộc
 
-- initial request returns complete 402 requirements;
-- exact valid payment unlocks the resource;
-- wrong network, asset, amount, or recipient fails;
-- expired and replayed proof fails;
-- unconfirmed or failed transaction fails;
-- concurrent retries return one economic result;
-- verifier/RPC timeout produces a retryable response without marking payment used.
+- request đầu tiên trả về đầy đủ yêu cầu 402;
+- thanh toán hợp lệ và chính xác mở khóa resource;
+- sai network, asset, amount hoặc recipient phải thất bại;
+- proof hết hạn hoặc bị replay phải thất bại;
+- transaction chưa confirm hoặc thất bại không được chấp nhận;
+- các retry đồng thời chỉ tạo một kết quả kinh tế;
+- verifier/RPC timeout trả về response có thể retry mà không đánh dấu payment đã dùng.
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](../../notes/images/x402-flow.mmd) để chỉnh sửa sơ đồ.

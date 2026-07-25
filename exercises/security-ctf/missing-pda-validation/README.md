@@ -1,21 +1,22 @@
-# Missing PDA check
+# Thiếu kiểm tra PDA
 
-The piggy program is designed so that only the PDA derived from the caller can withdraw SOL after some time.
+Piggy program được thiết kế để chỉ PDA derive từ caller có thể rút SOL sau một khoảng thời gian.
 
-But there is a bug in this program. Find the bug and drain SOL from the PDA.
+Program đang có lỗi. Hãy tìm cách rút SOL khỏi PDA không hợp lệ.
 
-# Task 1 - Write your exploit
+## Nhiệm vụ
 
-Write your exploit inside [`test`](https://github.com/Cyfrin/solana-course/blob/main/apps/ctf/pda/exercise/tests/test.rs).
+Viết exploit trong [`exercise/tests/test.rs`](./exercise/tests/test.rs).
 
-# Build
+## Build
 
 ```shell
 cargo build-sbf
 ```
 
-# Test
-Your exploit is successful if the test passes.
+## Kiểm thử
+
+Exploit thành công khi test chạy xanh.
 
 ```shell
 cargo test -- --nocapture

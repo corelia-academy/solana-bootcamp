@@ -1,7 +1,5 @@
 # Escrow
 
-[Mermaid source của instruction flow](../../notes/images/escrow-flow.mmd)
-
 ![Luồng Escrow](../../notes/images/escrow-flow.png)
 
 Maker khóa token A; taker trả token B; program settlement nguyên tử hoặc maker refund trước khi offer được nhận.
@@ -50,9 +48,13 @@ sequenceDiagram
 
 ## Test bảo mật cần có
 
-- wrong maker, mint, vault, token owner, or token program;
-- substituted receive account;
-- duplicate account aliases;
-- incorrect PDA signer seeds;
-- take/refund after close;
-- zero or mismatched amounts.
+- sai maker, mint, vault, token owner hoặc token program;
+- thay thế receive account;
+- nhiều account alias trỏ đến cùng địa chỉ;
+- PDA signer seeds không chính xác;
+- gọi `take` hoặc `refund` sau khi account đã đóng;
+- số lượng bằng không hoặc không khớp.
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](../../notes/images/escrow-flow.mmd) để chỉnh sửa sơ đồ.

@@ -1,4 +1,4 @@
-# Project code-along
+# Project thực hành theo từng bước
 
 | Project | Khái niệm chính | Đầu ra |
 | --- | --- | --- |
@@ -13,9 +13,9 @@
 | [MCP Solana Server](./mcp-solana-server/README.md) | Structured AI tools | Safe Solana tool server |
 | [AI Agent](./ai-agent-solana/README.md) | Agent loop, limits, audit log | Guarded Devnet agent |
 
-## Bốn trạng thái của repository
+## Bốn trạng thái của project
 
-Mỗi project gồm `starter`, `checkpoint-1`, `checkpoint-2` và `final`. Xem [quy ước repository](../docs/repository-conventions.md). Tất cả project trong bảng đã có source ở đủ bốn trạng thái; starter/TODO và test skip là có chủ ý theo tiến độ học.
+Mỗi project gồm `starter`, `checkpoint-1`, `checkpoint-2` và `final`. Bắt đầu tại `starter`; chỉ dùng checkpoint để phục hồi khi bị kẹt và mở `final` sau khi đã hoàn thành bài. Các TODO và test được skip trong starter là có chủ ý theo tiến độ học.
 
 ## Artifact kỹ thuật và hình ảnh bắt buộc
 
@@ -31,4 +31,4 @@ Mỗi project hoàn chỉnh phải có:
 
 README của project chứa product schema và liên kết tới các artifact tương ứng.
 
-Theo dõi độ đầy đủ tại [ma trận artifact của project](../docs/project-artifact-matrix.md).
+Quay lại [chương trình học](../curriculum/README.md) hoặc [trang chính](../README.md).

@@ -1,52 +1,52 @@
-# Capstone project
+# Capstone
 
-Learners choose one option and demonstrate a complete path from product specification to Devnet deployment and public demo.
+Chọn một trong các đề tài dưới đây và hoàn thiện toàn bộ hành trình từ đặc tả sản phẩm đến triển khai trên Devnet và demo công khai.
 
-## Options
+## Đề tài
 
-### A. Campus Credential App — Core
+### A. Ứng dụng chứng nhận học tập — Cốt lõi
 
-- admin issuer;
-- credential/certificate PDA per learner or achievement;
-- issue and revoke lifecycle;
-- NFT or verifiable token representation;
-- public verification page.
+- quản trị viên phát hành chứng nhận;
+- credential/certificate PDA cho từng học viên hoặc thành tích;
+- vòng đời phát hành và thu hồi;
+- biểu diễn dưới dạng NFT hoặc token có thể xác minh;
+- trang xác minh công khai.
 
-### B. Event Reward / Loyalty App — Core
+### B. Ứng dụng điểm thưởng sự kiện — Cốt lõi
 
-- signed or server-authorized QR check-in;
-- participant points account;
-- reward catalogue and redemption;
-- replay-resistant check-ins;
-- admin dashboard.
+- check-in QR có chữ ký hoặc được server cấp quyền;
+- account lưu điểm của người tham gia;
+- danh mục phần thưởng và quy trình đổi thưởng;
+- check-in có khả năng chống replay;
+- dashboard quản trị.
 
-### C. Token-Gated Course Access — Core
+### C. Truy cập khóa học bằng token — Cốt lõi
 
-- token ownership or balance requirement;
-- course entitlement/unlock;
-- payment or voucher simulation;
-- frontend access state;
-- clear revocation/expiry behavior.
+- yêu cầu sở hữu token hoặc số dư tối thiểu;
+- quyền truy cập và mở khóa nội dung;
+- mô phỏng thanh toán hoặc voucher;
+- trạng thái truy cập trên frontend;
+- quy tắc thu hồi và hết hạn rõ ràng.
 
-### D. Escrow Marketplace Lite — Core
+### D. Escrow Marketplace Lite — Cốt lõi
 
-- seller listing;
-- buyer deposit;
-- seller fulfillment marker;
-- buyer confirmation;
-- cancel/refund/dispute assumptions;
-- marketplace frontend.
+- người bán đăng sản phẩm;
+- người mua đặt cọc;
+- người bán đánh dấu đã hoàn thành;
+- người mua xác nhận;
+- giả định rõ ràng về hủy, hoàn tiền và tranh chấp;
+- frontend marketplace.
 
 ### E. AI Agent + Paywall dApp — AI/Agent
 
-Requires x402, MCP, and AI Agent modules.
+Yêu cầu đã hoàn thành các module x402, MCP và AI Agent.
 
-- MCP server with balance, holdings, and constrained write tools;
-- x402-gated data endpoint;
-- agent perception/decision/execution loop;
-- spending-cap PDA, approval gate, and kill switch;
+- MCP server có công cụ đọc số dư, tài sản và công cụ ghi bị giới hạn;
+- data endpoint được bảo vệ bằng x402;
+- vòng lặp nhận biết, quyết định và thực thi của agent;
+- spending-cap PDA, approval gate và kill switch;
 - action-log PDA;
-- dashboard for status, balance, logs, and manual override.
+- dashboard hiển thị trạng thái, số dư, log và quyền can thiệp thủ công.
 
 ```mermaid
 flowchart LR
@@ -59,45 +59,47 @@ flowchart LR
     Agent --> Log[Action Log PDA]
 ```
 
-## Required deliverables
+## Sản phẩm cần nộp
 
-- complete source repository;
-- architecture, account relationship, instruction-flow, PDA, and client-flow diagrams;
-- commented smart contract source;
-- test suite with happy and error cases;
-- deployed frontend;
-- public Devnet program ID and transaction examples;
-- 3-5 minute demo video;
-- completed security checklist;
-- README with setup, test, deploy, known limitations, and threat model.
+- repository chứa source hoàn chỉnh;
+- sơ đồ kiến trúc, quan hệ account, instruction flow, PDA và client flow;
+- source program có chú thích ở những phần quan trọng;
+- test suite gồm happy path và error path;
+- frontend đã deploy;
+- Devnet program ID công khai và transaction mẫu;
+- video demo dài 3–5 phút;
+- security checklist đã hoàn thành;
+- README hướng dẫn setup, test, deploy, known limitations và threat model.
 
-## Capstone rubric
+## Tiêu chí đánh giá
 
-| Dimension | Weight | Completion evidence |
+| Tiêu chí | Trọng số | Minh chứng hoàn thành |
 | --- | ---: | --- |
-| Product and demo | 15% | Coherent use case and working public flow |
-| Program correctness | 20% | Required instructions and state transitions |
-| Account/PDA design | 10% | Diagrams, seeds, ownership, authority |
-| Tests | 15% | Happy, authorization, invalid-account, boundary cases |
-| Security | 15% | Checklist, threat model, adversarial tests |
-| Frontend/client | 10% | Clear transaction and error UX |
-| Devnet/operations | 5% | Program ID, reproducible deployment, monitoring plan |
-| Documentation | 10% | Setup, diagrams, comments, demo, limitations |
+| Sản phẩm và demo | 15% | Use case mạch lạc và luồng công khai hoạt động |
+| Tính đúng của program | 20% | Đủ instruction và state transition bắt buộc |
+| Thiết kế account/PDA | 10% | Sơ đồ, seeds, ownership và authority |
+| Kiểm thử | 15% | Happy path, authorization, account không hợp lệ và boundary case |
+| Bảo mật | 15% | Checklist, threat model và adversarial test |
+| Frontend/client | 10% | UX transaction và lỗi rõ ràng |
+| Devnet/vận hành | 5% | Program ID, quy trình deploy tái lập được và kế hoạch giám sát |
+| Tài liệu | 10% | Setup, sơ đồ, chú thích, demo và giới hạn |
 
-## Review gates
+## Các vòng review
 
-### Gate 1 — Proposal
+### Vòng 1 — Đề xuất
 
-Problem, target user, option, non-goals, state accounts, instruction list, and risks.
+Trình bày vấn đề, người dùng mục tiêu, đề tài đã chọn, phạm vi không làm, state account, danh sách instruction và rủi ro.
 
-### Gate 2 — Design review
+### Vòng 2 — Review thiết kế
 
-Account/PDA diagrams, instruction account tables, frontend flow, test plan, and security assumptions.
+Chuẩn bị sơ đồ account/PDA, bảng account của instruction, frontend flow, kế hoạch kiểm thử và giả định bảo mật.
 
-### Gate 3 — Program review
+### Vòng 3 — Review program
 
-Core instructions pass local tests; error cases and authorization checks are demonstrated.
+Các instruction cốt lõi phải vượt qua local test; trình bày được error case và kiểm tra authorization.
 
-### Gate 4 — Launch review
+### Vòng 4 — Review phát hành
 
-Devnet deployment, frontend, explorer evidence, completed security checklist, and demo rehearsal.
+Hoàn thành triển khai Devnet, frontend, bằng chứng trên Explorer, security checklist và buổi chạy thử demo.
+
+Quay lại [chương trình học](../curriculum/README.md) hoặc [trang chính](../README.md).

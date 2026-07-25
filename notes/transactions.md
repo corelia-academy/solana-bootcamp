@@ -1,8 +1,6 @@
-# Programs, instructions, and transactions
+# Program, instruction và transaction
 
 ![Program, instruction và transaction](./images/program.png)
-
-[Mở source Excalidraw](./images/program.excalidraw)
 
 ```mermaid
 flowchart LR
@@ -13,9 +11,13 @@ flowchart LR
     I1 --> D1[Instruction data]
 ```
 
-- A transaction is an atomic, signed envelope containing one or more instructions.
-- An instruction identifies a program, lists accounts, and provides serialized data.
-- The runtime locks writable accounts, verifies signatures, and invokes programs.
-- If one instruction fails, the transaction's state changes roll back.
+- Transaction là một gói nguyên tử đã được ký, chứa một hoặc nhiều instruction.
+- Instruction xác định program, liệt kê account và cung cấp dữ liệu đã serialize.
+- Runtime khóa các writable account, xác minh chữ ký và gọi program.
+- Nếu một instruction thất bại, toàn bộ thay đổi trạng thái của transaction được rollback.
 
-Before sending a transaction, a client needs a recent blockhash, fee payer, required signatures, and all instruction accounts.
+Trước khi gửi transaction, client cần recent blockhash, fee payer, các chữ ký bắt buộc và đầy đủ account của mọi instruction.
+
+## Tài nguyên sơ đồ
+
+[Mở bản Excalidraw](./images/program.excalidraw) để chỉnh sửa sơ đồ.

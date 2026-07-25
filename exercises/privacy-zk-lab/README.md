@@ -6,8 +6,10 @@ Lab mô phỏng commitment → proof binding → nullifier consumption. Bắt đ
 
 ![Privacy proof flow](../../notes/images/privacy-flow.png)
 
-[Mermaid source](../../notes/images/privacy-flow.mmd)
-
 ```bash
 cd solution && pnpm install && pnpm test && pnpm run check
 ```
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](../../notes/images/privacy-flow.mmd) để chỉnh sửa sơ đồ.

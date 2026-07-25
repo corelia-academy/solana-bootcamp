@@ -6,8 +6,6 @@ Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/RE
 
 ![AMM flow](../../notes/images/amm-flow.png)
 
-[Mermaid source](../../notes/images/amm-flow.mmd)
-
 ## State
 
 | Account | Seeds | Purpose |
@@ -28,10 +26,10 @@ flowchart TB
 
 ## Instructions
 
-- initialize pool;
-- add liquidity and mint LP shares;
-- remove liquidity and burn LP shares;
-- swap with `x * y = k`, fee, and minimum output.
+- khởi tạo pool;
+- thêm thanh khoản và mint LP share;
+- rút thanh khoản và burn LP share;
+- swap theo `x * y = k`, có fee và minimum output.
 
 ## Signer, writable và owner
 
@@ -46,11 +44,15 @@ Pool do AMM Program sở hữu; vault, LP mint và user token accounts do SPL To
 
 ## Các trạng thái
 
-- `starter`: math worksheet and pool schema
-- `checkpoint-1`: pool/vault initialization
-- `checkpoint-2`: add/remove liquidity
-- `final`: swap, slippage, tests, stable-swap/oracle notes
+- `starter`: math worksheet và pool schema
+- `checkpoint-1`: khởi tạo pool/vault
+- `checkpoint-2`: thêm/rút thanh khoản
+- `final`: swap, slippage, test và ghi chú stable-swap/oracle
 
 ## Test bắt buộc
 
-Initial/subsequent liquidity, proportional withdrawal, invariant behavior, fee rounding, slippage rejection, wrong mint/vault, zero inputs, and checked arithmetic.
+Kiểm thử lần thêm thanh khoản đầu tiên và tiếp theo, rút theo tỷ lệ, invariant, làm tròn fee, từ chối slippage, sai mint/vault, input bằng không và checked arithmetic.
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](../../notes/images/amm-flow.mmd) để chỉnh sửa sơ đồ.

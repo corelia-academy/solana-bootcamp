@@ -4,6 +4,8 @@ Lab ingest event Voting theo khóa idempotency `(signature, logIndex)`, giữ ch
 
 ![Indexing flow](../../notes/images/indexing-flow.png)
 
-[Mermaid source](../../notes/images/indexing-flow.mmd)
-
 Bắt đầu tại [starter](./starter/src/indexer.ts), đối chiếu [solution](./solution/src/indexer.ts).
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](../../notes/images/indexing-flow.mmd) để chỉnh sửa sơ đồ.

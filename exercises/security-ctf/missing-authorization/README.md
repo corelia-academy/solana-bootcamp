@@ -1,21 +1,22 @@
-# Missing authorization check
+# Thiếu kiểm tra quyền sở hữu
 
-The oracle program is designed so that only the owner of the oracle account can update the price.
+Oracle program được thiết kế để chỉ chủ sở hữu oracle account có thể cập nhật giá.
 
-But there is a bug in this program. Find the bug and update the price without the owner's authorization.
+Program đang có lỗi. Hãy tìm cách cập nhật giá mà không cần quyền của chủ sở hữu.
 
-# Task 1 - Write your exploit
+## Nhiệm vụ
 
-Write your exploit inside [`test`](https://github.com/Cyfrin/solana-course/blob/main/apps/ctf/auth/exercise/tests/test.rs).
+Viết exploit trong [`exercise/tests/test.rs`](./exercise/tests/test.rs).
 
-# Build
+## Build
 
 ```shell
 cargo build-sbf
 ```
 
-# Test
-Your exploit is successful if the test passes.
+## Kiểm thử
+
+Exploit thành công khi test chạy xanh.
 
 ```shell
 cargo test -- --nocapture

@@ -1,6 +1,4 @@
-# AI agents on Solana
-
-[Mermaid source](./images/agent-loop.mmd)
+# AI agent trên Solana
 
 ![Vòng lặp AI Agent trên Solana](./images/agent-loop.png)
 
@@ -14,15 +12,19 @@ flowchart LR
     Observe --> Perceive
 ```
 
-## Guardrails
+## Cơ chế bảo vệ
 
-- dedicated agent wallet;
-- per-action and daily spending caps;
-- allowlisted programs, instructions, mints, and recipients;
-- simulation before send;
-- slippage and fee limits;
-- human approval above threshold;
-- kill switch and revocable delegated authority;
-- immutable audit log of proposed and executed actions.
+- ví riêng cho agent;
+- hạn mức chi tiêu theo action và theo ngày;
+- allowlist program, instruction, mint và recipient;
+- simulation trước khi gửi;
+- giới hạn slippage và phí;
+- yêu cầu con người phê duyệt khi vượt ngưỡng;
+- kill switch và delegated authority có thể thu hồi;
+- audit log bất biến cho action được đề xuất và đã thực thi.
 
-Never let model-generated text become an unchecked transaction.
+Không bao giờ chuyển trực tiếp nội dung do model tạo thành transaction chưa được kiểm tra.
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](./images/agent-loop.mmd) để chỉnh sửa sơ đồ.

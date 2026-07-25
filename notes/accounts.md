@@ -1,10 +1,8 @@
-# Accounts
+# Account trên Solana
 
 ![Sơ đồ Solana account](./images/account.png)
 
-[Mở source Excalidraw](./images/account.excalidraw)
-
-A Solana account is a record addressed by a public key.
+Account trên Solana là một vùng dữ liệu được định danh bằng public key.
 
 ```mermaid
 flowchart TB
@@ -15,17 +13,21 @@ flowchart TB
     Account --> Exec[Executable flag]
 ```
 
-## Program account vs data account
+## Program account và data account
 
-- A program account contains executable code.
-- A data account contains serialized application state.
-- Only the owner program may modify an account's data or debit its lamports.
-- A transaction marks accounts as signer/non-signer and writable/read-only.
+- Program account chứa code có thể thực thi.
+- Data account chứa trạng thái ứng dụng đã được serialize.
+- Chỉ owner program mới có thể sửa data hoặc trừ lamports của account.
+- Transaction đánh dấu từng account là signer/non-signer và writable/read-only.
 
-## Account review questions
+## Câu hỏi khi review account
 
-1. Does the expected program own this account?
-2. Must it be writable?
-3. Must it sign?
-4. Is its address constrained to the correct PDA or token account?
-5. Is enough space allocated for its serialized data plus discriminator?
+1. Account có thuộc đúng program dự kiến không?
+2. Account có cần writable không?
+3. Account có cần ký không?
+4. Địa chỉ có được ràng buộc đúng với PDA hoặc token account không?
+5. Có đủ dung lượng cho dữ liệu đã serialize và discriminator không?
+
+## Tài nguyên sơ đồ
+
+[Mở bản Excalidraw](./images/account.excalidraw) để chỉnh sửa sơ đồ.

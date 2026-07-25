@@ -6,8 +6,6 @@ Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/RE
 
 ![Stablecoin flow](../../notes/images/stablecoin-flow.png)
 
-[Mermaid source](../../notes/images/stablecoin-flow.mmd)
-
 ## State
 
 | Account | Seeds | Fields |
@@ -17,12 +15,12 @@ Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/RE
 
 ## Instructions
 
-- initialize configuration;
-- grant/revoke minter allowance;
+- khởi tạo configuration;
+- cấp/thu hồi minter allowance;
 - pause/unpause;
-- authorized mint within allowance/cap;
-- holder burn;
-- optional freeze/force-transfer discussion, disabled by default.
+- mint có phân quyền trong allowance/cap;
+- holder tự burn;
+- thảo luận tùy chọn freeze/force-transfer, mặc định tắt.
 
 ## Signer, writable và owner
 
@@ -44,11 +42,15 @@ flowchart LR
 
 ## Các trạng thái
 
-- `starter`: config schema and threat model
-- `checkpoint-1`: initialize and role management
-- `checkpoint-2`: pause and authorized mint
-- `final`: burn, logic tests, integration-test matrix và Token-2022 note
+- `starter`: config schema và threat model
+- `checkpoint-1`: khởi tạo và quản lý role
+- `checkpoint-2`: pause và mint có phân quyền
+- `final`: burn, logic test, integration-test matrix và ghi chú Token-2022
 
 ## Test bắt buộc
 
-Admin/minter authorization, paused behavior, allowance exhaustion, cap boundary, wrong mint, burn accounting, and role revocation.
+Kiểm thử quyền admin/minter, trạng thái pause, dùng hết allowance, cap boundary, sai mint, burn accounting và thu hồi role.
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](../../notes/images/stablecoin-flow.mmd) để chỉnh sửa sơ đồ.

@@ -1,6 +1,6 @@
 # Solana Security CTF
 
-Bốn bài tập thực tế được lấy từ `solana-course` và giữ cấu trúc `exercise/solution`.
+Bốn bài tập mô phỏng các lỗi bảo mật thường gặp trong chương trình Solana. Mỗi bài có thư mục `exercise` để thực hành và `solution` để đối chiếu sau khi hoàn thành.
 
 ## Cách học
 

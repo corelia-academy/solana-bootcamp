@@ -4,8 +4,6 @@ Tạo poll có time window, đăng ký candidate và ghi vote. Final dùng VoteR
 
 ![Voting flow](../../notes/images/voting-flow.png)
 
-[Mermaid source](../../notes/images/voting-flow.mmd)
-
 ## Mô hình state
 
 | Account | PDA seeds | Key fields |
@@ -41,16 +39,20 @@ flowchart TB
 
 ## Các trạng thái
 
-- `starter`: state types and test descriptions
-- `checkpoint-1`: poll creation
-- `checkpoint-2`: candidates and PDA schemas
-- `final`: voting, receipt, bộ integration tests và Voting Frontend reference
+- `starter`: state types và mô tả test
+- `checkpoint-1`: tạo poll
+- `checkpoint-2`: candidate và PDA schema
+- `final`: voting, receipt, bộ integration test và Voting Frontend tham khảo
 
 ## Test bắt buộc
 
-- poll and candidate creation;
-- authority and time-window failures;
-- correct vote count;
-- candidate/poll mismatch rejection;
-- duplicate vote rejection;
-- frontend derives the same PDAs.
+- tạo poll và candidate;
+- lỗi authority và time window;
+- vote count chính xác;
+- từ chối candidate không thuộc poll;
+- từ chối vote trùng;
+- frontend derive đúng cùng các PDA.
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](../../notes/images/voting-flow.mmd) để chỉnh sửa sơ đồ.

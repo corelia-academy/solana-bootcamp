@@ -6,42 +6,42 @@ Môi trường được hỗ trợ là macOS, Linux và Windows qua WSL2. Native
 
 | Tool | Baseline | Mục đích |
 | --- | --- | --- |
-| Rust | 1.87.0 | Solana programs and Rust labs |
-| Solana CLI | 3.0.10 | Local validator, wallet, deploy, Devnet operations |
-| Anchor CLI | 0.31.1 | Anchor programs, builds, and tests |
-| Node.js | 22 LTS | TypeScript clients, frontend và automation labs |
+| Rust | 1.87.0 | Solana program và Rust lab |
+| Solana CLI | 3.0.10 | Local validator, wallet, deploy và thao tác Devnet |
+| Anchor CLI | 0.31.1 | Build và test Anchor program |
+| Node.js | 22 LTS | TypeScript client, frontend và automation lab |
 | pnpm | 9.x | Cài dependency riêng trong từng project |
 
 Rust được khóa bằng `rust-toolchain.toml`; Node được khóa bằng `.nvmrc`. Mỗi project tự quản dependency, repository root không có `package.json` hay `node_modules`.
 
 ## macOS
 
-1. Install Xcode Command Line Tools: `xcode-select --install`.
-2. Install Homebrew if it is not present.
-3. Install Rust 1.87.0 with rustup.
-4. Install Solana CLI 3.0.10 using the official installer.
-5. Install AVM, then install and select Anchor 0.31.1.
-6. Install Node.js 22 LTS, rồi bật pnpm 9 bằng Corepack: `corepack enable && corepack prepare pnpm@9 --activate`.
+1. Cài Xcode Command Line Tools: `xcode-select --install`.
+2. Cài Homebrew nếu máy chưa có.
+3. Cài Rust 1.87.0 bằng rustup.
+4. Cài Solana CLI 3.0.10 bằng installer chính thức.
+5. Cài AVM, sau đó cài và chọn Anchor 0.31.1.
+6. Cài Node.js 22 LTS, rồi bật pnpm 9 bằng Corepack: `corepack enable && corepack prepare pnpm@9 --activate`.
 
-## Linux or Windows WSL2
+## Linux hoặc Windows WSL2
 
-1. On Windows, install WSL2 with Ubuntu and run all remaining commands inside Ubuntu.
-2. Install build dependencies: compiler toolchain, `pkg-config`, OpenSSL development headers, `curl`, and Git.
-3. Install Rust 1.87.0 with rustup.
-4. Install Solana CLI 3.0.10 using the official installer.
-5. Install AVM, then install and select Anchor 0.31.1.
-6. Install Node.js 22 LTS trong cùng môi trường, rồi chạy `corepack enable && corepack prepare pnpm@9 --activate`.
+1. Trên Windows, cài WSL2 với Ubuntu và chạy mọi lệnh còn lại trong Ubuntu.
+2. Cài build dependencies: compiler toolchain, `pkg-config`, OpenSSL development headers, `curl` và Git.
+3. Cài Rust 1.87.0 bằng rustup.
+4. Cài Solana CLI 3.0.10 bằng installer chính thức.
+5. Cài AVM, sau đó cài và chọn Anchor 0.31.1.
+6. Cài Node.js 22 LTS trong cùng môi trường, rồi chạy `corepack enable && corepack prepare pnpm@9 --activate`.
 
 ## Ma trận cài đặt
 
 | Area | macOS | Linux | Windows |
 | --- | --- | --- | --- |
 | Shell | Terminal/iTerm | Bash/Zsh | WSL2 Ubuntu shell |
-| Build tools | Xcode Command Line Tools | distro compiler packages | install inside WSL2 |
-| Course files | normal user directory | normal user directory | WSL filesystem such as `~/code` |
-| Solana/Anchor | install in macOS shell | install in Linux shell | install inside WSL only |
+| Build tool | Xcode Command Line Tools | Compiler package của distro | Cài trong WSL2 |
+| File khóa học | Thư mục user thông thường | Thư mục user thông thường | Filesystem WSL như `~/code` |
+| Solana/Anchor | Cài trong macOS shell | Cài trong Linux shell | Chỉ cài trong WSL |
 
-Do not mix Windows Node/Rust/Solana binaries with WSL binaries in one project.
+Không dùng lẫn binary Node/Rust/Solana của Windows và WSL trong cùng một project.
 
 ## Wallet và Devnet
 
@@ -55,7 +55,7 @@ solana address
 solana balance
 ```
 
-Request Devnet SOL through the official faucet if CLI airdrops are rate-limited. Verify transactions using Solana Explorer with the cluster set to Devnet.
+Nếu CLI airdrop bị giới hạn, hãy nhận Devnet SOL qua faucet chính thức. Khi kiểm tra transaction trên Solana Explorer, chọn cluster Devnet.
 
 ## Kiểm tra cài đặt
 
@@ -82,14 +82,14 @@ anchor test
 
 ## Lựa chọn Container và Codespaces
 
-A Dev Container or Codespace may be offered as a fallback for learners who cannot stabilize a local environment. It must pin the same course versions and persist the Solana wallet outside the image. The normal teaching path remains a local macOS/Linux/WSL setup so learners understand the tools they are using.
+Dev Container hoặc Codespace là phương án dự phòng khi không thể ổn định môi trường local. Container phải khóa đúng version của khóa học và lưu Solana wallet bên ngoài image. Lộ trình mặc định vẫn dùng macOS/Linux/WSL local để học viên hiểu các công cụ đang sử dụng.
 
 ## Minh chứng hoàn thành setup
 
-Before Module 2, submit:
+Trước Module 2, nộp:
 
-- operating system and terminal;
+- hệ điều hành và terminal;
 - output của sáu lệnh kiểm tra version;
-- Devnet wallet address (public key only);
-- Devnet Explorer link;
-- successful `anchor build` and `anchor test` output from the disposable project.
+- địa chỉ Devnet wallet, chỉ gồm public key;
+- link Devnet Explorer;
+- output `anchor build` và `anchor test` thành công từ project dùng để kiểm tra.

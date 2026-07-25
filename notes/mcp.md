@@ -1,7 +1,5 @@
 # Model Context Protocol
 
-[Mermaid source](./images/mcp-architecture.mmd)
-
 ![Kiến trúc MCP cho Solana](./images/mcp-architecture.png)
 
 ```mermaid
@@ -14,4 +12,8 @@ flowchart LR
     Write --> RPC
 ```
 
-Tools need clear names, descriptions, JSON Schemas, structured results, predictable errors, and least-privilege authorization. Separate read-only tools from actions that spend funds or submit transactions.
+Tool cần có tên và mô tả rõ ràng, JSON Schema, kết quả có cấu trúc, lỗi dễ dự đoán và quyền hạn tối thiểu. Tách tool chỉ đọc khỏi các action tiêu tiền hoặc gửi transaction.
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](./images/mcp-architecture.mmd) để chỉnh sửa sơ đồ.

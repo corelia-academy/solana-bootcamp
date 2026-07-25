@@ -1,10 +1,8 @@
 # MCP Solana Server
 
-Cung cấp Solana tools có cấu trúc và least privilege cho AI host.
+Cung cấp các Solana tool có cấu trúc và áp dụng nguyên tắc quyền hạn tối thiểu cho AI host.
 
 ![MCP architecture](../../notes/images/mcp-architecture.png)
-
-[Mermaid source](../../notes/images/mcp-architecture.mmd)
 
 Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/README.md) → [checkpoint 2](./checkpoint-2/README.md) → [final](./final/README.md).
 
@@ -21,8 +19,8 @@ Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/RE
 
 - stdio transport dùng MCP SDK v1;
 - bốn tool trong bảng trên với Zod input schema;
-- structured success/error result;
-- injectable `RpcPort` để test không cần Devnet hay private key.
+- kết quả success/error có cấu trúc;
+- `RpcPort` có thể inject để test không cần Devnet hay private key.
 
 MCP resources, reusable prompts và HTTP transport là bài mở rộng sau khi hoàn thành stdio server; chúng không nằm trong public interface của bản `final` hiện tại.
 
@@ -46,7 +44,7 @@ flowchart LR
 
 ## Test bắt buộc
 
-Schema validation, RPC failure, read result shape, unauthorized writes, vượt cap, program/recipient ngoài allowlist, simulation failure và write thành công bằng mock RPC.
+Kiểm thử schema, RPC failure, cấu trúc kết quả đọc, write không có quyền, vượt cap, program/recipient ngoài allowlist, simulation failure và write thành công bằng mock RPC.
 
 ## Authority và mutable state
 
@@ -60,3 +58,7 @@ Schema validation, RPC failure, read result shape, unauthorized writes, vượt 
 ## PDA rationale và trust boundary
 
 MCP server không tạo PDA riêng; nó đọc/call các program đã allowlist. Host/model không giữ signer trực tiếp: mọi write đi qua authentication, policy, simulation và confirmation trong server.
+
+## Tài nguyên sơ đồ
+
+[Mở Mermaid source](../../notes/images/mcp-architecture.mmd) để chỉnh sửa sơ đồ.
