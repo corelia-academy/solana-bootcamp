@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWxqSWYDLsh6d8JQRqWSZC9sDgG");
+declare_id!("EBnYf3H5VBKaKdn2mSthnx7KVgdzktqeZJpKnfNySx5V");
 
 #[program]
 pub mod pda_counter {
