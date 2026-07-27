@@ -1,0 +1,25 @@
+{
+  "license": "MIT",
+  "name": "@corelia/module-05-testing-lab",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "anchor build",
+    "test:anchor": "bash scripts/test-anchor.sh",
+    "test:litesvm": "pnpm exec ts-mocha -p ./tsconfig.json -t 60000 tests/litesvm/**/*.ts",
+    "test:all": "pnpm run test:litesvm && pnpm run test:anchor"
+  },
+  "devDependencies": {
+    "@coral-xyz/anchor": "0.31.1",
+    "@solana/web3.js": "^1.98.0",
+    "@types/bn.js": "^5.1.5",
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.11.0",
+    "bn.js": "^5.2.1",
+    "chai": "^4.5.0",
+    "litesvm": "^0.3.0",
+    "ts-mocha": "^10.0.0",
+    "typescript": "^5.8.3"
+  }
+}
