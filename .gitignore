@@ -19,6 +19,9 @@ target/
 test-ledger/
 *.so
 
+# Personal video talking scripts, not part of course material.
+video-scripts/
+
 # Never commit local wallets or private keys.
 *.json.keypair
 *-keypair.json
