@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["mocha", "chai"],
+    "types": ["mocha", "chai", "node"],
     "lib": ["es2022"],
     "module": "commonjs",
     "target": "es2022",

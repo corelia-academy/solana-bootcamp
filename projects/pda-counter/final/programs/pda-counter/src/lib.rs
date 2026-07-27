@@ -1,36 +1,31 @@
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWxqSWYDLsh6d8JQRqWSZC9sDgG");
+pub mod state;
+pub use state::*;
+
+declare_id!("A8pt6YDBMdyws1Ue3vGJvvqW8fRTSPx5HduMvahYzYQC");
 
 #[program]
 pub mod pda_counter {
     use super::*;
 
     pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
-        let counter = &mut ctx.accounts.counter;
-        counter.owner = ctx.accounts.owner.key();
-        counter.value = 0;
-        counter.bump = ctx.bumps.counter;
+        ctx.accounts
+            .counter
+            .init(ctx.accounts.owner.key(), ctx.bumps.counter);
         Ok(())
     }
 
     pub fn increment(ctx: Context<UpdateCounter>) -> Result<()> {
-        let counter = &mut ctx.accounts.counter;
-        counter.value = counter.value.checked_add(1).ok_or(CounterError::Overflow)?;
-        Ok(())
+        ctx.accounts.counter.checked_increment()
     }
 
     pub fn decrement(ctx: Context<UpdateCounter>) -> Result<()> {
-        let counter = &mut ctx.accounts.counter;
-        counter.value = counter
-            .value
-            .checked_sub(1)
-            .ok_or(CounterError::Underflow)?;
-        Ok(())
+        ctx.accounts.counter.checked_decrement()
     }
 
     pub fn reset(ctx: Context<UpdateCounter>) -> Result<()> {
-        ctx.accounts.counter.value = 0;
+        ctx.accounts.counter.reset_value();
         Ok(())
     }
 }
@@ -60,20 +55,4 @@ pub struct UpdateCounter<'info> {
     )]
     pub counter: Account<'info, Counter>,
     pub owner: Signer<'info>,
-}
-
-#[account]
-#[derive(InitSpace)]
-pub struct Counter {
-    pub owner: Pubkey,
-    pub value: u64,
-    pub bump: u8,
-}
-
-#[error_code]
-pub enum CounterError {
-    #[msg("Giá trị counter đã đạt giới hạn tối đa")]
-    Overflow,
-    #[msg("Counter đang bằng 0 nên không thể giảm")]
-    Underflow,
 }
