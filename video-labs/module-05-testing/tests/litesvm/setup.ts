@@ -62,9 +62,15 @@ export const createCtx = (): Ctx => {
     svm.airdrop(pubkey, lamports);
   };
 
+  const freshBlockhash = (): string => {
+    svm.expireBlockhash();
+    return svm.latestBlockhash();
+  };
+
   const send = (tx: Transaction, signers: Keypair[]): TransactionMetadata => {
-    tx.recentBlockhash = svm.latestBlockhash();
+    tx.recentBlockhash = freshBlockhash();
     tx.feePayer = tx.feePayer ?? payer.publicKey;
+    tx.signatures = [];
     tx.sign(...signers);
     const result = svm.sendTransaction(tx);
     if (result instanceof FailedTransactionMetadata) {
@@ -79,8 +85,9 @@ export const createCtx = (): Ctx => {
     signers: Keypair[],
     pattern: RegExp,
   ): FailedTransactionMetadata => {
-    tx.recentBlockhash = svm.latestBlockhash();
+    tx.recentBlockhash = freshBlockhash();
     tx.feePayer = tx.feePayer ?? payer.publicKey;
+    tx.signatures = [];
     tx.sign(...signers);
     const result = svm.sendTransaction(tx);
     if (!(result instanceof FailedTransactionMetadata)) {
