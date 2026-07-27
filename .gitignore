@@ -22,6 +22,9 @@ test-ledger/
 # Personal video talking scripts, not part of course material.
 video-scripts/
 
+# Local Claude Code state (settings, session cache).
+.claude/
+
 # Never commit local wallets or private keys.
 *.json.keypair
 *-keypair.json
