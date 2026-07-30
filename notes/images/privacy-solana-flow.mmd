@@ -1,0 +1,16 @@
+sequenceDiagram
+  participant P as Prover (offchain)
+  participant V as Mock verifier program
+  participant C as VerifiedContext (verifier-owned)
+  participant A as Privacy application
+  participant N as Nullifier PDA
+  participant S as PrivacyState
+
+  Note over P: secret, salt, amount and Merkle path stay private
+  P->>V: verify_fixture(root, nullifier, output, domain)
+  V->>C: create context bound to public inputs
+  P->>A: consume_note(public inputs + context)
+  A->>A: validate verifier ID, context owner and every field
+  A->>N: init PDA ["nullifier", nullifier]
+  A->>S: record output commitment / state transition
+  Note over A,S: Any failure rolls back the whole transaction

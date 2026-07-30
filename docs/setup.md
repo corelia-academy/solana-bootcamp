@@ -12,6 +12,11 @@ Môi trường được hỗ trợ là macOS, Linux và Windows qua WSL2. Native
 | Node.js | 22 LTS | TypeScript client, frontend và automation lab |
 | pnpm | 9.x | Cài dependency riêng trong từng project |
 
+Module 12 là nhánh tự chọn và có thêm toolchain riêng: `nargo 1.0.0-beta.20` cùng
+`bb 3.0.0-nightly.20251104`. Không cần cài hai công cụ này để học các module bắt buộc. Phiên bản
+được pin vì circuit artifact, proving backend và verification key là một compatibility boundary;
+không dùng `latest` khi tạo proof cho bài nộp.
+
 Rust được khóa bằng `rust-toolchain.toml`; Node được khóa bằng `.nvmrc`. Mỗi project tự quản dependency, repository root không có `package.json` hay `node_modules`.
 
 ## macOS

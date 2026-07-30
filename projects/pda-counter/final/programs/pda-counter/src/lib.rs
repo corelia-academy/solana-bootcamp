@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWxqSWYDLsh6d8JQRqWSZC9sDgG");
+declare_id!("VE4sWAcPP6yheQ34BWqmGmnpdnQGPz4gQaXaujCM83x");
 
 #[program]
 pub mod pda_counter {
@@ -11,6 +11,8 @@ pub mod pda_counter {
         counter.owner = ctx.accounts.owner.key();
         counter.value = 0;
         counter.bump = ctx.bumps.counter;
+        msg!("owner {}", counter.owner);
+        msg!("value {}", counter.value);
         Ok(())
     }
 

@@ -1,0 +1,20 @@
+[package]
+name = "mock-verifier"
+version = "0.1.0"
+description = "Teaching-only verifier boundary; never a production ZK verifier"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "mock_verifier"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+anchor-lang = "0.31.1"

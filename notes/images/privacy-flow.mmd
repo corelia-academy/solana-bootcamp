@@ -1,6 +1,30 @@
 flowchart LR
-  Secret[Secret + witness] --> Prover
-  Prover --> Proof[Proof]
-  Public[Commitment + root + nullifier] --> Verifier
-  Proof --> Verifier
-  Verifier --> Used[Consumed nullifier]
+  subgraph OFF["OFFCHAIN · PRIVATE"]
+    N["Input note<br/>secret · salt · amount"]
+    P["Merkle path<br/>leaf index · siblings"]
+    PROVER["Relation / Noir prover"]
+    N --> PROVER
+    P --> PROVER
+  end
+
+  subgraph PUBLIC["PUBLIC INPUTS"]
+    ROOT["Current root"]
+    NF["Nullifier"]
+    OUT["Output commitment"]
+    DOMAIN["Program + domain"]
+  end
+
+  subgraph CHAIN["ONCHAIN · PUBLIC"]
+    VERIFY["Verifier boundary"]
+    CONSUME["Consume nullifier PDA"]
+    STATE["Record output / new state"]
+  end
+
+  ROOT --> PROVER
+  DOMAIN --> PROVER
+  PROVER -->|"proof (Noir) or witness (TS only)"| VERIFY
+  ROOT --> VERIFY
+  NF --> VERIFY
+  OUT --> VERIFY
+  DOMAIN --> VERIFY
+  VERIFY --> CONSUME --> STATE

@@ -1,0 +1,6 @@
+Prover.toml
+Verifier.toml
+target/
+proof
+vk
+witness

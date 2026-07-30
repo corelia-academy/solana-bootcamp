@@ -1,0 +1,14 @@
+# Copy thành Prover.toml và thay các giá trị bằng fixture của bạn.
+# Không commit Prover.toml thật vì nó chứa private witness.
+secret = "11"
+salt = "22"
+input_amount = "10"
+leaf_index = "1"
+siblings = ["101", "202"]
+output_secret = "33"
+output_salt = "44"
+output_amount = "10"
+current_root = "REPLACE_WITH_COMPUTED_FIELD"
+expected_nullifier = "REPLACE_WITH_COMPUTED_FIELD"
+output_commitment = "REPLACE_WITH_COMPUTED_FIELD"
+domain = "2026"

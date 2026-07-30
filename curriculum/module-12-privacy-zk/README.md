@@ -2,33 +2,49 @@
 
 ## Kết quả đầu ra
 
-Giải thích privacy proof flow và prototype verification mà không yêu cầu toán nâng cao.
+Sau module này, học viên có thể:
 
-## Bài học
+- phân biệt dữ liệu public, private witness và metadata vẫn bị lộ;
+- giải thích trọn flow `note → commitment → Merkle root → proof → nullifier → output note`;
+- viết và test relation ở TypeScript trước khi biểu diễn nó bằng constraint;
+- tạo và verify một proof Noir/Barretenberg ở local;
+- thiết kế ranh giới CPI an toàn giữa application program và verifier program trên Solana.
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Module không xây mixer hay private token production. Noir proof được verify bằng backend
+Barretenberg ở local; nó **không** được đưa thẳng vào ZK ElGamal Proof Program của Solana.
 
-1. Privacy problem on public blockchains
-2. Commitment scheme
-3. Nullifier pattern
-4. Merkle-tree state
-5. ZK proof intuition
-6. Noir circuit overview
-7. Verifier program on Solana
-8. CPI verification pattern
-9. Private-transfer demo
-10. Limitations and security considerations
+## Câu chuyện xuyên suốt
+
+Alice sở hữu một private note có `amount = 10`. Onchain chỉ lưu commitment của note trong
+Merkle tree. Khi tiêu note, Alice chứng minh mình biết preimage của một leaf thuộc current root,
+công bố nullifier duy nhất để chặn double-spend, và tạo output commitment mới có cùng amount.
+
+Đọc [nội dung chi tiết từng lesson](./lessons.md) trước khi làm lab.
+
+## Lab ba tầng
+
+Lab nằm tại [exercises/privacy-zk-lab](../../exercises/privacy-zk-lab/README.md):
+
+1. **TypeScript mental model:** kiểm tra trực tiếp witness/relation; đây không phải ZK.
+2. **Noir circuit:** constraint và proof thật, verify local bằng Barretenberg.
+3. **Solana boundary:** mock verifier CPI và nullifier PDA để học integration; đây không phải
+   production proof verifier.
 
 ## Sản phẩm nộp
 
-Commitment/nullifier/Merkle diagram, constrained circuit, verifier-call flow, success/invalid/replay tests, and documented privacy limitations.
-
-Lab: [Privacy & ZK starter/solution](../../exercises/privacy-zk-lab/README.md).
+- hai diagram đánh dấu public/private và offchain/onchain;
+- TypeScript relation tests cho valid, invalid và replay cases;
+- Noir circuit, output `nargo test` và log `bb verify`;
+- Anchor CPI/replay tests;
+- [threat-model worksheet](./threat-model.md) đã điền.
 
 ## Điều kiện tiên quyết
 
-Hoàn thành Module 3 và Module 5; đây là nhánh tự chọn.
+Hoàn thành Module 3 và Module 5. Noir và Barretenberg chỉ cần cài nếu làm tầng 2; Anchor
+toolchain của khóa học chỉ cần cho tầng 3.
 
 ## Điều hướng
 
-Module trước: [Module 11](../module-11-amm/README.md) · Module tiếp theo: [Module 13](../module-13-indexing/README.md) · [Bản đồ phụ thuộc](../../docs/module-dependencies.md)
+Module trước: [Module 11](../module-11-amm/README.md) · Module tiếp theo:
+[Module 13](../module-13-indexing/README.md) ·
+[Bản đồ phụ thuộc](../../docs/module-dependencies.md)
