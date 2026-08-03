@@ -6,6 +6,7 @@ Tài liệu học, bài tập code-along, project và tài nguyên dành cho h�
 
 ## Bắt đầu
 
+- [Những điều học viên cần biết trước khi bắt đầu](./docs/getting-started.md)
 - [Chương trình 18 module](./curriculum/README.md)
 - [Cài đặt khóa học](./docs/setup.md)
 - [Ghi chú khái niệm cốt lõi](./notes/README.md)
