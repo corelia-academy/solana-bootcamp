@@ -56,6 +56,8 @@ Client không được tự quyết định poll đang mở. Program đọc `Clo
 
 ## Luồng code-along
 
+Code của từng bước nằm trong [code-along.md](./code-along.md).
+
 1. Khởi tạo Poll với title, time window và authority.
 2. Thêm candidate bằng ID tuần tự; test sai authority và thêm quá muộn.
 3. Vote bằng cách tạo VoteReceipt và tăng counter có checked arithmetic.

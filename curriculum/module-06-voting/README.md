@@ -6,7 +6,7 @@ Thiết kế và deploy program nhiều account với time rules, quan hệ PDA 
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ project trống đến bản `final`.
 
 1. Poll/candidate/vote product specification
 2. Poll and Candidate state schemas
