@@ -21,7 +21,7 @@ Theo dõi và triển khai luồng IDL → client → wallet → transaction →
 
 Reference: [frontend data flow](../../notes/frontend.md).
 
-Project: [Voting Frontend](../../projects/voting-frontend/README.md), dùng lại program/IDL của Module 6.
+Project: [Voting Frontend](../../projects/voting-app/frontend/README.md), dùng lại program/IDL của Module 6.
 
 ## Điều kiện tiên quyết
 

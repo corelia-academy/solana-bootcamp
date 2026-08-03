@@ -861,11 +861,11 @@ Cần thấy `8 passing`. Mở [Explorer Devnet](https://explorer.solana.com/?cl
 
 **Khái niệm:** [frontend](./lessons.md#610-frontend)
 
-[Voting Frontend](../../projects/voting-frontend/README.md) là project của Module 9; ở đây chỉ chạy thử bản `final` với program của bạn. Poll do bộ test tạo chỉ mở 10 phút, nên chạy lại test Devnet ngay trước khi vote. Thay `~/code/solana-bootcamp` bằng nơi bạn clone repo:
+[Voting Frontend](../../projects/voting-app/frontend/README.md) là project của Module 9; ở đây chỉ chạy thử bản `final` với program của bạn. Poll do bộ test tạo chỉ mở 10 phút, nên chạy lại test Devnet ngay trước khi vote. Thay `~/code/solana-bootcamp` bằng nơi bạn clone repo:
 
 ```bash
 anchor test --provider.cluster devnet --skip-deploy
-cp -R ~/code/solana-bootcamp/projects/voting-frontend/final ~/code/bootcamp-labs/voting-frontend
+cp -R ~/code/solana-bootcamp/projects/voting-app/frontend/final ~/code/bootcamp-labs/voting-frontend
 cd ~/code/bootcamp-labs/voting-frontend
 cp ../voting/target/idl/voting.json src/idl/voting.json
 pnpm install

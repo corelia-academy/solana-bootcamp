@@ -1,6 +1,6 @@
 # Voting Frontend — Code-along từng bước
 
-Bài này viết [Voting Frontend](../../projects/voting-frontend/README.md) từ một thư mục trống, theo đúng thứ tự video Module 9. Mỗi bước gõ một đoạn ngắn rồi build, test hoặc mở trình duyệt ngay. Bước cuối ra đúng code `final` (trừ `name` trong `package.json`, `pnpm-lock.yaml` và `src/idl/README.md` của repo); `starter`, `checkpoint-1`, `checkpoint-2` và `final` chỉ để đối chiếu.
+Bài này viết [Voting Frontend](../../projects/voting-app/frontend/README.md) từ một thư mục trống, theo đúng thứ tự video Module 9. Mỗi bước gõ một đoạn ngắn rồi build, test hoặc mở trình duyệt ngay. Bước cuối ra đúng code `final` (trừ `name` trong `package.json`, `pnpm-lock.yaml` và `src/idl/README.md` của repo); `starter`, `checkpoint-1`, `checkpoint-2` và `final` chỉ để đối chiếu.
 
 Cần làm xong [Voting App Module 6](../module-06-voting/code-along.md), có program đã deploy Devnet tại `~/code/bootcamp-labs/voting`. Node 24 và pnpm theo [docs/setup.md](../../docs/setup.md). Ví Phantom bật Testnet Mode, chọn Devnet, có Devnet SOL.
 

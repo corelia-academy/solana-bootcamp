@@ -6,7 +6,7 @@
 | Voting App | [README](../projects/voting-app/README.md) | Poll/Candidate/Receipt PDAs | Voting Frontend | authority, time, duplicate vote |
 | SPL Token | [README](../projects/token-basics/README.md) | Mint/ATA, không có custom PDA | TypeScript client | mint/owner/decimals/supply |
 | Escrow | [README](../projects/escrow/README.md) | Escrow PDA + vault ATA | CPI/client flow | substitution, donation, replay |
-| Voting Frontend | [README](../projects/voting-frontend/README.md) | Dùng PDAs của Voting, không tạo PDA | wallet → confirm → refetch | rejection, stale state, cluster |
+| Voting Frontend | [README](../projects/voting-app/frontend/README.md) | Dùng PDAs của Voting, không tạo PDA | wallet → confirm → refetch | rejection, stale state, cluster |
 | Stablecoin Lite | [README](../projects/stablecoin-lite/README.md) | Config/Allowance PDAs | Admin/minter client | role, pause, allowance, cap |
 | Simple AMM | [README](../projects/simple-amm/README.md) | Pool PDA, vaults, LP mint | Liquidity/swap client | rounding, slippage, wrong vault |
 | x402 | [README](../projects/x402-paywall/README.md) | Không cần custom PDA; thanh toán là SPL transferChecked | x402 v2: PAYMENT-REQUIRED → PAYMENT-SIGNATURE → facilitator verify/settle | so khớp accepted, replay, đồng thời, timeout |

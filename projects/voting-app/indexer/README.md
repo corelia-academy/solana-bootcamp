@@ -1,6 +1,6 @@
 # Vote Indexer
 
-Voting program phát event `VoteCast` mỗi lần vote; indexer TypeScript decode event từ log, lưu vào PostgreSQL theo khóa `(signature, event_index)`, backfill theo checkpoint, nghe realtime và mở REST API có phân trang giới hạn. Gõ lại từ đầu theo [code-along Module 13](../../curriculum/module-13-indexing/code-along.md).
+Voting program phát event `VoteCast` mỗi lần vote; indexer TypeScript decode event từ log, lưu vào PostgreSQL theo khóa `(signature, event_index)`, backfill theo checkpoint, nghe realtime và mở REST API có phân trang giới hạn. Gõ lại từ đầu theo [code-along Module 13](../../../curriculum/module-13-indexing/code-along.md).
 
 ## Data flow
 

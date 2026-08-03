@@ -11,7 +11,7 @@ Voting program phát `VoteCast`; indexer backfill theo checkpoint, nghe realtime
 
 ## Học viên cần làm
 
-Đối chiếu với bài gõ theo [code-along Module 13](../../../curriculum/module-13-indexing/code-along.md) sau khi tự làm xong.
+Đối chiếu với bài gõ theo [code-along Module 13](../../../../curriculum/module-13-indexing/code-along.md) sau khi tự làm xong.
 
 ## Chạy và kiểm tra
 

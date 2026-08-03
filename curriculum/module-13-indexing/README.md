@@ -21,7 +21,7 @@ Biến program events thành application data có thể query và hiểu trade-o
 
 Emit one domain event, ingest it idempotently, store transaction signature/slot, expose a bounded API, and demonstrate reconnect/backfill behavior.
 
-Project: [Vote Indexer](../../projects/vote-indexer/README.md). Lab ngắn không cần RPC/PostgreSQL: [Data Indexing starter/solution](../../exercises/indexing-lab/README.md).
+Project: [Vote Indexer](../../projects/voting-app/indexer/README.md). Lab ngắn không cần RPC/PostgreSQL: [Data Indexing starter/solution](../../exercises/indexing-lab/README.md).
 
 ## Điều kiện tiên quyết
 

@@ -2,7 +2,7 @@
 
 Project Module 9 dùng lại Voting App Module 6, giữ program interface ổn định và tập trung vào wallet/transaction UX.
 
-![Frontend flow](../../notes/images/frontend-flow.png)
+![Frontend flow](../../../notes/images/frontend-flow.png)
 
 - [Starter](./starter/README.md)
 - [Checkpoint 1](./checkpoint-1/README.md)
@@ -23,4 +23,4 @@ Frontend không tạo namespace PDA mới; Anchor adapter derive đúng Poll/Can
 
 ## Tài nguyên sơ đồ
 
-[Mở Mermaid source](../../notes/images/frontend-flow.mmd) để chỉnh sửa sơ đồ.
+[Mở Mermaid source](../../../notes/images/frontend-flow.mmd) để chỉnh sửa sơ đồ.

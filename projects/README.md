@@ -4,8 +4,8 @@
 | --- | --- | --- |
 | [PDA Counter](./pda-counter/README.md) | Anchor state, PDA, constraints | Per-user counter |
 | [Voting App](./voting-app/README.md) | Multiple PDAs, time, receipts | Tested voting program |
-| [Voting Frontend](./voting-frontend/README.md) | Wallet, confirmation, refetch | Voting client UI |
-| [Vote Indexer](./vote-indexer/README.md) | Events, idempotent ingest, checkpoint | Event indexer và REST API |
+| [Voting Frontend](./voting-app/frontend/README.md) | Wallet, confirmation, refetch | Voting client UI |
+| [Vote Indexer](./voting-app/indexer/README.md) | Events, idempotent ingest, checkpoint | Event indexer và REST API |
 | [SPL Token Basics](./token-basics/README.md) | Mint, ATA, authorities | Token operation labs |
 | [Escrow](./escrow/README.md) | CPI, vault PDA, atomic settlement | Token escrow |
 | [Stablecoin Lite](./stablecoin-lite/README.md) | Roles, pause, allowance | Admin token protocol |

@@ -54,7 +54,7 @@ end
 [[ -z "$(find . -type d -name tests -empty -not -path '*/node_modules/*')" ]]
 [[ -z "$(rg -n '[[:blank:]]+$' --glob '!**/node_modules/**' --glob '!**/target/**' --glob '!**/dist/**' . || true)" ]]
 
-for readme in projects/*/{starter,checkpoint-1,checkpoint-2,final}/README.md; do
+for readme in projects/*/{starter,checkpoint-1,checkpoint-2,final}/README.md projects/*/{frontend,indexer}/{starter,checkpoint-1,checkpoint-2,final}/README.md; do
   [[ -f "$readme" ]] || continue
   for heading in "Mục tiêu state" "Phần đã có" "Học viên cần làm" "Chạy và kiểm tra"; do
     rg -qF "## $heading" "$readme" || { echo "$readme thiếu '$heading'" >&2; exit 1; }
@@ -80,8 +80,8 @@ run_pnpm projects/pda-counter/final test
 run_pnpm projects/voting-app/final test
 run_pnpm projects/token-basics/final test
 run_pnpm projects/escrow/final test
-run_pnpm projects/voting-frontend/final test
-pnpm --dir projects/voting-frontend/final run build
+run_pnpm projects/voting-app/frontend/final test
+pnpm --dir projects/voting-app/frontend/final run build
 run_pnpm projects/stablecoin-lite/final test
 run_pnpm projects/simple-amm/final test
 run_pnpm projects/x402-paywall/final test

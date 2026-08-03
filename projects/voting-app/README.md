@@ -42,7 +42,12 @@ flowchart TB
 - `starter`: state types và mô tả test
 - `checkpoint-1`: tạo poll
 - `checkpoint-2`: candidate và PDA schema
-- `final`: voting, receipt, bộ integration test và Voting Frontend tham khảo
+- `final`: voting, receipt và bộ integration test
+
+Hai phần mở rộng của Voting App nằm ngay trong project này, cũng chia `starter`, `checkpoint-1`, `checkpoint-2`, `final`:
+
+- [`frontend/`](./frontend/README.md): Voting Frontend của Module 9.
+- [`indexer/`](./indexer/README.md): Vote Indexer của Module 13; `indexer/final/voting` là bản `final` ở trên thêm event `VoteCast`.
 
 ## Test bắt buộc
 

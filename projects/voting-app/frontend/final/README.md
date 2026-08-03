@@ -29,7 +29,7 @@ pnpm dev
 - **Anchor mode**: build Voting App Module 6 (`anchor build`), deploy lên Devnet, rồi copy `target/idl/voting.json` vào `src/idl/voting.json`. App tự chuyển sang `createAnchorVotingClient` với `AnchorProvider` từ wallet đang kết nối.
 
 ```bash
-cp ../../voting-app/final/target/idl/voting.json src/idl/voting.json
+cp ../../final/target/idl/voting.json src/idl/voting.json
 VITE_RPC_URL=https://api.devnet.solana.com pnpm dev   # hoặc http://127.0.0.1:8899 cho localnet
 VITE_USE_MOCK=true pnpm dev                            # ép mock mode dù đã có IDL
 ```

@@ -1,6 +1,6 @@
 # Vote Indexer — Code-along từng bước
 
-Bài này thêm event cho Voting program của Module 6, rồi viết một indexer TypeScript từ thư mục trống: decode event từ log, lưu vào PostgreSQL không trùng, backfill theo checkpoint, nghe realtime và mở REST API cho frontend. Mỗi bước gõ một đoạn ngắn rồi type-check hoặc test ngay. Bước cuối ra đúng code [`projects/vote-indexer/final`](../../projects/vote-indexer/README.md); `checkpoint-1`, `checkpoint-2` và `final` chỉ để đối chiếu.
+Bài này thêm event cho Voting program của Module 6, rồi viết một indexer TypeScript từ thư mục trống: decode event từ log, lưu vào PostgreSQL không trùng, backfill theo checkpoint, nghe realtime và mở REST API cho frontend. Mỗi bước gõ một đoạn ngắn rồi type-check hoặc test ngay. Bước cuối ra đúng code [`projects/voting-app/indexer/final`](../../projects/voting-app/indexer/README.md); `checkpoint-1`, `checkpoint-2` và `final` chỉ để đối chiếu.
 
 Cần có project `~/code/bootcamp-labs/voting` đã làm xong theo [code-along Module 6](../module-06-voting/code-along.md), Node 24, pnpm 9 và Docker. Trên Windows, chạy mọi lệnh trong WSL2 và bật WSL integration của Docker Desktop.
 
@@ -1380,6 +1380,6 @@ Thay `<POLL>` bằng địa chỉ seed in ra. Terminal indexer in năm dòng `re
 3. Ở terminal indexer: `pnpm start`. Sau vài giây in `backfill +3`.
 4. Gọi lại leaderboard của poll mới: 2 phiếu Rust, 1 phiếu TypeScript.
 
-Ba phiếu được tạo lúc indexer tắt nên realtime bỏ lỡ; backfill đi từ checkpoint và bù đủ, không tạo bản trùng với phiếu đã có. Code giờ giống [`projects/vote-indexer/final`](../../projects/vote-indexer/final/README.md).
+Ba phiếu được tạo lúc indexer tắt nên realtime bỏ lỡ; backfill đi từ checkpoint và bù đủ, không tạo bản trùng với phiếu đã có. Code giờ giống [`projects/voting-app/indexer/final`](../../projects/voting-app/indexer/final/README.md).
 
 Lưu ý: `solana-test-validator` chỉ giữ lịch sử gần đây (xem `solana first-available-block -u localhost`). Indexer tắt quá lâu thì RPC không còn transaction cũ để backfill, nên production cần RPC giữ lịch sử đủ dài hoặc nguồn stream như Geyser.
