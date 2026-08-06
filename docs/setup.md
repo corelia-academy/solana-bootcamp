@@ -85,6 +85,44 @@ node --version
 pnpm --version
 ```
 
+## Nâng cấp từ bản cài theo video cũ
+
+Video cũ cài bằng script một lệnh, ra Rust 1.87.0, Solana CLI 4.1.1, Anchor 0.31.1, Surfpool 1.5.0, Node 24 và Yarn. Bản Anchor, Solana và Rust này không build được project của khóa học. Chạy các lệnh kiểm tra ở trên, rồi chỉ chạy dòng ứng với công cụ bị lệch:
+
+```bash
+rustup toolchain install 1.89.0
+agave-install init 4.1.2
+rustup toolchain install stable
+RUSTUP_TOOLCHAIN=stable cargo install --git https://github.com/otter-sec/anchor avm --tag v1.2.1 --locked --force
+RUSTUP_TOOLCHAIN=stable avm install 1.2.1 && avm use 1.2.1
+corepack enable && corepack prepare pnpm@9 --activate
+```
+
+Mở terminal mới rồi kiểm tra lại. Surfpool 1.5.0 và Node 24 của video cũ đã đạt baseline, không cần cài lại. `rustc --version` ở ngoài project có thể vẫn in bản mặc định; trong project, `rust-toolchain.toml` tự chọn 1.89.0.
+
+Nếu `pnpm --version` vẫn in bản khác 9 sau lệnh `corepack`, máy còn một pnpm cài riêng đứng trước trong `PATH`. Chạy `which -a pnpm` để xem; dòng đầu tiên phải là pnpm của corepack, nằm cùng thư mục với `node`.
+
+## Công cụ AI hỗ trợ code (tùy chọn)
+
+Không bắt buộc để học. Nếu dùng agent viết code (Claude Code, Codex, Cursor, VS Code Copilot, Windsurf), cài hai công cụ chính thức của Solana Foundation để agent đọc tài liệu Solana và Anchor hiện hành thay vì nhớ bản cũ:
+
+- **Skill `solana-dev`**: hướng dẫn cho agent về Anchor, testing với Surfpool, client và security checklist. Video cũ đã cài skill này; chạy lại lệnh để lấy bản mới, vì bản cũ nhắm Anchor 1.1. `-g` cài cho mọi project, `-y` chọn sẵn mọi agent tìm thấy trên máy.
+
+  ```bash
+  npx skills add https://github.com/solana-foundation/solana-dev-skill -g -y
+  ```
+
+- **Solana Developer MCP** ([mcp.solana.com](https://mcp.solana.com)): MCP server từ xa, không cần API key, endpoint `https://mcp.solana.com/mcp`. Có tool tra tài liệu Solana/Anchor và `program_autofixer` soát lỗi bảo mật trong program Rust. Không đọc hay ký gì trên chain. Với Claude Code:
+
+  ```bash
+  claude mcp add --scope user --transport http solana-mcp https://mcp.solana.com/mcp
+  claude mcp list
+  ```
+
+  `--scope user` để server dùng được ở mọi project; thiếu cờ này thì chỉ có ở thư mục đang đứng. `claude mcp list` phải in `solana-mcp: https://mcp.solana.com/mcp (HTTP) - ✔ Connected`; trong Claude Code, `/mcp` liệt kê các tool như `list_sections`, `program_autofixer`. Cursor, VS Code, Windsurf và Codex: làm theo tab tương ứng trên [mcp.solana.com](https://mcp.solana.com).
+
+Khi code agent gợi ý khác code của khóa học (ví dụ dùng `@solana/kit` thay cho `@anchor-lang/core`, hoặc phiên bản khác baseline), làm theo code-along và baseline ở trên. Không đưa seed phrase hay file keypair cho agent.
+
 ## Anchor smoke test
 
 Tạo project mẫu bên ngoài repository khóa học để generated files và package tải về không trở thành course content:
@@ -115,4 +153,4 @@ Trước Module 2, nộp:
 
 ## Ghi chú cập nhật so với video
 
-Baseline đã nâng lên Anchor 1.2.1, Solana CLI 4.1.2, Rust 1.89.0 và Node 24 LTS. Khác biệt chính so với video quay bằng Anchor 0.31: package TypeScript là `@anchor-lang/core` (thay cho `@coral-xyz/anchor`), `anchor test` chạy Surfpool thay cho `solana-test-validator`, và `anchor build` báo lỗi khi Program ID lệch nên cần chạy `anchor keys sync` trước lần build đầu tiên. Project mẫu chọn pnpm và khóa toolchain riêng vì nằm ngoài repo; các bước cấu hình, build/test và Devnet được ghi chi tiết ở Module 1. Yêu cầu hoàn thành nay bao gồm deploy/upgrade, IDL và test Devnet bên cạnh smoke test local.
+Baseline đã nâng lên Anchor 1.2.1, Solana CLI 4.1.2, Rust 1.89.0 và Node 24 LTS; máy cài theo video cũ nâng cấp theo [mục ở trên](#nâng-cấp-từ-bản-cài-theo-video-cũ). Khác biệt chính so với video quay bằng Anchor 0.31: package TypeScript là `@anchor-lang/core` (thay cho `@coral-xyz/anchor`), `anchor test` chạy Surfpool thay cho `solana-test-validator`, và `anchor build` báo lỗi khi Program ID lệch nên cần chạy `anchor keys sync` trước lần build đầu tiên. Project mẫu chọn pnpm và khóa toolchain riêng vì nằm ngoài repo; các bước cấu hình, build/test và Devnet được ghi chi tiết ở Module 1. Yêu cầu hoàn thành nay bao gồm deploy/upgrade, IDL và test Devnet bên cạnh smoke test local.
