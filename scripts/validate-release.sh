@@ -35,7 +35,22 @@ end
 abort(errors.join("\n")) unless errors.empty?
 '
 
-[[ "$(find curriculum -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')" == "18" ]]
+ruby -e '
+expected = %w[
+  module-00-orientation module-01-orientation module-02-rust
+  module-03-solana-mental-model module-04-anchor module-05-testing
+  module-06-voting module-07-spl-token module-08-escrow module-09-frontend
+  module-10-stablecoin module-11-amm module-12-privacy-zk
+  module-13-indexing module-14-forecasting module-15-x402 module-16-mcp
+  module-17-ai-agents module-18-security
+].sort
+actual = Dir.children("curriculum").select { |name| File.directory?(File.join("curriculum", name)) }.sort
+missing = expected - actual
+extra = actual - expected
+unless missing.empty? && extra.empty?
+  abort("Tập module không đúng (cần Module 00–18). Thiếu: #{missing.join(", ")}; thừa: #{extra.join(", ")}")
+end
+'
 [[ -z "$(find . -type d -name tests -empty -not -path '*/node_modules/*')" ]]
 [[ -z "$(rg -n '[[:blank:]]+$' --glob '!**/node_modules/**' --glob '!**/target/**' --glob '!**/dist/**' . || true)" ]]
 
