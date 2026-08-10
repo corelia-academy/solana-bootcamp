@@ -5,7 +5,8 @@
   "scripts": {
     "check": "tsc --noEmit",
     "lab": "tsx src/token-lifecycle.ts",
-    "test": "vitest run"
+    "test": "vitest run amounts",
+    "test:chain": "vitest run token-rules"
   },
   "dependencies": {
     "@solana/spl-token": "0.4.15",

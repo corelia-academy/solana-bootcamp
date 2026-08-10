@@ -6,7 +6,7 @@ Giải thích và thao tác an toàn với mint, token account, ATA và token au
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ project trống đến bản `final`.
 
 1. Mint account
 2. Token account
