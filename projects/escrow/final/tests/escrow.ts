@@ -157,9 +157,12 @@ describe("escrow", () => {
 
   it("từ chối maker_ata_b không thuộc maker (substituted receive account)", async () => {
     const { escrow, vault } = deriveOffer(new anchor.BN(13));
+    // Token account mint B của ví khác; dùng takerAtaB sẽ bị chặn sớm vì trùng account mutable.
+    const otherAtaB = await createAssociatedTokenAccount(provider.connection, payer, mintB, Keypair.generate().publicKey);
     await expectFailure(program.methods.take().accounts({
       taker: taker.publicKey, maker: maker.publicKey, escrow, mintA, mintB, vault,
-      takerAtaA, takerAtaB, makerAtaB: takerAtaB, tokenProgram: TOKEN_PROGRAM_ID,
+      takerAtaA, takerAtaB, makerAtaB: otherAtaB, tokenProgram: TOKEN_PROGRAM_ID,
     }).signers([taker]).rpc(), /ConstraintTokenOwner|token owner|2015/i);
+    expect((await getAccount(provider.connection, vault)).amount).to.equal(1_000n);
   });
 });

@@ -6,7 +6,7 @@ Triển khai token exchange nguyên tử bằng CPI, vault do program quản lý
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ project trống đến bản `final`.
 
 1. Maker/taker flow
 2. Escrow state

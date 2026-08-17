@@ -22,7 +22,7 @@ pnpm install
 anchor test
 ```
 
-`tests/escrow.ts` có 5 integration tests: make, take kèm token donation, refund, invalid input và unauthorized refund.
+`tests/escrow.ts` có 8 integration tests: make, take kèm token donation, refund, invalid input, unauthorized refund, take lần hai sau khi đóng, mint B giả và maker receive account bị thay. Viết lại từng bước theo [code-along Module 8](../../../curriculum/module-08-escrow/code-along.md).
 
 ## Kỳ vọng bảo mật
 

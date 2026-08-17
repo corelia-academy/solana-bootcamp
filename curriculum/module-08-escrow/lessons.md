@@ -56,6 +56,10 @@ Trong một instruction, taker chuyển token B cho maker, Escrow PDA ký để 
 
 Test wrong maker, substituted receive account, wrong mint/vault, zero amount, same mint, token donation vào vault, refund bởi attacker và replay sau close. Token gửi ngoài ý muốn không được làm kẹt close; final chuyển `vault.amount` thay vì chỉ amount ban đầu.
 
+## Luồng code-along
+
+Code của từng bước nằm trong [code-along.md](./code-along.md): state → `make` → `take` → `refund` → test bảo mật.
+
 ## Hoàn thành module khi
 
 Bốn snapshot compile, final có make/take/refund, test chứng minh settlement/refund và rollback, account table giải thích signer/writable/owner, còn frontend chỉ được ghi là preview.
