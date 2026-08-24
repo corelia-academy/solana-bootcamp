@@ -14,21 +14,16 @@ const u16le = (value: number) => Uint8Array.from(new BN(value).toArray("le", 2))
  * `Poll.id` ở adapter này là ĐỊA CHỈ Poll account (base58), vì Poll PDA gồm cả authority:
  * hai authority khác nhau có thể dùng cùng `poll_id`.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function createAnchorVotingClient(program: Program<any>, connection: Connection): VotingClient {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const accounts = program.account as any;
 
   return {
     async listPolls(): Promise<Poll[]> {
       const [pollRows, candidateRows] = await Promise.all([accounts.poll.all(), accounts.candidate.all()]);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return pollRows.map((row: any) => {
         const pollKey = row.publicKey as PublicKey;
         const candidates = candidateRows
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .filter((item: any) => item.account.poll.equals(pollKey))
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .map((item: any) => ({
             id: item.account.candidateId as number,
             name: item.account.name as string,

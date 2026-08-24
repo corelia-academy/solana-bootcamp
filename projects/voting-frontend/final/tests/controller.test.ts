@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { voteAndRefresh } from "../src/controller";
 import { explorerTransactionUrl } from "../src/explorer";
-import type { VoteState, VotingClient } from "../src/domain";
+import type { VoteState, VotingClient, WalletPort } from "../src/domain";
 
 const client = (overrides: Partial<VotingClient> = {}): VotingClient => ({
   listPolls: vi.fn().mockResolvedValue([]),
@@ -9,22 +9,34 @@ const client = (overrides: Partial<VotingClient> = {}): VotingClient => ({
   confirm: vi.fn().mockResolvedValue(undefined),
   ...overrides,
 });
+const connected: WalletPort = { connected: true, publicKey: "voter" };
+
+async function run(c: VotingClient, wallet: WalletPort = connected): Promise<VoteState[]> {
+  const states: VoteState[] = [];
+  await voteAndRefresh({
+    wallet,
+    client: c,
+    pollId: "1",
+    candidateId: 0,
+    setState: (s) => states.push(s),
+    setPolls: () => {},
+  });
+  return states;
+}
+
 describe("voting frontend controller", () => {
   it("reject wallet disconnected", async () => {
-    const states: VoteState[] = [];
     const c = client();
-    await voteAndRefresh({
-      wallet: { connected: false },
-      client: c,
-      pollId: "1",
-      candidateId: 0,
-      setState: (s) => states.push(s),
-      setPolls: () => {},
-    });
+    const states = await run(c, { connected: false });
     expect(c.vote).not.toHaveBeenCalled();
     expect(states.at(-1)?.phase).toBe("error");
   });
-  it("confirm rồi mới refetch", async () => {
+  it("đi qua awaiting-signature, confirming rồi success", async () => {
+    const states = await run(client());
+    expect(states.map((s) => s.phase)).toEqual(["awaiting-signature", "confirming", "success"]);
+    expect(states.at(-1)?.signature).toBe("sig-1");
+  });
+  it("confirm rồi mới refetch, refetch đúng một lần", async () => {
     const calls: string[] = [];
     const c = client({
       vote: vi.fn(async () => {
@@ -39,32 +51,24 @@ describe("voting frontend controller", () => {
         return [];
       }),
     });
-    await voteAndRefresh({
-      wallet: { connected: true, publicKey: "voter" },
-      client: c,
-      pollId: "1",
-      candidateId: 0,
-      setState: () => {},
-      setPolls: () => {},
-    });
+    await run(c);
     expect(calls).toEqual(["vote", "confirm", "refetch"]);
   });
-  it("surface rejected signature/confirmation error và không refetch", async () => {
+  it("chữ ký bị từ chối: báo lỗi và không refetch", async () => {
     const c = client({ vote: vi.fn().mockRejectedValue(new Error("User rejected")) });
-    const states: VoteState[] = [];
-    await voteAndRefresh({
-      wallet: { connected: true, publicKey: "voter" },
-      client: c,
-      pollId: "1",
-      candidateId: 0,
-      setState: (s) => states.push(s),
-      setPolls: () => {},
-    });
+    const states = await run(c);
     expect(states.at(-1)).toMatchObject({ phase: "error", message: "User rejected" });
+    expect(c.listPolls).not.toHaveBeenCalled();
+  });
+  it("confirmation thất bại: báo lỗi và không refetch", async () => {
+    const c = client({ confirm: vi.fn().mockRejectedValue(new Error("Transaction lỗi")) });
+    const states = await run(c);
+    expect(states.at(-1)).toMatchObject({ phase: "error", message: "Transaction lỗi" });
     expect(c.listPolls).not.toHaveBeenCalled();
   });
   it("tạo Explorer URL theo cluster", () => {
     expect(explorerTransactionUrl("sig", "devnet")).toContain("cluster=devnet");
+    expect(explorerTransactionUrl("sig", "localnet")).toContain("customUrl=http%3A%2F%2F127.0.0.1%3A8899");
     expect(explorerTransactionUrl("sig", "mainnet-beta")).not.toContain("cluster=");
   });
 });

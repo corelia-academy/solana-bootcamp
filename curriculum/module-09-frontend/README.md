@@ -6,7 +6,7 @@ Theo dõi và triển khai luồng IDL → client → wallet → transaction →
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ thư mục trống đến bản `final`.
 
 1. IDL as program/client contract
 2. TypeScript client generation

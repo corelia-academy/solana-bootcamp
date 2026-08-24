@@ -21,6 +21,8 @@ pnpm run build
 pnpm dev
 ```
 
+`package.json` ghim `@solana/wallet-adapter-base-ui` 0.1.6 qua `pnpm.overrides`: bản 0.1.7 kéo thêm `@solana/wallet-adapter-react` 0.15.40, tạo hai React context khiến nút ví không thấy `WalletProvider`.
+
 ### Mock mode và Anchor mode
 
 - **Mock mode** (mặc định): chưa có `src/idl/voting.json` thì app dùng `MockVotingClient`, không cần validator hay wallet.

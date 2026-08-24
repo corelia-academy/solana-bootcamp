@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@solana/wallet-adapter-base-ui': 0.1.6
+
 importers:
 
   .:
