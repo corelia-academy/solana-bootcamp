@@ -2,6 +2,8 @@
 
 Môi trường được hỗ trợ là macOS, Linux và Windows qua WSL2. Native Windows shell không nằm trong support path chính của khóa học.
 
+Đọc [quy tắc video, docs và phiên bản](../curriculum/module-00-orientation/lessons.md#05-video-documentation--tool-versions) trước khi cài. Khi thao tác khác video, ưu tiên docs của khóa học và baseline dưới đây; chỉ cập nhật công cụ khi docs hướng dẫn.
+
 ## Baseline được khóa
 
 | Tool | Baseline | Mục đích |
@@ -78,12 +80,13 @@ pnpm --version
 Tạo project mẫu bên ngoài repository khóa học để generated files và package tải về không trở thành course content:
 
 ```bash
-cd /tmp
-anchor init hello-solana
+mkdir -p ~/code/bootcamp-labs
+cd ~/code/bootcamp-labs
+anchor init hello-solana --package-manager pnpm --no-install
 cd hello-solana
-anchor build
-anchor test
 ```
+
+Từ root project `~/code/bootcamp-labs/hello-solana`, tiếp tục [lesson 1.3](../curriculum/module-01-orientation/lessons.md#13-your-first-anchor-project) để khóa toolchain trong project ngoài repo, cài dependency, chọn wallet và chạy build/test local. Sau smoke test, làm lesson 1.4–1.5 để deploy/upgrade, xuất bản IDL và test Devnet. Nếu project đã tồn tại, dùng lại project, không ghi đè hoặc khởi tạo lại.
 
 ## Lựa chọn Container và Codespaces
 
@@ -97,4 +100,9 @@ Trước Module 2, nộp:
 - output của sáu lệnh kiểm tra version;
 - địa chỉ Devnet wallet, chỉ gồm public key;
 - link Devnet Explorer;
-- output `anchor build` và `anchor test` thành công từ project dùng để kiểm tra.
+- output `anchor build` và test local thành công từ project dùng để kiểm tra;
+- Program ID, output deploy/upgrade, kết quả IDL và link transaction test Devnet theo [Module 1 setup checklist](../curriculum/module-01-orientation/setup-checklist.md).
+
+## Ghi chú cập nhật so với video
+
+Bản thử nghiệm giữ nguyên baseline. Project mẫu chọn pnpm và khóa toolchain riêng vì nằm ngoài repo; các bước cấu hình, build/test và Devnet được ghi chi tiết ở Module 1. Yêu cầu hoàn thành nay bao gồm deploy/upgrade, IDL và test Devnet bên cạnh smoke test local.

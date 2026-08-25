@@ -1,43 +1,268 @@
-# Nội dung bài học — Module 1
+# Nội dung bài học — Module 1: Solana Setup & First Deployment
 
-## 1.1 Bản đồ bootcamp
+Hướng dẫn dùng baseline trong [setup guide](../../docs/setup.md). Các command Anchor dưới đây được đối chiếu với [mã nguồn CLI Anchor 0.31.1](https://github.com/coral-xyz/anchor/blob/v0.31.1/cli/src/lib.rs). Tài liệu Anchor phiên bản mới có thể có workflow khác, đặc biệt phần IDL.
 
-Bootcamp đi từ Rust tối thiểu cần thiết đến account model, Anchor, testing, project full-stack và AI Agent. Học viên không cần học toàn bộ Rust, validator internals hay cryptography trước khi viết chương trình đầu tiên. Mục tiêu là hiểu đủ sâu để tự giải thích state, authority và transaction của sản phẩm mình xây.
+## 1.1 Setup Development Environment
 
-Thực hành: đọc [18-module curriculum](../README.md), chọn capstone dự kiến và ghi lại ba prerequisite cần hoàn thành trước capstone đó.
+**Đoạn video:** 00:00–02:46.
 
-Kết quả: học viên phân biệt core track, optional specialization và AI/Agent track.
+Cài công cụ theo [setup guide](../../docs/setup.md): macOS dùng Xcode Command Line Tools; Linux dùng build dependencies của distro; Windows dùng WSL2 Ubuntu. Trên Windows, chạy toàn bộ Rust, Solana, Anchor, Node và pnpm trong WSL, không trộn binary Windows/Linux.
 
-## 1.2 Ma trận cài đặt
+Chạy các lệnh kiểm tra từ terminal dùng cho khóa học:
 
-macOS dùng Xcode Command Line Tools; Linux dùng compiler packages của distro; Windows dùng WSL2 Ubuntu. Toàn bộ Rust, Solana và Anchor của Windows phải cài bên trong WSL, không trộn executable Windows với Linux.
+```bash
+rustc --version
+cargo --version
+solana --version
+anchor --version
+node --version
+pnpm --version
+```
 
-Thực hành: hoàn thành ma trận OS trong [setup guide](../../docs/setup.md) và ghi lại shell, kiến trúc CPU, đường dẫn repository.
+**Kết quả mong đợi:** từng command chạy được và version khớp bảng baseline trong setup guide. Nếu không khớp, kiểm tra `PATH`, toolchain/AVM và [troubleshooting](../../docs/troubleshooting.md) trước khi tiếp tục. Không cài `latest` để thử sửa lỗi.
 
-## 1.3 Cấu trúc Anchor project
+**Thực hành:** lưu hệ điều hành, terminal và sáu version output. Toolchain của project mẫu được khóa thêm ở lesson 1.3 vì project nằm bên ngoài repo.
 
-`Anchor.toml` cấu hình workspace và cluster; `programs/` chứa Rust onchain; `tests/` chứa integration test; `app/` chứa client; `target/idl` và `target/deploy` là artifacts sinh ra.
+## 1.2 Wallet & Devnet
 
-Thực hành: chạy `anchor init hello-solana`, vẽ cây thư mục và giải thích file nào là source, config hay generated artifact.
+**Đoạn video:** 02:46–06:58.
 
-## 1.4 Khóa phiên bản
+Tạo wallet riêng để học theo [wallet và Devnet](../../docs/setup.md#wallet-và-devnet). Chỉ chạy lệnh tạo wallet nếu file chưa tồn tại; nếu đã tạo, dùng lại file đó, không ghi đè.
 
-Một khóa học code-along phải dùng cùng major/minor toolchain để tránh lỗi không liên quan đến bài học. Kiểm tra `rustc`, `cargo`, `solana`, `anchor`; Node/package manager được kiểm tra trước module client.
+Các command chạy từ terminal bất kỳ:
 
-Thực hành: lưu output version vào báo cáo setup và so với [course setup](../../docs/setup.md).
+```bash
+solana-keygen new --outfile ~/.config/solana/bootcamp-devnet.json
+solana config set --keypair ~/.config/solana/bootcamp-devnet.json
+solana config set --url devnet
+solana config get
+solana address
+solana balance --url devnet
+solana airdrop 2 --url devnet
+solana balance --url devnet
+```
 
-## 1.5 Debug lỗi setup
+**Kết quả mong đợi:** RPC là Devnet, keypair path là wallet học tập và balance có Devnet SOL. Nếu airdrop bị giới hạn, dùng [faucet Solana chính thức](https://faucet.solana.com/) theo troubleshooting. Lượng SOL cần cho deploy/IDL phụ thuộc kích thước program và phí; nếu thiếu balance, bổ sung Devnet SOL rồi chạy lại bước bị lỗi.
 
-Quy trình: đọc full error → xác định command đầu tiên thất bại → kiểm tra version/PATH → thu nhỏ reproduction → chỉ cleanup đúng thư mục generated. Không xóa wallet hoặc project để “thử lại từ đầu”.
+Mở [Solana Explorer](https://explorer.solana.com/?cluster=devnet), chọn Devnet và tìm public wallet address. Public key dùng để tìm account; keypair file dùng để ký và không được chia sẻ. Không dùng ví hoặc SOL mainnet cho bài này.
 
-Thực hành: dùng [troubleshooting guide](../../docs/troubleshooting.md) để phân loại một lỗi PATH, một lỗi program ID và một lỗi Devnet.
+**Thực hành:** lưu public address và link Explorer có `cluster=devnet`; không lưu seed phrase hoặc nội dung keypair trong báo cáo.
 
-## 1.6 Wallet, Devnet và Explorer
+## 1.3 Your First Anchor Project
 
-Wallet học tập chỉ dùng Devnet. Public key có thể chia sẻ; seed phrase/private key không bao giờ đưa vào Git, screenshot hay chat. `solana config get` phải khớp cluster mà Explorer đang hiển thị.
+**Đoạn video:** 06:58–11:52.
 
-Thực hành: tạo wallet riêng, nhận Devnet SOL, gửi một transfer nhỏ và mở signature trên Explorer.
+### Tạo project ngoài repository
+
+Từ terminal, tạo thư mục bài làm riêng bên ngoài repo khóa học. Trên Windows dùng filesystem của WSL như `~/code`, không dùng `/mnt/c`.
+
+```bash
+mkdir -p ~/code/bootcamp-labs
+cd ~/code/bootcamp-labs
+anchor init hello-solana --package-manager pnpm --no-install
+cd hello-solana
+```
+
+Nếu `hello-solana` đã tồn tại, mở project đó để tiếp tục; không dùng `--force` hoặc xóa project để làm lại. Mọi command còn lại của lesson 1.3–1.5 chạy trong `~/code/bootcamp-labs/hello-solana`, nơi có `Anchor.toml`.
+
+Project này nằm ngoài repo nên không tự kế thừa `rust-toolchain.toml` và `.nvmrc` của khóa học. Tạo file `rust-toolchain.toml` tại root project với nội dung:
+
+```toml
+[toolchain]
+channel = "1.87.0"
+components = ["rustfmt", "clippy"]
+profile = "minimal"
+```
+
+Tạo `.nvmrc` chứa `22`; chọn Node 22 theo setup guide rồi kiểm tra `node --version` trong terminal hiện tại. File `.nvmrc` chỉ ghi phiên bản, không tự chuyển Node.
+
+Trong `Anchor.toml`, bổ sung vào section `[toolchain]` đã có, không tạo section trùng:
+
+```toml
+[toolchain]
+anchor_version = "0.31.1"
+package_manager = "pnpm"
+```
+
+Trong `programs/hello-solana/Cargo.toml`, đặt dependency `anchor-lang` thành `"=0.31.1"`, giữ nguyên các section và feature do template sinh ra.
+
+Trong `package.json`, đặt dependency `@coral-xyz/anchor` thành `"0.31.1"` để client khớp CLI/program. Giữ các dependency khác do template tạo. Chạy:
+
+```bash
+pnpm install
+anchor keys sync
+anchor keys list
+```
+
+Giữ lockfiles đã tạo để lần cài sau dùng cùng dependency. `anchor keys sync` đồng bộ Program ID với program keypair. Kiểm tra `declare_id!` trong `programs/hello-solana/src/lib.rs` và `hello_solana` trong `[programs.localnet]` của `Anchor.toml` cùng địa chỉ với `anchor keys list`.
+
+### Đọc cấu trúc và test local
+
+- `Anchor.toml`: workspace, địa chỉ program, cluster, wallet và test command.
+- `programs/hello-solana/src/lib.rs`: source Rust, có instruction mẫu `initialize`.
+- `tests/hello-solana.ts`: test TypeScript gọi instruction mẫu và in signature.
+- `app/`: nơi dành cho frontend; chưa cần viết ở module này.
+- `target/idl/` và `target/types/`: interface và type sinh ra sau build.
+- `target/deploy/`: binary `.so` cùng program keypair; wallet học tập và program keypair là hai file khác nhau.
+
+Trong section `[provider]` đã có, đặt:
+
+```toml
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/bootcamp-devnet.json"
+```
+
+Giữ test script pnpm do template sinh ra. Sau đó chạy:
+
+```bash
+anchor build
+anchor test --provider.cluster localnet
+```
+
+**Kết quả mong đợi:** build thành công, có `target/deploy/hello_solana.so` và `target/idl/hello_solana.json`; test mẫu báo passing và in transaction signature. Với Anchor 0.31.1, test local tự khởi động `solana-test-validator`; không để một validator khác chiếm port.
+
+Solana CLI ở lesson 1.2 đang chọn Devnet, nhưng Anchor ở bước này chọn localnet bằng cấu hình/flag riêng. Signature của test local không thể tra trên Explorer Devnet.
+
+**Thực hành:** chú thích cây thư mục, lưu build/test output và giải thích source khác generated artifact như thế nào. Không xóa program keypair sau build vì lesson tiếp theo cần giữ cùng Program ID.
+
+## 1.4 Deploy & Upgrade Program on Devnet
+
+**Đoạn video:** 11:52–17:15.
+
+### Đồng bộ cấu hình trước deploy
+
+Trong root project, lấy public Program ID:
+
+```bash
+anchor keys list
+```
+
+Trong `Anchor.toml`, giữ `[programs.localnet]` và thêm `[programs.devnet]` với cùng Program ID. Thay `YOUR_PROGRAM_ID` bằng địa chỉ `hello_solana` vừa đọc; không dùng địa chỉ mẫu trong video.
+
+```toml
+[programs.devnet]
+hello_solana = "YOUR_PROGRAM_ID"
+```
+
+Đổi `cluster` trong `[provider]` đang có thành `"devnet"`; giữ wallet học tập. Đây là chỉnh sửa section hiện có, không thêm `[provider]` thứ hai.
+
+```toml
+[provider]
+cluster = "devnet"
+wallet = "~/.config/solana/bootcamp-devnet.json"
+```
+
+Chạy và kiểm tra lại Program ID, cluster và balance:
+
+```bash
+anchor keys sync
+anchor build
+solana config get
+solana balance --url devnet
+```
+
+**Kết quả mong đợi:** `declare_id!`, các entry `hello_solana` trong Anchor.toml và `address` trong IDL local cùng Program ID; wallet có đủ Devnet SOL. Chỉ tiếp tục khi provider của Anchor và RPC Solana CLI đều trỏ Devnet, wallet đúng file học tập.
+
+### Deploy lần đầu
+
+```bash
+anchor deploy --provider.cluster devnet
+```
+
+**Kết quả mong đợi:** command báo deploy thành công trên Devnet và Program ID khớp `anchor keys list`. Ghi lại địa chỉ này. Trong các command bên dưới, đặt biến bằng public Program ID của bạn:
+
+```bash
+BOOTCAMP_PROGRAM_ID=YOUR_PROGRAM_ID
+solana program show "$BOOTCAMP_PROGRAM_ID" --url devnet
+```
+
+Thay `YOUR_PROGRAM_ID` trước khi chạy. Biến chỉ có hiệu lực trong terminal hiện tại; nếu mở terminal mới, đặt lại biến. `solana program show` phải trả về program đã deploy và upgrade authority khớp public address của wallet học tập.
+
+### Upgrade cùng program
+
+Trong `programs/hello-solana/src/lib.rs`, thêm dòng sau vào hàm `initialize`, trước `Ok(())`; giữ nguyên chữ ký hàm và `declare_id!`:
+
+```rust
+msg!("Hello Solana: upgraded program");
+```
+
+Từ root project, build và upgrade:
+
+```bash
+anchor build
+anchor upgrade target/deploy/hello_solana.so --program-id "$BOOTCAMP_PROGRAM_ID" --provider.cluster devnet
+solana program show "$BOOTCAMP_PROGRAM_ID" --url devnet
+```
+
+**Kết quả mong đợi:** upgrade thành công, Program ID không đổi; deployment slot được cập nhật. Wallet cần là upgrade authority. Lesson 1.5 sẽ gọi `initialize` và kiểm tra log mới để xác nhận phiên bản sau upgrade.
+
+**Thực hành:** lưu output deploy/upgrade và public Program ID. Giữ program keypair để tiếp tục cùng địa chỉ; không đổi authority hoặc tạo program mới trong bài này.
+
+## 1.5 Explorer, IDL & Devnet Testing
+
+**Đoạn video:** 17:15–22:04.
+
+### Kiểm tra Explorer và IDL local
+
+Trên [Explorer Devnet](https://explorer.solana.com/?cluster=devnet), tìm Program ID của bạn và xác nhận đây là executable program. Link program và wallet phải chọn Devnet.
+
+Mở `target/idl/hello_solana.json`: `address` phải khớp Program ID; phần `instructions` có `initialize`. IDL mô tả interface để client gọi program, không phải binary `.so`. Ở module này chỉ cần đọc địa chỉ và instruction; cách viết account/constraint sẽ học sau.
+
+### Xuất bản và đọc IDL trên Devnet
+
+Trong root project, dùng cùng biến `BOOTCAMP_PROGRAM_ID` ở lesson 1.4:
+
+```bash
+anchor idl init --filepath target/idl/hello_solana.json "$BOOTCAMP_PROGRAM_ID" --provider.cluster devnet
+anchor idl fetch "$BOOTCAMP_PROGRAM_ID" --out /tmp/bootcamp-hello-solana-devnet-idl.json --provider.cluster devnet
+```
+
+**Kết quả mong đợi:** IDL init thành công; file fetch có địa chỉ và danh sách instruction khớp IDL local. Anchor 0.31.1 không tự xuất bản IDL onchain khi chạy `anchor deploy`; IDL init là bước riêng và chỉ chạy một lần cho program này.
+
+Nếu đã init IDL khi làm bài trước đó, fetch để kiểm tra. Khi IDL đã tồn tại và cần cập nhật, dùng `upgrade`, không chạy lại `init`:
+
+```bash
+anchor idl upgrade --filepath target/idl/hello_solana.json "$BOOTCAMP_PROGRAM_ID" --provider.cluster devnet
+anchor idl fetch "$BOOTCAMP_PROGRAM_ID" --out /tmp/bootcamp-hello-solana-devnet-idl.json --provider.cluster devnet
+```
+
+Thực hành lệnh upgrade IDL sau init để hiểu hai thao tác. Lần thay đổi log ở lesson 1.4 không đổi interface nên danh sách instruction vẫn như cũ. Nếu lệnh init lỗi vì nguyên nhân khác, đọc lỗi trước; không chuyển sang upgrade một cách máy móc. Wallet dùng cập nhật IDL cần có IDL authority.
+
+### Test chương trình đã deploy
+
+Giữ test `tests/hello-solana.ts` do template sinh ra: test dùng `AnchorProvider.env()`, gọi `initialize` và in transaction signature. Trong root project chạy:
+
+```bash
+anchor test --provider.cluster devnet --skip-deploy
+```
+
+**Kết quả mong đợi:** test passing và in signature của transaction Devnet. `--skip-deploy` sử dụng chương trình đã deploy/upgrade ở lesson 1.4, nhưng test vẫn ký và gửi transaction gọi instruction. Cluster Devnet không khởi động local validator. Client test dùng IDL local đã build, vì vậy cần kiểm tra IDL onchain bằng bước fetch riêng phía trên.
+
+Mở signature trên Explorer Devnet, kiểm tra transaction thành công, Program ID được gọi và log `Hello Solana: upgraded program`. Lưu link transaction làm minh chứng upgrade. Để test local về sau, chỉ định lại `--provider.cluster localnet`; không chạy `anchor test` mặc định rồi mặc nhiên cho rằng đó là localnet khi provider đang chọn Devnet.
+
+**Thực hành:** lưu link program, signature/link test Devnet, kết quả đối chiếu IDL và test output.
 
 ## Lab cuối module
 
-Hoàn thành [setup checklist](./setup-checklist.md), sau đó chạy `anchor build` và `anchor test` trên project tạm. Nộp version output, public address, Explorer link và cây thư mục có chú thích.
+Hoàn thành tuần tự lesson 1.1–1.5 trên cùng project mẫu và [setup checklist](./setup-checklist.md). Mỗi bước cần có kết quả mong đợi trước khi chuyển bước; khi lỗi, dùng [troubleshooting](../../docs/troubleshooting.md) và [quy trình xử lý sai khác](../module-00-orientation/lessons.md#05-video-documentation--tool-versions).
+
+Nộp một báo cáo ngắn gồm:
+
+- OS, terminal và sáu version output.
+- Public wallet address và Explorer Devnet link.
+- Cây thư mục có chú thích config/source/test/generated artifact.
+- Build output và test local passing.
+- Output deploy/upgrade, public Program ID và program Explorer link.
+- Kết quả IDL init/upgrade/fetch; xác nhận address/instructions khớp local.
+- Test Devnet passing và transaction link có log sau upgrade.
+
+Không nộp seed phrase, keypair file hoặc nội dung `target/deploy/*-keypair.json`. Kiểm tra screenshot/output trước khi chia sẻ.
+
+## Ghi chú cập nhật so với video
+
+Bản thử nghiệm chuyển bootcamp map sang Module 0, chọn pnpm khi init project, khóa toolchain trong project ngoài repo và tách test local/Devnet bằng cluster rõ ràng. Lab nay yêu cầu deploy, upgrade, IDL và test Devnet; checklist cũ chỉ yêu cầu build/test. Các khác biệt tiếp theo cần được ghi tại lesson bị ảnh hưởng theo [quy tắc video và docs](../module-00-orientation/lessons.md#05-video-documentation--tool-versions).
+
+## Điều hướng
+
+[Module 1](./README.md) · [Setup checklist](./setup-checklist.md) · [Module 2 — Rust Survival Kit](../module-02-rust/README.md)
