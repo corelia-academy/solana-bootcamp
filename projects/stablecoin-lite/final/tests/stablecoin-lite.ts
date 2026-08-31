@@ -13,6 +13,7 @@ import { expect } from "chai";
 describe("stablecoin-lite", () => {
   anchor.setProvider(anchor.AnchorProvider.env());
   const provider = anchor.getProvider() as anchor.AnchorProvider;
+  // IDL được sinh khi `anchor build`; dùng dynamic workspace để test vẫn type-check trước build.
   const program: any = anchor.workspace.StablecoinLite;
   const payer = (provider.wallet as anchor.Wallet).payer;
   const admin = payer;
@@ -28,6 +29,15 @@ describe("stablecoin-lite", () => {
     program.programId,
   );
   let destination: PublicKey;
+
+  const mintAccounts = (mint = mintKeypair.publicKey, to = destination) => ({
+    minter: minter.publicKey,
+    config,
+    allowance,
+    mint,
+    destination: to,
+    tokenProgram: TOKEN_PROGRAM_ID,
+  });
 
   const expectFailure = async (promise: Promise<unknown>, message: RegExp) => {
     try {
@@ -82,6 +92,7 @@ describe("stablecoin-lite", () => {
       program.programId,
     );
     await createMint(provider.connection, payer, existingConfig, null, 6, existing);
+
     await expectFailure(
       program.methods
         .initializeConfig(6, new BN(1_000))
@@ -100,18 +111,14 @@ describe("stablecoin-lite", () => {
   it("cấp allowance cho minter", async () => {
     await program.methods
       .setMinter(new BN(700))
-      .accounts({
-        admin: admin.publicKey,
-        config,
-        minter: minter.publicKey,
-        allowance,
-      })
+      .accounts({ admin: admin.publicKey, config, minter: minter.publicKey, allowance })
       .rpc();
 
     const state = await program.account.config.fetch(config);
     expect(state.totalCap.toNumber()).to.equal(1_000);
     expect(state.paused).to.equal(false);
-    expect((await program.account.minterAllowance.fetch(allowance)).remaining.toNumber()).to.equal(700);
+    const allowanceState = await program.account.minterAllowance.fetch(allowance);
+    expect(allowanceState.remaining.toNumber()).to.equal(700);
   });
 
   it("từ chối admin không hợp lệ", async () => {
@@ -128,37 +135,21 @@ describe("stablecoin-lite", () => {
   it("mint trong allowance rồi chặn khi pause mà không đổi state", async () => {
     await program.methods
       .authorizedMint(new BN(400))
-      .accounts({
-        minter: minter.publicKey,
-        config,
-        allowance,
-        mint: mintKeypair.publicKey,
-        destination,
-        tokenProgram: TOKEN_PROGRAM_ID,
-      })
+      .accounts(mintAccounts())
       .signers([minter])
       .rpc();
+    expect((await getAccount(provider.connection, destination)).amount).to.equal(400n);
     await program.methods.setPaused(true).accounts({ admin: admin.publicKey, config }).rpc();
 
     const balanceBefore = (await getAccount(provider.connection, destination)).amount;
-    const allowanceBefore = (await program.account.minterAllowance.fetch(allowance)).remaining.toNumber();
+    const allowanceBefore = (await program.account.minterAllowance.fetch(allowance)).remaining;
     await expectFailure(
-      program.methods
-        .authorizedMint(new BN(1))
-        .accounts({
-          minter: minter.publicKey,
-          config,
-          allowance,
-          mint: mintKeypair.publicKey,
-          destination,
-          tokenProgram: TOKEN_PROGRAM_ID,
-        })
-        .signers([minter])
-        .rpc(),
+      program.methods.authorizedMint(new BN(1)).accounts(mintAccounts()).signers([minter]).rpc(),
       /Paused|pause|6001/i,
     );
     expect((await getAccount(provider.connection, destination)).amount).to.equal(balanceBefore);
-    expect((await program.account.minterAllowance.fetch(allowance)).remaining.toNumber()).to.equal(allowanceBefore);
+    const allowanceAfter = (await program.account.minterAllowance.fetch(allowance)).remaining;
+    expect(allowanceAfter.toNumber()).to.equal(allowanceBefore.toNumber());
     await program.methods.setPaused(false).accounts({ admin: admin.publicKey, config }).rpc();
   });
 
@@ -169,15 +160,12 @@ describe("stablecoin-lite", () => {
       .rpc();
     await program.methods
       .authorizedMint(new BN(600))
-      .accounts({ minter: minter.publicKey, config, allowance, mint: mintKeypair.publicKey, destination, tokenProgram: TOKEN_PROGRAM_ID })
+      .accounts(mintAccounts())
       .signers([minter])
       .rpc();
+
     await expectFailure(
-      program.methods
-        .authorizedMint(new BN(1))
-        .accounts({ minter: minter.publicKey, config, allowance, mint: mintKeypair.publicKey, destination, tokenProgram: TOKEN_PROGRAM_ID })
-        .signers([minter])
-        .rpc(),
+      program.methods.authorizedMint(new BN(1)).accounts(mintAccounts()).signers([minter]).rpc(),
       /CapExceeded|total cap|6003/i,
     );
     expect((await getMint(provider.connection, mintKeypair.publicKey)).supply).to.equal(1_000n);
@@ -194,10 +182,37 @@ describe("stablecoin-lite", () => {
     await expectFailure(
       program.methods
         .authorizedMint(new BN(1))
-        .accounts({ minter: minter.publicKey, config, allowance, mint: wrongMint, destination: wrongDestination, tokenProgram: TOKEN_PROGRAM_ID })
+        .accounts(mintAccounts(wrongMint, wrongDestination))
         .signers([minter])
         .rpc(),
       /ConstraintSeeds|ConstraintHasOne|seeds constraint/i,
+    );
+  });
+
+  it("thu hồi minter bằng allowance 0", async () => {
+    await program.methods
+      .setMinter(new BN(0))
+      .accounts({ admin: admin.publicKey, config, minter: minter.publicKey, allowance })
+      .rpc();
+
+    await expectFailure(
+      program.methods.authorizedMint(new BN(1)).accounts(mintAccounts()).signers([minter]).rpc(),
+      /AllowanceExceeded|allowance|6002/i,
+    );
+  });
+
+  it("từ chối ví chưa được cấp allowance", async () => {
+    const [outsiderAllowance] = PublicKey.findProgramAddressSync(
+      [Buffer.from("minter"), config.toBuffer(), outsider.publicKey.toBuffer()],
+      program.programId,
+    );
+    await expectFailure(
+      program.methods
+        .authorizedMint(new BN(1))
+        .accounts({ ...mintAccounts(), minter: outsider.publicKey, allowance: outsiderAllowance })
+        .signers([outsider])
+        .rpc(),
+      /AccountNotInitialized|3012/i,
     );
   });
 
@@ -213,7 +228,10 @@ describe("stablecoin-lite", () => {
       })
       .signers([minter])
       .rpc();
+
     expect((await getAccount(provider.connection, destination)).amount).to.equal(900n);
     expect((await getMint(provider.connection, mintKeypair.publicKey)).supply).to.equal(900n);
+    const state = await program.account.config.fetch(config);
+    expect(state.mintedByProtocol.toNumber()).to.equal(1_000);
   });
 });

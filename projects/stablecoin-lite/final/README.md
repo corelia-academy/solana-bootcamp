@@ -24,5 +24,5 @@ pnpm test
 
 Đây là protocol giáo dục, không phải stablecoin production và không có collateral/oracle/redemption.
 
-`tests/stablecoin-lite.ts` chạy transaction thật trên local validator cho admin/minter, pause rollback, allowance/cap, wrong mint và holder burn.
+`tests/stablecoin-lite.ts` chạy transaction thật trên local validator cho admin/minter, pause rollback, allowance/cap, wrong mint, revoke minter, ví chưa được cấp allowance và holder burn.
 Test runner tự tạo wallet tạm trong `target/`; không dùng hoặc ghi đè ví Solana cá nhân.

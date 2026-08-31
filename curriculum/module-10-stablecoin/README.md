@@ -6,7 +6,7 @@ Xây protocol token giáo dục với role rõ ràng và emergency controls.
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ project trống đến bản `final`.
 
 1. Admin/config mental model
 2. Config account
