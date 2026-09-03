@@ -426,21 +426,25 @@ createRoot(document.getElementById("root")!).render(<App client={mockClient} wal
 ```css
 :root {
   font-family: Inter, system-ui, sans-serif;
-  color: #e8eaf6;
-  background: #10131a;
+  color: #ffffff;
+  background: #000000;
 }
 body {
   margin: 0;
 }
-main {
+#root {
   max-width: 760px;
-  margin: 3rem auto;
-  padding: 0 1rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+h1, h2 {
+  font-weight: 500;
+  letter-spacing: -0.04em;
 }
 ```
 
@@ -450,7 +454,7 @@ Trong `src/main.tsx`, chèn sau dòng `import { MockVotingClient } from "./mock-
 import "./styles.css";
 ```
 
-Trang chuyển nền tối, tiêu đề và trạng thái ví nằm hai đầu một hàng.
+Trang chuyển nền đen, nội dung ở giữa trang, tiêu đề và trạng thái ví nằm hai đầu một hàng.
 
 ### 3e. CSS, phần 2
 
@@ -459,28 +463,34 @@ Thêm vào cuối `src/styles.css`:
 <!-- file: src/styles.css; mode: append -->
 ```css
 section {
-  background: #1b2130;
-  border: 1px solid #30394d;
-  border-radius: 12px;
-  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(236, 228, 253, 0.12);
+  border-radius: 16px;
+  padding: 1.5rem;
   margin: 1rem 0;
 }
 button {
   margin: 0.25rem;
-  padding: 0.65rem 1rem;
-  border-radius: 8px;
-  border: 0;
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(236, 228, 253, 0.2);
+  background: transparent;
+  color: inherit;
+  font: inherit;
   cursor: pointer;
 }
 button:disabled {
   opacity: 0.5;
 }
+[role="alert"] {
+  color: #ff5c7a;
+}
 a {
-  color: #8ad4ff;
+  color: #14f195;
 }
 ```
 
-`src/styles.css` giờ giống `final`.
+`src/styles.css` có đủ kiểu cho trang; bước 4d thêm kiểu cho nút ví.
 
 ### 3f. Tải poll và màn hình đang tải
 
@@ -733,7 +743,19 @@ Trong `src/main.tsx`:
 
 3. Thay dòng `<App client={mockClient} wallet={{ connected: true, publicKey: "mock-voter" }} />` trong `render` bằng `<WalletApp />`.
 
-`pnpm dev`: góc trái có nút **Select Wallet**. Bấm, chọn Phantom, duyệt kết nối: nút đổi thành địa chỉ ví rút gọn, header hiện địa chỉ đầy đủ. Vote ở mock mode giờ dùng public key của Phantom, không cần ký.
+4. Thêm vào cuối `src/styles.css` để nút ví cùng màu tím Solana và cùng dáng pill với các nút khác:
+
+<!-- file: src/styles.css; mode: append -->
+```css
+.wallet-adapter-button-trigger {
+  background: #9945ff;
+  border-radius: 999px;
+}
+```
+
+`src/styles.css` giờ giống `final`.
+
+`pnpm dev`: góc trên có nút **Select Wallet** màu tím. Bấm, chọn Phantom, duyệt kết nối: nút đổi thành địa chỉ ví rút gọn, header hiện địa chỉ đầy đủ. Vote ở mock mode giờ dùng public key của Phantom, không cần ký.
 
 <a id="fe-5"></a>
 ## Bước 5 — IDL và đọc account từ Devnet
