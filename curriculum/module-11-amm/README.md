@@ -6,7 +6,7 @@ Triển khai liquidity và swap constant-product trước khi học stable-swap 
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ project trống đến bản `final`.
 
 1. AMM concept
 2. Pool account

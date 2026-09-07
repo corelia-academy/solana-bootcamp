@@ -32,7 +32,10 @@ pub fn initial_lp(amount_a: u64, amount_b: u64) -> Result<u64> {
     require!(amount_a > 0 && amount_b > 0, AmmError::InvalidAmount);
     let shares = u64::try_from(integer_sqrt((amount_a as u128) * (amount_b as u128)))
         .map_err(|_| error!(AmmError::Overflow))?;
-    require!(shares > MINIMUM_LIQUIDITY, AmmError::InsufficientInitialLiquidity);
+    require!(
+        shares > MINIMUM_LIQUIDITY,
+        AmmError::InsufficientInitialLiquidity
+    );
     Ok(shares)
 }
 
@@ -61,7 +64,12 @@ pub fn subsequent_lp(
 
 /// Lượng token A/B thật sự phải nạp để nhận `shares`, làm tròn LÊN (có lợi cho pool).
 /// Nhờ đó program chỉ lấy đúng phần tỷ lệ, phần dư của token còn lại ở lại ví user.
-pub fn deposit_amounts(shares: u64, reserve_a: u64, reserve_b: u64, supply: u64) -> Result<(u64, u64)> {
+pub fn deposit_amounts(
+    shares: u64,
+    reserve_a: u64,
+    reserve_b: u64,
+    supply: u64,
+) -> Result<(u64, u64)> {
     require!(supply > 0, AmmError::InvalidAmount);
     let ceil_div = |reserve: u64| -> Result<u64> {
         let numerator = (shares as u128)
@@ -119,7 +127,10 @@ mod tests {
         // User đưa tối đa 100 A và 1_000 B nhưng tỷ lệ pool là 1:2.
         let shares = subsequent_lp(100, 1_000, 1_000, 2_000, 500).unwrap();
         assert_eq!(shares, 50);
-        assert_eq!(deposit_amounts(shares, 1_000, 2_000, 500).unwrap(), (100, 200));
+        assert_eq!(
+            deposit_amounts(shares, 1_000, 2_000, 500).unwrap(),
+            (100, 200)
+        );
     }
     #[test]
     fn deposit_rounds_up_in_favor_of_pool() {

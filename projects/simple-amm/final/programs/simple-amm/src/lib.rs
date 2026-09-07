@@ -4,7 +4,9 @@ use anchor_spl::{
     token::{self, Burn, Mint, MintTo, Token, TokenAccount, TransferChecked},
 };
 pub mod math;
-use math::{deposit_amounts, initial_lp, is_allowed_fee, subsequent_lp, swap_output, MINIMUM_LIQUIDITY};
+use math::{
+    deposit_amounts, initial_lp, is_allowed_fee, subsequent_lp, swap_output, MINIMUM_LIQUIDITY,
+};
 
 declare_id!("Fg6PaFpoGXkYsidMpWxqSWYDLsh6d8JQRqWSZC9sDgG");
 
@@ -39,7 +41,12 @@ pub mod simple_amm {
         let (amount_a, amount_b, user_shares, locked) = if supply == 0 {
             // Lần đầu: user đặt tỷ lệ giá, MINIMUM_LIQUIDITY shares bị khóa vĩnh viễn.
             let total = initial_lp(max_amount_a, max_amount_b)?;
-            (max_amount_a, max_amount_b, total - MINIMUM_LIQUIDITY, MINIMUM_LIQUIDITY)
+            (
+                max_amount_a,
+                max_amount_b,
+                total - MINIMUM_LIQUIDITY,
+                MINIMUM_LIQUIDITY,
+            )
         } else {
             let shares = subsequent_lp(
                 max_amount_a,
@@ -122,7 +129,8 @@ pub mod simple_amm {
             AmmError::SlippageExceeded
         );
         token::burn(
-            CpiContext::new(ctx.accounts.token_program.key(),
+            CpiContext::new(
+                ctx.accounts.token_program.key(),
                 Burn {
                     mint: ctx.accounts.lp_mint.to_account_info(),
                     from: ctx.accounts.provider_lp.to_account_info(),
@@ -212,7 +220,8 @@ fn transfer_from_user<'info>(
     amount: u64,
 ) -> Result<()> {
     token::transfer_checked(
-        CpiContext::new(token_program.key(),
+        CpiContext::new(
+            token_program.key(),
             TransferChecked {
                 from: from.to_account_info(),
                 mint: mint.to_account_info(),
@@ -241,7 +250,8 @@ fn transfer_from_pool<'info>(
         &[pool.bump],
     ]];
     token::transfer_checked(
-        CpiContext::new_with_signer(token_program.key(),
+        CpiContext::new_with_signer(
+            token_program.key(),
             TransferChecked {
                 from: from.to_account_info(),
                 mint: mint.to_account_info(),
@@ -271,7 +281,8 @@ fn mint_lp<'info>(
         &[pool.bump],
     ]];
     token::mint_to(
-        CpiContext::new_with_signer(token_program.key(),
+        CpiContext::new_with_signer(
+            token_program.key(),
             MintTo {
                 mint: lp_mint.to_account_info(),
                 to: to.to_account_info(),
