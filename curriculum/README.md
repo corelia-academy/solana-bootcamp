@@ -1,12 +1,17 @@
-# Chương trình 18 module
+# Chương trình Module 0 + 18 module
+
+Chương trình có tổng cộng 19 trang module: Module 0 để định hướng và Module 1–18 để học, thực hành. Giữ nguyên số Module 1–18.
 
 Mỗi module có trang riêng, mục tiêu đầu ra, lesson sequence, nội dung chi tiết và bài thực hành.
+
+[Truy cập khóa học trên Corelia Academy](https://corelia.academy/learn/courses/solana-bootcamp) để học theo từng lesson cùng nội dung bổ trợ; dùng các trang trong repo để đọc docs và thực hành code tương ứng.
 
 Xem [bản đồ phụ thuộc](../docs/module-dependencies.md) để biết prerequisite và sản phẩm được tái sử dụng giữa các module.
 
 | # | Module | Sản phẩm chính |
 | ---: | --- | --- |
-| 1 | [Định hướng & môi trường](./module-01-orientation/README.md) | Toolchain và Devnet wallet hoạt động |
+| 0 | [Bootcamp Orientation](./module-00-orientation/README.md) | Lộ trình cá nhân và readiness checklist |
+| 1 | [Solana Setup & First Deployment](./module-01-orientation/README.md) | Hello Solana build/test local, deploy/upgrade, IDL và test Devnet |
 | 2 | [Rust Survival Kit](./module-02-rust/README.md) | Rust Poll Counter CLI |
 | 3 | [Solana Mental Model](./module-03-solana-mental-model/README.md) | Account/transaction model |
 | 4 | [Anchor Fundamentals](./module-04-anchor/README.md) | PDA Counter |
@@ -29,7 +34,7 @@ Module 12-14 là ba hướng chuyên sâu tự chọn độc lập. Module 15-17
 
 ## Tài nguyên dùng chung
 
-- [Nội dung chi tiết từng lesson](./module-01-orientation/lessons.md) — bắt đầu từ Module 1 và đi theo liên kết của từng module
+- [Nội dung chi tiết từng lesson](./module-00-orientation/lessons.md) — bắt đầu từ Module 0 và đi theo liên kết của từng module
 - [Core notes và diagrams](../notes/README.md)
 - [Code exercises](../exercises/README.md)
 - [Projects](../projects/README.md)

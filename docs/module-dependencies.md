@@ -2,7 +2,8 @@
 
 | Module | Cần hoàn thành trước | Sản phẩm được dùng tiếp |
 | ---: | --- | --- |
-| 1 | Không | Toolchain và Devnet wallet |
+| 0 | Không | Lộ trình cá nhân và readiness checklist |
+| 1 | Module 0 | Toolchain, wallet và Hello Solana deploy/test trên Devnet |
 | 2 | Module 1 | Rust Poll Counter và kỹ năng Rust nền tảng |
 | 3 | Module 1 | Account/transaction mental model |
 | 4 | Module 2–3 | PDA Counter Anchor |
