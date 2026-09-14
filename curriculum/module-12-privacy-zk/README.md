@@ -19,7 +19,8 @@ Alice sở hữu một private note có `amount = 10`. Onchain chỉ lưu commit
 Merkle tree. Khi tiêu note, Alice chứng minh mình biết preimage của một leaf thuộc current root,
 công bố nullifier duy nhất để chặn double-spend, và tạo output commitment mới có cùng amount.
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md) trước khi làm lab.
+Đọc [nội dung chi tiết từng lesson](./lessons.md) trước khi làm lab. Video của module đi theo
+[code-along từng bước](./code-along.md), tạo project [Private Note](../../projects/private-note/README.md) từ đầu.
 
 ## Lab ba tầng
 

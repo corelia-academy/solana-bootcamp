@@ -1,0 +1,21 @@
+[package]
+license = "MIT"
+name = "privacy-app"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "privacy_app"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build", "mock-verifier/idl-build"]
+
+[dependencies]
+anchor-lang = "1.2.1"
+mock-verifier = { path = "../mock-verifier", features = ["cpi"] }
