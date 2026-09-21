@@ -6,7 +6,7 @@ Biến program events thành application data có thể query và hiểu trade-o
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ project trống đến bản `final`.
 
 1. Why indexing matters and RPC limitations
 2. RPC versus indexer
@@ -21,7 +21,7 @@ Biến program events thành application data có thể query và hiểu trade-o
 
 Emit one domain event, ingest it idempotently, store transaction signature/slot, expose a bounded API, and demonstrate reconnect/backfill behavior.
 
-Lab: [Data Indexing starter/solution](../../exercises/indexing-lab/README.md).
+Project: [Vote Indexer](../../projects/vote-indexer/README.md). Lab ngắn không cần RPC/PostgreSQL: [Data Indexing starter/solution](../../exercises/indexing-lab/README.md).
 
 ## Điều kiện tiên quyết
 

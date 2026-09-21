@@ -1,0 +1,22 @@
+{
+  "name": "vote-indexer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "tsc",
+    "test": "vitest run --no-file-parallelism",
+    "migrate": "node --env-file=.env scripts/migrate.ts",
+    "start": "node --env-file=.env src/main.ts",
+    "seed": "node --env-file=.env scripts/seed.ts"
+  },
+  "dependencies": {
+    "@anchor-lang/core": "1.2.1",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "@types/pg": "^8.23.1",
+    "typescript": "5.9.3",
+    "vitest": "^3"
+  }
+}
