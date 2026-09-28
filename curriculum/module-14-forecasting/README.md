@@ -8,7 +8,7 @@ Xây ứng dụng dự đoán sự kiện với admin resolution và points acco
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ project trống đến bản `final`.
 
 1. Forecasting/event-prediction concept
 2. Question/market account
@@ -23,7 +23,7 @@ Xây ứng dụng dự đoán sự kiện với admin resolution và points acco
 
 Devnet app with question creation, bounded participation, one resolution, claim protection, leaderboard, tests, and a prominent no-real-money disclaimer.
 
-Lab: [Forecasting starter/solution](../../exercises/forecasting-lab/README.md).
+Project: [Forecasting App](../../projects/forecasting-app/README.md). Lab TypeScript khởi động: [Forecasting starter/solution](../../exercises/forecasting-lab/README.md).
 
 ## Điều kiện tiên quyết
 
