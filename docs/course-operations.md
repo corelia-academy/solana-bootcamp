@@ -1,12 +1,21 @@
 # Cách học khóa online
 
-Repository này là tài liệu đồng hành cho khóa học quay sẵn. Mỗi module đi theo nhịp `Xem → Dừng video → Code → Test → Đối chiếu`; học viên tự học từ `starter`, không bắt đầu từ `final`.
+Repository này là tài liệu đồng hành cho khóa học quay sẵn. Các module thực hành đi theo nhịp `Xem → Dừng video → Code → Test → Đối chiếu`; học viên tự học từ `starter`, không bắt đầu từ `final`.
+
+Bắt đầu từ [Module 0](../curriculum/module-00-orientation/README.md). Module 0 là phần định hướng và readiness checklist; nhịp code-along áp dụng từ Module 1. Khi video khác cách thao tác trong docs, đọc [quy tắc video, docs và phiên bản](../curriculum/module-00-orientation/lessons.md#05-video-documentation--tool-versions).
+
+## Học trên Corelia Academy
+
+Truy cập [khóa Solana Bootcamp](https://corelia.academy/learn/courses/solana-bootcamp) để học theo từng lesson cùng các nội dung bổ trợ. Khi theo dõi video trên YouTube, mở thêm nội dung khóa học và docs của lesson để biết mục tiêu, bài thực hành và kết quả cần hoàn thành.
+
+GitHub repo cung cấp docs cập nhật, code thực hành và checklist. Sau mỗi video, thực hiện bài tập/lab tương ứng rồi đối chiếu kết quả trước khi chuyển bài.
 
 ## Lộ trình video
 
 | Chặng | Module | Sản phẩm kiểm chứng | Thời lượng tự học gợi ý |
 | --- | --- | --- | ---: |
-| Chuẩn bị | 1 | Toolchain và Devnet wallet | 2–3 giờ |
+| Định hướng | 0 | Mục tiêu học, lộ trình và readiness checklist | 30–45 phút |
+| Setup và deploy đầu tiên | 1 | Hello Solana build/test local, deploy/upgrade, IDL và test Devnet | 2–3 giờ |
 | Nền tảng | 2–3 | Rust Poll Counter, Solana mental model | 6–8 giờ |
 | Anchor và testing | 4–5 | PDA Counter cùng test matrix | 6–8 giờ |
 | Core projects | 6–8 | Voting, SPL Token, Escrow | 12–16 giờ |
@@ -30,7 +39,9 @@ Module 12–14 là ba nhánh độc lập. Module 18 nên được xem trước 
 
 ## Khi nào được chuyển bài
 
-Học viên có thể chuyển module khi:
+Với Module 0, chuyển bài khi hoàn thành [readiness checklist](../curriculum/module-00-orientation/readiness-checklist.md). Với Module 1, hoàn thành [setup & first deployment checklist](../curriculum/module-01-orientation/setup-checklist.md). Không yêu cầu kiến thức PDA hoặc constraint chưa học để hoàn thành hai module này.
+
+Từ các module xây dựng program/project, áp dụng những tiêu chí sau theo nội dung đã được dạy trong module:
 
 - giải thích được state nào thay đổi và account nào cho phép thay đổi đó;
 - derive đúng PDA/ATA và mô tả signer, writable, owner;

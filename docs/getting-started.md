@@ -1,127 +1,50 @@
 # Những điều học viên cần biết trước khi bắt đầu
 
-Trang này giúp bạn kiểm tra khóa học có phù hợp hay không, chuẩn bị môi trường và hiểu cách học trước khi bắt đầu Module 1.
+Khóa học dành cho lập trình viên mới tiếp cận Solana, có kiến thức lập trình cơ bản. Bạn nên đọc được code, dùng terminal và hiểu Git ở mức cơ bản; Rust cần thiết được dạy ở Module 2.
 
-## Khóa học dành cho ai?
+Bắt đầu với [Module 0 — Bootcamp Orientation](../curriculum/module-00-orientation/README.md) để hiểu lộ trình, tự kiểm tra prerequisite và biết cách dùng tài liệu trước khi cài môi trường ở Module 1.
 
-Khóa học dành cho lập trình viên mới tiếp cận Solana. Bạn nên có kiến thức lập trình cơ bản; kinh nghiệm với JavaScript, TypeScript hoặc Rust là một lợi thế.
+## Truy cập khóa học
 
-Đây không phải khóa học “zero-code”. Rust nền tảng được dạy trong Module 2, nhưng bạn vẫn cần biết cách đọc code, sử dụng terminal và làm việc với Git ở mức cơ bản.
+Mở [Solana Bootcamp trên Corelia Academy](https://corelia.academy/learn/courses/solana-bootcamp) để học theo từng lesson và xem các nội dung bổ trợ của khóa học. Video trên YouTube là phần bài giảng; hãy kết hợp với nội dung khóa học, tài liệu và bài thực hành trong GitHub repo để hoàn thành từng module.
 
 ## Bạn sẽ học được gì?
 
-Sau khóa học, bạn có thể:
+- Giải thích account/transaction model của Solana.
+- Viết, kiểm thử và triển khai program bằng Rust và Anchor.
+- Kết nối frontend TypeScript với program onchain.
+- Nhận diện lỗi validation và rủi ro bảo mật phổ biến.
+- Xây và trình bày một ứng dụng qua [capstone](../capstones/README.md).
 
-- giải thích Solana mental model, transaction và account model;
-- tạo ví học tập, sử dụng Devnet và kiểm tra giao dịch trên Solana Explorer;
-- sử dụng Solana CLI trong quy trình phát triển;
-- viết, kiểm thử và triển khai Solana program bằng Rust và Anchor;
-- kết nối frontend TypeScript với program onchain;
-- nhận diện các lỗi validation và rủi ro bảo mật phổ biến;
-- xây dựng, kiểm thử và trình bày một ứng dụng Solana hoàn chỉnh.
+## Lộ trình và cách học
 
-## Khóa học gồm những phần nào?
+[Chương trình](../curriculum/README.md) gồm **Module 0 + 18 module**, tổng cộng 19 trang module. Sau phần định hướng là nền tảng Module 1–5, core projects Module 6–11, một nhánh tự chọn trong Module 12–14, AI/Agent track Module 15–17 và Security & Production ở Module 18.
 
-[Chương trình đầy đủ](../curriculum/README.md) gồm 18 module:
+Đọc [Your Learning Roadmap](../curriculum/module-00-orientation/lessons.md#02-your-learning-roadmap) và [bản đồ phụ thuộc](./module-dependencies.md) để chọn hướng học. Mỗi bài thực hành đi theo nhịp **Xem → Dừng video → Code → Test → Đối chiếu**; [hướng dẫn dùng repo](../curriculum/module-00-orientation/lessons.md#04-how-to-use-the-github-repository) giải thích starter, checkpoint và final.
 
-1. **Nền tảng (Module 1–5):** định hướng và môi trường, Rust Survival Kit, Solana Mental Model, Anchor Fundamentals và Testing Stack.
-2. **Core projects (Module 6–11):** Voting App, SPL Token, Escrow, Frontend Integration, Stablecoin Lite và Simple AMM.
-3. **Nhánh tự chọn (chọn Module 12, 13 hoặc 14):** Privacy & ZK, Data Indexing hoặc Forecasting App.
-4. **AI và automation (Module 15–17):** x402 Payments, Model Context Protocol và AI Agents on Solana.
-5. **Production (Module 18):** security, release readiness và capstone.
+## Video, docs và phiên bản
 
-Ba module 12–14 là các hướng chuyên sâu độc lập. Module 18 nên được xem trước khi đưa MCP hoặc AI Agent lên Devnet.
+GitHub docs được cập nhật trong lúc quay video và sau khi phát hành, nên một số bước có thể khác video. Ưu tiên docs hiện hành của lesson/setup và dùng bộ phiên bản được khóa trong [setup guide](./setup.md#baseline-được-khóa). Phiên bản mới hơn có thể gây lỗi tương thích; chỉ cập nhật khi docs hướng dẫn.
 
-## Học theo hình thức nào?
+Đọc [Video, Documentation & Tool Versions](../curriculum/module-00-orientation/lessons.md#05-video-documentation--tool-versions) để hiểu quy tắc đầy đủ và cách kiểm tra sai khác. Trang này không lặp bảng phiên bản; setup guide là nơi quản lý baseline.
 
-Mỗi module đi theo nhịp:
+## Chuẩn bị và xử lý lỗi
 
-`Xem → Dừng video → Code → Test → Đối chiếu`
+Chuẩn bị laptop macOS, Linux hoặc Windows qua WSL2, editor và kiến thức terminal/Git cơ bản. Hoàn thành [readiness checklist](../curriculum/module-00-orientation/readiness-checklist.md) trước Module 1; chưa cần cài toolchain để hoàn thành Module 0.
 
-Bạn sẽ:
-
-- xem video bài giảng theo đúng thứ tự prerequisite;
-- bắt đầu bài thực hành từ `starter` và code theo hướng dẫn;
-- hoàn thành bài tập, test và minh chứng sau mỗi module;
-- chỉ dùng checkpoint để phục hồi khi bị kẹt và chỉ đọc `final` sau khi đã tự làm hoặc ghi rõ vấn đề;
-- tham gia workshop hoặc mentor session nếu có lịch: `[quy định mentor session]`;
-- xây dựng và nộp dự án cuối khóa theo [hướng dẫn capstone](../capstones/README.md).
-
-Đọc [Cách học khóa online](./course-operations.md) để hiểu quy trình nộp bài, điều kiện chuyển module và cách sử dụng checkpoint.
-
-## Cần chuẩn bị gì?
-
-### Thiết bị và tài khoản
-
-- laptop chạy macOS, Linux hoặc Windows qua WSL2;
-- Git và tài khoản GitHub;
-- VS Code hoặc editor tương đương;
-- một ví Solana riêng chỉ dùng để học trên Devnet.
-
-Không dùng ví mainnet làm ví học tập. Không commit hoặc chia sẻ seed phrase, private key hay keypair file.
-
-### Toolchain
-
-Khóa học sử dụng baseline sau:
-
-| Công cụ | Phiên bản |
-| --- | --- |
-| Rust | 1.87.0 |
-| Solana CLI | 3.0.10 |
-| Anchor CLI | 0.31.1 |
-| Node.js | 22 LTS |
-| pnpm | 9.x |
-
-Làm theo [Hướng dẫn cài đặt môi trường](./setup.md) và hoàn thành phần kiểm tra cài đặt trước Module 2. Không cài theo phiên bản `latest` nếu tài liệu khóa học đã khóa phiên bản.
-
-## Khi gặp lỗi thì hỏi ở đâu?
-
-Kênh hỏi đáp và hỗ trợ chính thức: [GitHub Discussions](https://github.com/corelia-academy/solana-bootcamp/discussions).
-
-Trước khi đăng câu hỏi:
-
-1. Đọc [Hướng dẫn xử lý lỗi](./troubleshooting.md).
-2. Tận dụng AI để phân tích thông báo lỗi và gợi ý hướng kiểm tra.
-3. Đọc kỹ từng đề xuất, chỉ chạy lệnh hoặc sửa code khi bạn hiểu tác động.
-4. Tìm trong GitHub Discussions để tránh tạo câu hỏi trùng lặp.
-5. Nếu vẫn chưa giải quyết được, hãy tạo Discussion mới và chuẩn bị:
-
-- hành vi bạn mong đợi;
-- hành vi thực tế;
-- toàn bộ thông báo lỗi hoặc ảnh chụp lỗi rõ ràng;
-- đoạn code nhỏ nhất có liên quan;
-- hệ điều hành và phiên bản Rust, Solana CLI, Anchor, Node.js, pnpm;
-- prompt đã hỏi AI và phần phản hồi có liên quan;
-- những giải pháp đã thử và kết quả của từng giải pháp.
-
-Không cung cấp seed phrase, private key, keypair file, access token hoặc secret khác cho AI hay trong Discussion. Không chạy lệnh do AI đề xuất nếu bạn chưa hiểu lệnh đó sẽ đọc, sửa hoặc xóa dữ liệu nào.
-
-Nếu vấn đề liên quan đến mất tiền, lộ khóa, giao dịch đáng ngờ hoặc một rủi ro bảo mật đang diễn ra, hãy ngừng thử nghiệm và hỏi hỗ trợ ngay. Không cần tiếp tục thử với AI trước khi đăng câu hỏi.
+Khi gặp lỗi, đọc [troubleshooting](./troubleshooting.md), kiểm tra docs/version và ghi command, thư mục chạy lệnh, lỗi đầy đủ cùng các cách đã thử. Kênh hỏi đáp hiện có của repo là [GitHub Discussions](https://github.com/corelia-academy/solana-bootcamp/discussions). Không chia sẻ seed phrase, private key, keypair file hoặc access token; chỉ chạy đề xuất sửa lỗi khi hiểu tác động.
 
 ## Điều kiện hoàn thành khóa học
 
-Để được ghi nhận hoàn thành, học viên cần:
-
-- hoàn thành các module bắt buộc và một nhánh chuyên sâu tự chọn;
-- nộp đầy đủ bài tập, source code, test output và các minh chứng được yêu cầu;
-- hoàn thành và nộp capstone;
-- đạt tối thiểu **75/100**, tương ứng mức **Đạt** trong [rubric đánh giá](./assessment.md).
-
-Workshop hoặc mentor session không phải điều kiện bắt buộc, trừ khi `[quy định mentor session]` quy định khác.
-
-## Học viên nhận được gì?
-
-Học viên đáp ứng điều kiện hoàn thành có thể nhận:
-
-- chứng nhận hoàn thành khóa học do `[đơn vị cấp chứng nhận]` cấp;
-- huy hiệu kỹ năng theo `[cách nhận huy hiệu]`;
-- một dự án capstone để bổ sung vào portfolio;
-- nền tảng để tiếp tục xây dựng sản phẩm hoặc tham gia UniHackfest và các Solana hackathon.
-
-Khóa học cung cấp kiến thức và sản phẩm thực hành để chuẩn bị cho hackathon; không đảm bảo việc được tuyển chọn hoặc đạt giải.
+Hoàn thành các module bắt buộc, một nhánh chuyên sâu tự chọn và capstone; nộp source code, test output cùng minh chứng theo yêu cầu. Điểm tối thiểu là **75/100**, mức **Đạt** trong [rubric đánh giá](./assessment.md). Đọc [cách học khóa online](./course-operations.md) để hiểu điều kiện chuyển bài và cách nộp kết quả.
 
 ## Bắt đầu
 
-1. Đọc [chương trình 18 module](../curriculum/README.md).
-2. Hoàn thành [cài đặt môi trường](./setup.md).
-3. Bắt đầu với [Module 1 — Định hướng & môi trường](../curriculum/module-01-orientation/README.md).
+1. Truy cập [khóa Solana Bootcamp trên Corelia Academy](https://corelia.academy/learn/courses/solana-bootcamp).
+2. Đọc [Module 0 — Bootcamp Orientation](../curriculum/module-00-orientation/README.md).
+3. Hoàn thành [readiness checklist](../curriculum/module-00-orientation/readiness-checklist.md).
+4. Mở [Module 1 — Solana Setup & First Deployment](../curriculum/module-01-orientation/README.md), làm setup theo docs và thực hành lab từng bước.
+
+## Ghi chú cập nhật
+
+Bản thử nghiệm chuyển định hướng sang Module 0. Thứ tự bắt đầu nay là Module 0 → readiness checklist → Module 1 → setup/lab; bảng phiên bản được dẫn về setup guide để tránh lệch thông tin với docs cập nhật.
