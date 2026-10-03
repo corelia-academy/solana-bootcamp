@@ -1,5 +1,4 @@
 import * as anchor from "@anchor-lang/core";
-import { BN } from "@anchor-lang/core";
 import { expect } from "chai";
 
 describe("voting", () => {
@@ -8,11 +7,11 @@ describe("voting", () => {
   // `any` để test compile được trước khi có type sinh từ IDL (target/types/voting.ts).
   const program: any = anchor.workspace.voting;
   const authority = provider.wallet.publicKey;
-  const pollId = new BN(Date.now());
+  const pollId = new anchor.BN(Date.now());
   const candidateId = 1;
   const now = Math.floor(Date.now() / 1000);
-  const startTime = new BN(now + 4);
-  const endTime = new BN(now + 600);
+  const startTime = new anchor.BN(now + 4);
+  const endTime = new anchor.BN(now + 600);
 
   const [poll] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("poll"), provider.wallet.publicKey.toBuffer(), pollId.toArrayLike(Buffer, "le", 8)],
@@ -22,7 +21,7 @@ describe("voting", () => {
     [
       Buffer.from("candidate"),
       poll.toBuffer(),
-      new BN(candidateId).toArrayLike(Buffer, "le", 2),
+      new anchor.BN(candidateId).toArrayLike(Buffer, "le", 2),
     ],
     program.programId,
   );
@@ -31,7 +30,7 @@ describe("voting", () => {
     program.programId,
   );
 
-  function findPoll(id: BN) {
+  function findPoll(id: anchor.BN) {
     return anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from("poll"), authority.toBuffer(), id.toArrayLike(Buffer, "le", 8)],
       program.programId,
@@ -40,9 +39,16 @@ describe("voting", () => {
 
   function findCandidate(pollAddress: anchor.web3.PublicKey, id: number) {
     return anchor.web3.PublicKey.findProgramAddressSync(
-      [Buffer.from("candidate"), pollAddress.toBuffer(), new BN(id).toArrayLike(Buffer, "le", 2)],
+      [Buffer.from("candidate"), pollAddress.toBuffer(), new anchor.BN(id).toArrayLike(Buffer, "le", 2)],
       program.programId,
     )[0];
+  }
+
+  async function fund(to: anchor.web3.PublicKey) {
+    const tx = new anchor.web3.Transaction().add(
+      anchor.web3.SystemProgram.transfer({ fromPubkey: authority, toPubkey: to, lamports: 10_000_000 }),
+    );
+    await provider.sendAndConfirm(tx);
   }
 
   it("tạo poll và candidate đúng PDA", async () => {
@@ -67,6 +73,7 @@ describe("voting", () => {
   it("từ chối ví khác authority thêm candidate", async () => {
     const stranger = anchor.web3.Keypair.generate();
     const strangerCandidate = findCandidate(poll, 2);
+    await fund(stranger.publicKey);
     try {
       await program.methods
         .addCandidate(pollId, 2, "Candidate lạ")
