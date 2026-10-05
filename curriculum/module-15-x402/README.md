@@ -6,7 +6,7 @@ Xây và test API trả phí theo request theo x402 v2 trên Solana Devnet, dùn
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ thư mục trống đến bản `final`.
 
 1. HTTP 402 history
 2. Request cycle v2: PAYMENT-REQUIRED / PAYMENT-SIGNATURE / PAYMENT-RESPONSE

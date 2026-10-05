@@ -4,6 +4,7 @@ import {
   SOLANA_DEVNET,
   SettlementCache,
   USDC_DEVNET,
+  buildPaymentRequired,
   decodeHeader,
   encodeHeader,
   gate,
@@ -47,6 +48,20 @@ const facilitator = (overrides: Partial<FacilitatorPort> = {}): FacilitatorPort 
 
 const run = (header: string | undefined, f = facilitator(), cache = new SettlementCache(), now = 0) =>
   gate({ paymentHeader: header, route, facilitator: f, cache, now });
+
+describe("x402 v2 header và challenge", () => {
+  it("header là base64 của JSON và đọc lại ra đúng object", () => {
+    const header = encodeHeader({ x402Version: 2, note: "xin chào" });
+    expect(Buffer.from(header, "base64").toString("utf8")).toBe('{"x402Version":2,"note":"xin chào"}');
+    expect(decodeHeader(header)).toEqual({ x402Version: 2, note: "xin chào" });
+  });
+
+  it("route cấu hình sai bị từ chối khi tạo challenge", () => {
+    expect(() => buildPaymentRequired({ ...route, accepts: [] })).toThrow("ít nhất một");
+    expect(() => buildPaymentRequired({ ...route, accepts: [{ ...route.accepts[0], amount: "0.01" }] })).toThrow("amount");
+    expect(() => buildPaymentRequired({ ...route, accepts: [{ ...route.accepts[0], network: "solana-devnet" }] })).toThrow("CAIP-2");
+  });
+});
 
 describe("x402 v2 gate", () => {
   it("request đầu tiên trả 402 + header PAYMENT-REQUIRED đúng schema", async () => {

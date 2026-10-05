@@ -57,6 +57,8 @@ Không cần custom PDA: thanh toán là SPL `transferChecked` vào ATA của `p
 
 ## Test bắt buộc
 
+- header là base64 của JSON và đọc lại đúng object;
+- route cấu hình sai (không có option, amount không phải atomic units, network không phải CAIP-2) bị từ chối khi tạo challenge;
 - request đầu tiên trả 402 + `PAYMENT-REQUIRED` đúng schema;
 - payment hợp lệ: verify → settle → 200 + `PAYMENT-RESPONSE`;
 - `accepted` sai amount, payTo, asset hoặc network bị từ chối trước khi gọi facilitator;

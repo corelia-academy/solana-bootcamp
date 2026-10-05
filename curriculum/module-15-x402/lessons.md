@@ -50,6 +50,17 @@ Facilitator timeout (trả 502 retryable), settle fail, ATA người nhận chư
 
 402 schema, payment hợp lệ, `accepted` sai amount/payTo/asset/network, payload hỏng, verify fail, replay, request đồng thời, facilitator timeout rồi retry.
 
+## Luồng code-along
+
+Code của từng bước nằm trong [code-along.md](./code-along.md).
+
+1. Định dạng dữ liệu v2 và mã hóa header base64.
+2. Trả 402 challenge; route cấu hình sai bị từ chối.
+3. Decode payment, so khớp `accepted` với option đã công bố.
+4. Verify rồi settle qua facilitator, trả 200 + `PAYMENT-RESPONSE`.
+5. Chống replay và request đồng thời bằng claim, 502 retryable khi facilitator lỗi.
+6. Resource server với `@x402/express`, rồi paying client với `@x402/fetch` trên Devnet.
+
 ## Wire contract
 
 ```text
