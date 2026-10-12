@@ -6,7 +6,7 @@ Cung cấp Solana read và write có giới hạn qua MCP server có cấu trúc
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ thư mục trống đến bản `final`.
 
 1. Host, client, server, tool, resource, and prompt
 2. stdio, SSE, and HTTP transports
