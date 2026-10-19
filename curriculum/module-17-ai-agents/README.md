@@ -6,7 +6,7 @@ Xây agent có thể audit: đọc state, đề xuất action, đi qua determini
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md), rồi gõ theo [code-along từng bước](./code-along.md) từ project trống đến bản `final`.
 
 1. Perception-decision-action-observation loop
 2. Agent wallet patterns and spending limits

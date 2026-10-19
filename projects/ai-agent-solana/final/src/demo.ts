@@ -1,6 +1,7 @@
-import { Agent, type AuditEntry, type Proposal } from "./agent.js";
+import { MemoryAuditStore } from "./adapters.js";
+import { Agent, type Proposal } from "./agent.js";
 const target = "Vote111111111111111111111111111111111111111";
-const entries: AuditEntry[] = [];
+const audit = new MemoryAuditStore();
 const proposal: Proposal = {
   action: "vote",
   target,
@@ -22,11 +23,7 @@ const agent = new Agent(
   { propose: async () => proposal },
   { execute: async () => ({ status: "confirmed", signature: "mock-signature" }) },
   { request: async () => true },
-  {
-    append: async (e) => {
-      entries.push(e);
-    },
-  },
+  audit,
   { killSwitch: false, allowedTargets: new Set([target]), maxAmount: 100n, approvalAbove: 10n, maxSlippageBps: 100 },
 );
-console.log(await agent.run(), entries);
+console.log(await agent.run(), audit.entries);

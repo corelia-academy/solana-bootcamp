@@ -4,6 +4,7 @@ import {
   evaluatePolicy,
   type AgentPolicy,
   type AuditEntry,
+  type AuditPort,
   type Observation,
   type Proposal,
 } from "../src/agent.js";
@@ -33,6 +34,17 @@ const policy = (o: Partial<AgentPolicy> = {}): AgentPolicy => ({
   maxSlippageBps: 100,
   ...o,
 });
+const denyCases = [
+  [proposal({ target: "evil" }), "TARGET_NOT_ALLOWED"],
+  [proposal({ amount: 101n }), "AMOUNT_LIMIT"],
+  [proposal({ slippageBps: 101 }), "SLIPPAGE_LIMIT"],
+  [proposal({ observationVersion: "old" }), "STALE_STATE"],
+] as const;
+const recorder = (audit: AuditEntry[]): AuditPort => ({
+  append: async (e) => {
+    audit.push(e);
+  },
+});
 const build = (p: Proposal, pol = policy(), approved = true) => {
   const audit: AuditEntry[] = [];
   const execute = vi.fn().mockResolvedValue({ status: "confirmed", signature: "sig" });
@@ -42,11 +54,7 @@ const build = (p: Proposal, pol = policy(), approved = true) => {
       { propose: async () => p },
       { execute },
       { request: async () => approved },
-      {
-        append: async (e) => {
-          audit.push(e);
-        },
-      },
+      recorder(audit),
       pol,
     ),
     execute,
@@ -59,12 +67,7 @@ describe("guarded agent", () => {
     expect(await x.agent.run()).toMatchObject({ status: "confirmed" });
     expect(x.execute).toHaveBeenCalledTimes(1);
   });
-  it.each([
-    [proposal({ target: "evil" }), "TARGET_NOT_ALLOWED"],
-    [proposal({ amount: 101n }), "AMOUNT_LIMIT"],
-    [proposal({ slippageBps: 101 }), "SLIPPAGE_LIMIT"],
-    [proposal({ observationVersion: "old" }), "STALE_STATE"],
-  ] as const)("deny policy case", async (p, error) => {
+  it.each(denyCases)("deny policy case", async (p, error) => {
     const x = build(p);
     expect(await x.agent.run()).toEqual({ status: "failed", error });
     expect(x.execute).not.toHaveBeenCalled();
@@ -74,6 +77,12 @@ describe("guarded agent", () => {
       decision: "deny",
       reason: "KILL_SWITCH",
     }));
+  it.each(denyCases)("evaluatePolicy deny case", (p, reason) =>
+    expect(evaluatePolicy(p, observation, policy())).toEqual({ decision: "deny", reason }));
+  it("approval threshold", () => {
+    expect(evaluatePolicy(proposal({ amount: 10n }), observation, policy()).decision).toBe("allow");
+    expect(evaluatePolicy(proposal({ amount: 11n }), observation, policy()).decision).toBe("needs_approval");
+  });
   it("approval gate", async () => {
     const x = build(proposal({ amount: 11n }), policy(), false);
     expect(await x.agent.run()).toEqual({ status: "failed", error: "APPROVAL_REJECTED" });
@@ -94,11 +103,7 @@ describe("guarded agent", () => {
       { propose: async () => proposal({ amount: 6n, idempotencyKey: `id-${id++}` }) },
       { execute },
       { request: async () => true },
-      {
-        append: async (e) => {
-          audit.push(e);
-        },
-      },
+      recorder(audit),
       policy({ maxSessionAmount: 10n }),
     );
     expect((await agent.run()).status).toBe("confirmed");
