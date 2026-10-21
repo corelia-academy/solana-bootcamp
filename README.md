@@ -6,6 +6,10 @@ Tài liệu học, bài tập code-along, project và tài nguyên dành cho h�
 
 ## Bắt đầu
 
+[![Học trên Corelia Academy](https://img.shields.io/badge/H%E1%BB%8Dc%20tr%C3%AAn%20Corelia%20Academy-7C3AED?style=for-the-badge)](https://corelia.academy/learn/courses/solana-bootcamp)
+
+Học trên Corelia Academy và nhận **chứng nhận hoàn thành** khi đáp ứng yêu cầu của khóa học.
+
 Truy cập [khóa Solana Bootcamp trên Corelia Academy](https://corelia.academy/learn/courses/solana-bootcamp) để học theo từng lesson cùng các nội dung bổ trợ của khóa học. Khi xem video trên YouTube, hãy kết hợp với nội dung khóa học và tài liệu/code trong repo để hoàn thành bài thực hành.
 
 - [Module 0 — Bootcamp Orientation](./curriculum/module-00-orientation/README.md)
