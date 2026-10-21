@@ -4,13 +4,16 @@ Checklist này dùng trước khi instructor thu hình hoặc phát hành một 
 
 ## Đồng bộ nội dung
 
-- [ ] Đúng 18 module; Module 12–14 được ghi là ba nhánh độc lập.
+- [ ] Đúng Module 0 + 18 module, tổng cộng 19 trang module; giữ số Module 1–18 và link cũ của Module 1; Module 12–14 là ba nhánh độc lập.
 - [ ] Mỗi module có prerequisite, kết quả đầu ra, lesson, project/lab, definition of done và điều hướng.
 - [ ] Tên state, PDA seed, instruction/API và error trong lesson trùng với code final.
 - [ ] Video không gọi artifact chưa tồn tại; phần preview/mở rộng được ghi rõ.
 - [ ] Mỗi project root có schema, authority/trust boundary, threat model, test matrix và diagram.
 
 ## Dry-run bắt buộc
+
+- [ ] Module 0: đọc thử từ README repo đến readiness checklist và Module 1; không yêu cầu cài toolchain ở Module 0.
+- [ ] Module 1: đúng baseline, build/test local, deploy/upgrade cùng Program ID, IDL init/upgrade/fetch và test Devnet có Explorer link/log sau upgrade.
 
 - [ ] Module 5: PDA Counter test lab chạy từ starter và học viên phân biệt logic/constraint/integration test.
 - [ ] Module 9: wallet disconnect, reject signature, failed confirmation, refetch và Explorer URL đúng cluster.
@@ -37,3 +40,4 @@ Chạy `./scripts/validate-release.sh` cho content audit và `./scripts/validate
 - [ ] Commit/tag dùng khi quay video đã được ghi lại.
 - [ ] Known limitations và phần cần credential/Devnet được nêu trong README tương ứng.
 - [ ] Instructor quay từ đúng commit; mọi correction sau đó có changelog hoặc release mới.
+- [ ] Thay đổi cách thao tác trong docs có ghi chú cập nhật ngay tại lesson/tài liệu liên quan; học viên tìm được quy tắc ưu tiên docs và baseline.
