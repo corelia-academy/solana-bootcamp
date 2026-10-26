@@ -6,7 +6,7 @@ Tạo security review có bằng chứng và Devnet launch package có thể tá
 
 ## Bài học
 
-Đọc [nội dung chi tiết từng lesson](./lessons.md).
+Đọc [nội dung chi tiết từng lesson](./lessons.md). Làm project theo [code-along từng bước](./code-along.md).
 
 1. Common Solana vulnerabilities
 2. Account validation
@@ -25,6 +25,8 @@ Tạo security review có bằng chứng và Devnet launch package có thể tá
 ## Sản phẩm nộp
 
 Hoàn thành [security checklist](../../docs/security-checklist.md) với liên kết tới constraints/tests/rationale, Devnet program ID, lệnh deploy, authority plan, retry policy, monitoring plan và known limitations.
+
+Project: [Secure Treasury](../../projects/secure-treasury/README.md) — quỹ SOL 2-trên-3, vá từng lỗ hổng bằng test đỏ rồi xanh, kèm `SECURITY.md` mẫu.
 
 Code exercise: [Solana Security CTF](../../exercises/security-ctf/README.md).
 
