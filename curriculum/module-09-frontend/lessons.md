@@ -66,4 +66,4 @@ Mock wallet để test disconnected/rejected signature; mock client để test f
 
 ## Hoàn thành module khi
 
-Học viên chạy được mock mode, kết nối Devnet wallet, vote trên program Module 6, thấy confirmation/error rõ ràng và reload trang vẫn đọc đúng onchain state.
+Học viên chạy được mock mode, copy IDL Module 6 vào `src/idl/voting.json` để chuyển sang Anchor mode, kết nối Devnet wallet, vote trên program Module 6, thấy confirmation/error rõ ràng và reload trang vẫn đọc đúng onchain state.

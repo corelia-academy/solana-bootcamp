@@ -1,2 +1,28 @@
-import type{Poll,VoteState,VotingClient,WalletPort}from"./domain";
-export async function voteAndRefresh(input:{wallet:WalletPort;client:VotingClient;pollId:string;candidateId:number;setState(s:VoteState):void;setPolls(p:Poll[]):void}){if(!input.wallet.connected||!input.wallet.publicKey){input.setState({phase:"error",message:"Hãy kết nối wallet trước khi vote"});return}try{input.setState({phase:"awaiting-signature"});const signature=await input.client.vote({pollId:input.pollId,candidateId:input.candidateId,voter:input.wallet.publicKey});input.setState({phase:"confirming",signature});await input.client.confirm(signature);input.setPolls(await input.client.listPolls());input.setState({phase:"success",signature})}catch(error){input.setState({phase:"error",message:error instanceof Error?error.message:"Transaction thất bại"})}}
+import type { Poll, VoteState, VotingClient, WalletPort } from "./domain";
+export async function voteAndRefresh(input: {
+  wallet: WalletPort;
+  client: VotingClient;
+  pollId: string;
+  candidateId: number;
+  setState(s: VoteState): void;
+  setPolls(p: Poll[]): void;
+}) {
+  if (!input.wallet.connected || !input.wallet.publicKey) {
+    input.setState({ phase: "error", message: "Hãy kết nối wallet trước khi vote" });
+    return;
+  }
+  try {
+    input.setState({ phase: "awaiting-signature" });
+    const signature = await input.client.vote({
+      pollId: input.pollId,
+      candidateId: input.candidateId,
+      voter: input.wallet.publicKey,
+    });
+    input.setState({ phase: "confirming", signature });
+    await input.client.confirm(signature);
+    input.setPolls(await input.client.listPolls());
+    input.setState({ phase: "success", signature });
+  } catch (error) {
+    input.setState({ phase: "error", message: error instanceof Error ? error.message : "Transaction thất bại" });
+  }
+}
