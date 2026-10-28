@@ -11,4 +11,4 @@ Contexts, PDA/vault schema và skipped acceptance tests.
 ## Học viên cần làm
 Hoàn thiện `make`, sau đó mở đúng test tương ứng.
 ## Chạy và kiểm tra
-`pnpm install && anchor build && anchor test`
+`pnpm install && anchor keys sync && anchor build && anchor test`

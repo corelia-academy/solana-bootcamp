@@ -11,4 +11,4 @@ Khóa đúng token A trong vault do Escrow PDA kiểm soát.
 ## Học viên cần làm
 Atomic settlement trong `take`.
 ## Chạy và kiểm tra
-`pnpm install && anchor build && anchor test`
+`pnpm install && anchor keys sync && anchor build && anchor test`

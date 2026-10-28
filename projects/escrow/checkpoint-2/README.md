@@ -11,4 +11,4 @@ Settlement nguyên tử và đóng state/vault.
 ## Học viên cần làm
 Maker-only refund và replay-after-close coverage.
 ## Chạy và kiểm tra
-`pnpm install && anchor build && anchor test`
+`pnpm install && anchor keys sync && anchor build && anchor test`

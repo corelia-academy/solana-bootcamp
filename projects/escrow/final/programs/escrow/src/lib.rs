@@ -41,8 +41,7 @@ pub mod escrow {
         });
 
         transfer_checked(
-            CpiContext::new(
-                ctx.accounts.token_program.to_account_info(),
+            CpiContext::new(ctx.accounts.token_program.key(),
                 TransferChecked {
                     from: ctx.accounts.maker_ata_a.to_account_info(),
                     mint: ctx.accounts.mint_a.to_account_info(),
@@ -58,8 +57,7 @@ pub mod escrow {
     pub fn take(ctx: Context<Take>) -> Result<()> {
         let escrow = &ctx.accounts.escrow;
         transfer_checked(
-            CpiContext::new(
-                ctx.accounts.token_program.to_account_info(),
+            CpiContext::new(ctx.accounts.token_program.key(),
                 TransferChecked {
                     from: ctx.accounts.taker_ata_b.to_account_info(),
                     mint: ctx.accounts.mint_b.to_account_info(),
@@ -79,8 +77,7 @@ pub mod escrow {
             &[escrow.bump],
         ]];
         transfer_checked(
-            CpiContext::new_with_signer(
-                ctx.accounts.token_program.to_account_info(),
+            CpiContext::new_with_signer(ctx.accounts.token_program.key(),
                 TransferChecked {
                     from: ctx.accounts.vault.to_account_info(),
                     mint: ctx.accounts.mint_a.to_account_info(),
@@ -92,8 +89,7 @@ pub mod escrow {
             ctx.accounts.vault.amount,
             ctx.accounts.mint_a.decimals,
         )?;
-        close_account(CpiContext::new_with_signer(
-            ctx.accounts.token_program.to_account_info(),
+        close_account(CpiContext::new_with_signer(ctx.accounts.token_program.key(),
             CloseAccount {
                 account: ctx.accounts.vault.to_account_info(),
                 destination: ctx.accounts.maker.to_account_info(),
@@ -113,8 +109,7 @@ pub mod escrow {
             &[escrow.bump],
         ]];
         transfer_checked(
-            CpiContext::new_with_signer(
-                ctx.accounts.token_program.to_account_info(),
+            CpiContext::new_with_signer(ctx.accounts.token_program.key(),
                 TransferChecked {
                     from: ctx.accounts.vault.to_account_info(),
                     mint: ctx.accounts.mint_a.to_account_info(),
@@ -126,8 +121,7 @@ pub mod escrow {
             ctx.accounts.vault.amount,
             ctx.accounts.mint_a.decimals,
         )?;
-        close_account(CpiContext::new_with_signer(
-            ctx.accounts.token_program.to_account_info(),
+        close_account(CpiContext::new_with_signer(ctx.accounts.token_program.key(),
             CloseAccount {
                 account: ctx.accounts.vault.to_account_info(),
                 destination: ctx.accounts.maker.to_account_info(),
@@ -143,7 +137,9 @@ pub mod escrow {
 pub struct Make<'info> {
     #[account(mut)]
     pub maker: Signer<'info>,
+    #[account(mint::token_program = token_program)]
     pub mint_a: InterfaceAccount<'info, Mint>,
+    #[account(mint::token_program = token_program)]
     pub mint_b: InterfaceAccount<'info, Mint>,
     #[account(mut, token::mint = mint_a, token::authority = maker, token::token_program = token_program)]
     pub maker_ata_a: InterfaceAccount<'info, TokenAccount>,
@@ -165,7 +161,9 @@ pub struct Take<'info> {
     pub maker: UncheckedAccount<'info>,
     #[account(mut, seeds = [b"escrow", escrow.maker.as_ref(), escrow.seed.to_le_bytes().as_ref()], bump = escrow.bump, has_one = maker, has_one = mint_a, has_one = mint_b, close = maker)]
     pub escrow: Account<'info, Escrow>,
+    #[account(mint::token_program = token_program)]
     pub mint_a: InterfaceAccount<'info, Mint>,
+    #[account(mint::token_program = token_program)]
     pub mint_b: InterfaceAccount<'info, Mint>,
     #[account(mut, associated_token::mint = mint_a, associated_token::authority = escrow, associated_token::token_program = token_program)]
     pub vault: InterfaceAccount<'info, TokenAccount>,
@@ -184,6 +182,7 @@ pub struct Refund<'info> {
     pub maker: Signer<'info>,
     #[account(mut, seeds = [b"escrow", maker.key().as_ref(), escrow.seed.to_le_bytes().as_ref()], bump = escrow.bump, has_one = maker, has_one = mint_a, close = maker)]
     pub escrow: Account<'info, Escrow>,
+    #[account(mint::token_program = token_program)]
     pub mint_a: InterfaceAccount<'info, Mint>,
     #[account(mut, associated_token::mint = mint_a, associated_token::authority = escrow, associated_token::token_program = token_program)]
     pub vault: InterfaceAccount<'info, TokenAccount>,

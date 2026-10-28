@@ -1,4 +1,4 @@
-import * as anchor from "@coral-xyz/anchor";
+import * as anchor from "@anchor-lang/core";
 import {
   TOKEN_PROGRAM_ID,
   createAssociatedTokenAccount,
@@ -127,5 +127,39 @@ describe("escrow", () => {
     await expectFailure(program.methods.refund().accounts({
       maker: taker.publicKey, escrow, mintA, vault, makerAtaA, tokenProgram: TOKEN_PROGRAM_ID,
     }).signers([taker]).rpc(), /ConstraintSeeds|seeds constraint/i);
+  });
+
+  it("take lần hai thất bại vì offer đã đóng", async () => {
+    const { escrow, vault } = deriveOffer(new anchor.BN(2));
+    await expectFailure(program.methods.take().accounts({
+      taker: taker.publicKey, maker: maker.publicKey, escrow, mintA, mintB, vault,
+      takerAtaA, takerAtaB, makerAtaB, tokenProgram: TOKEN_PROGRAM_ID,
+    }).signers([taker]).rpc(), /AccountNotInitialized|not initialized|3012/i);
+  });
+
+  it("từ chối take với mint B khác mint đã ghi trong offer", async () => {
+    const seed = new anchor.BN(13);
+    const { escrow, vault } = deriveOffer(seed);
+    await program.methods.make(seed, new anchor.BN(1_000), new anchor.BN(1_000))
+      .accounts({ maker: maker.publicKey, mintA, mintB, makerAtaA, escrow, vault, tokenProgram: TOKEN_PROGRAM_ID })
+      .signers([maker]).rpc();
+    const mintC = await createMint(provider.connection, payer, payer.publicKey, null, 6);
+    const takerAtaC = await createAssociatedTokenAccount(provider.connection, payer, mintC, taker.publicKey);
+    const makerAtaC = await createAssociatedTokenAccount(provider.connection, payer, mintC, maker.publicKey);
+    await mintTo(provider.connection, payer, mintC, takerAtaC, payer, 1_000_000n);
+    await expectFailure(program.methods.take().accounts({
+      taker: taker.publicKey, maker: maker.publicKey, escrow, mintA, mintB: mintC, vault,
+      takerAtaA, takerAtaB: takerAtaC, makerAtaB: makerAtaC, tokenProgram: TOKEN_PROGRAM_ID,
+    }).signers([taker]).rpc(), /ConstraintHasOne|has one|2001/i);
+    // Offer vẫn còn nguyên sau khi tấn công thất bại.
+    expect((await getAccount(provider.connection, vault)).amount).to.equal(1_000n);
+  });
+
+  it("từ chối maker_ata_b không thuộc maker (substituted receive account)", async () => {
+    const { escrow, vault } = deriveOffer(new anchor.BN(13));
+    await expectFailure(program.methods.take().accounts({
+      taker: taker.publicKey, maker: maker.publicKey, escrow, mintA, mintB, vault,
+      takerAtaA, takerAtaB, makerAtaB: takerAtaB, tokenProgram: TOKEN_PROGRAM_ID,
+    }).signers([taker]).rpc(), /ConstraintTokenOwner|token owner|2015/i);
   });
 });

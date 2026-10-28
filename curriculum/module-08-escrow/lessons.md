@@ -22,7 +22,7 @@ Tạo state/vault, transfer checked token A từ maker, đảm bảo amount > 0 
 
 ## 8.6 Take
 
-Transfer B taker→maker và A vault→taker trong cùng transaction; PDA ký bằng seeds; close state/vault đúng destination.
+Transfer B taker→maker và A vault→taker trong cùng transaction; PDA ký bằng seeds; close state/vault đúng destination. `maker_ata_b` phải tồn tại trước khi take (program không tạo hộ); client có thể thêm instruction `createAssociatedTokenAccountIdempotent` vào cùng transaction.
 
 ## 8.7 Refund
 

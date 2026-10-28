@@ -39,7 +39,9 @@ pub mod escrow {
 pub struct Make<'info> {
     #[account(mut)]
     pub maker: Signer<'info>,
+    #[account(mint::token_program = token_program)]
     pub mint_a: InterfaceAccount<'info, Mint>,
+    #[account(mint::token_program = token_program)]
     pub mint_b: InterfaceAccount<'info, Mint>,
     #[account(mut, token::mint = mint_a, token::authority = maker, token::token_program = token_program)]
     pub maker_ata_a: InterfaceAccount<'info, TokenAccount>,
@@ -61,7 +63,9 @@ pub struct Take<'info> {
     pub maker: UncheckedAccount<'info>,
     #[account(mut, seeds = [b"escrow", escrow.maker.as_ref(), escrow.seed.to_le_bytes().as_ref()], bump = escrow.bump, has_one = maker, has_one = mint_a, has_one = mint_b, close = maker)]
     pub escrow: Account<'info, Escrow>,
+    #[account(mint::token_program = token_program)]
     pub mint_a: InterfaceAccount<'info, Mint>,
+    #[account(mint::token_program = token_program)]
     pub mint_b: InterfaceAccount<'info, Mint>,
     #[account(mut, associated_token::mint = mint_a, associated_token::authority = escrow, associated_token::token_program = token_program)]
     pub vault: InterfaceAccount<'info, TokenAccount>,
@@ -80,6 +84,7 @@ pub struct Refund<'info> {
     pub maker: Signer<'info>,
     #[account(mut, seeds = [b"escrow", maker.key().as_ref(), escrow.seed.to_le_bytes().as_ref()], bump = escrow.bump, has_one = maker, has_one = mint_a, close = maker)]
     pub escrow: Account<'info, Escrow>,
+    #[account(mint::token_program = token_program)]
     pub mint_a: InterfaceAccount<'info, Mint>,
     #[account(mut, associated_token::mint = mint_a, associated_token::authority = escrow, associated_token::token_program = token_program)]
     pub vault: InterfaceAccount<'info, TokenAccount>,
