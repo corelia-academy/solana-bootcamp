@@ -6,7 +6,7 @@ Học viên có toolchain theo baseline khóa học, wallet học tập và Devn
 
 ## Điều kiện tiên quyết
 
-Hoàn thành [Module 0 — Bootcamp Orientation](../module-00-orientation/README.md) và readiness checklist. Có kiến thức lập trình, terminal và Git cơ bản.
+Hoàn thành [Module 0 — Bootcamp Orientation & Blockchain Basics](../module-00-orientation/README.md) và readiness checklist, gồm phần blockchain, ví/chữ ký, transaction và mạng thực hành. Có kiến thức lập trình, terminal và Git cơ bản.
 
 ## Bài học
 

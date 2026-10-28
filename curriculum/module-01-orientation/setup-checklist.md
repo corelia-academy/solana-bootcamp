@@ -20,7 +20,7 @@
 - [ ] Deploy chương trình mẫu lên Devnet thành công.
 - [ ] Upgrade cùng Program ID thành công bằng wallet có upgrade authority.
 - [ ] Explorer hiển thị executable program trên Devnet.
-- [ ] IDL init và upgrade trên Devnet thành công; fetch được IDL.
+- [ ] IDL được tải lên khi deploy; `anchor idl upgrade` thành công; fetch được IDL.
 - [ ] Địa chỉ và danh sách instruction của IDL fetch khớp IDL local.
 - [ ] `anchor test --provider.cluster devnet --skip-deploy` thành công.
 - [ ] Transaction test trên Explorer gọi đúng program và có log sau upgrade.

@@ -8,10 +8,11 @@ Môi trường được hỗ trợ là macOS, Linux và Windows qua WSL2. Native
 
 | Tool | Baseline | Mục đích |
 | --- | --- | --- |
-| Rust | 1.87.0 | Solana program và Rust lab |
-| Solana CLI | 3.0.10 | Local validator, wallet, deploy và thao tác Devnet |
-| Anchor CLI | 0.31.1 | Build và test Anchor program |
-| Node.js | 22 LTS | TypeScript client, frontend và automation lab |
+| Rust | 1.89.0 | Solana program và Rust lab (tối thiểu của `anchor-lang` 1.x) |
+| Solana CLI (Agave) | 4.1.2 | Wallet, deploy, `cargo build-sbf` và thao tác Devnet |
+| Anchor CLI | 1.2.1 | Build và test Anchor program (cài qua AVM) |
+| Surfpool | 1.1.2 trở lên | Local validator mặc định của `anchor test` từ Anchor 1.0 |
+| Node.js | 24 LTS | TypeScript client, frontend và automation lab |
 | pnpm | 9.x | Cài dependency riêng trong từng project |
 
 Module 12 là nhánh tự chọn và có thêm toolchain riêng: `nargo 1.0.0-beta.20` cùng
@@ -25,19 +26,25 @@ Rust được khóa bằng `rust-toolchain.toml`; Node được khóa bằng `.n
 
 1. Cài Xcode Command Line Tools: `xcode-select --install`.
 2. Cài Homebrew nếu máy chưa có.
-3. Cài Rust 1.87.0 bằng rustup.
-4. Cài Solana CLI 3.0.10 bằng installer chính thức.
-5. Cài AVM, sau đó cài và chọn Anchor 0.31.1.
-6. Cài Node.js 22 LTS, rồi bật pnpm 9 bằng Corepack: `corepack enable && corepack prepare pnpm@9 --activate`.
+3. Cài Rust bằng rustup; repo tự chọn 1.89.0 qua `rust-toolchain.toml`.
+4. Cài Solana CLI 4.1.2: `sh -c "$(curl -sSfL https://release.anza.xyz/v4.1.2/install)"` (máy đã có Agave thì `agave-install init 4.1.2`).
+5. Cài AVM rồi Anchor 1.2.1:
+   ```bash
+   cargo install --git https://github.com/otter-sec/anchor avm --tag v1.2.1 --locked --force
+   avm install 1.2.1 && avm use 1.2.1
+   ```
+6. Cài Surfpool (local validator mặc định của `anchor test`) theo hướng dẫn tại surfpool.run.
+7. Cài Node.js 24 LTS, rồi bật pnpm 9 bằng Corepack: `corepack enable && corepack prepare pnpm@9 --activate`.
 
 ## Linux hoặc Windows WSL2
 
 1. Trên Windows, cài WSL2 với Ubuntu và chạy mọi lệnh còn lại trong Ubuntu.
 2. Cài build dependencies: compiler toolchain, `pkg-config`, OpenSSL development headers, `curl` và Git.
-3. Cài Rust 1.87.0 bằng rustup.
-4. Cài Solana CLI 3.0.10 bằng installer chính thức.
-5. Cài AVM, sau đó cài và chọn Anchor 0.31.1.
-6. Cài Node.js 22 LTS trong cùng môi trường, rồi chạy `corepack enable && corepack prepare pnpm@9 --activate`.
+3. Cài Rust bằng rustup; repo tự chọn 1.89.0 qua `rust-toolchain.toml`.
+4. Cài Solana CLI 4.1.2: `sh -c "$(curl -sSfL https://release.anza.xyz/v4.1.2/install)"`.
+5. Cài AVM rồi Anchor 1.2.1 (cùng lệnh như macOS).
+6. Cài Surfpool theo hướng dẫn tại surfpool.run.
+7. Cài Node.js 24 LTS trong cùng môi trường, rồi chạy `corepack enable && corepack prepare pnpm@9 --activate`.
 
 ## Ma trận cài đặt
 
@@ -71,6 +78,7 @@ rustc --version
 cargo --version
 solana --version
 anchor --version
+surfpool --version
 node --version
 pnpm --version
 ```
@@ -97,7 +105,7 @@ Dev Container hoặc Codespace là phương án dự phòng khi không thể ổ
 Trước Module 2, nộp:
 
 - hệ điều hành và terminal;
-- output của sáu lệnh kiểm tra version;
+- output của bảy lệnh kiểm tra version;
 - địa chỉ Devnet wallet, chỉ gồm public key;
 - link Devnet Explorer;
 - output `anchor build` và test local thành công từ project dùng để kiểm tra;
@@ -105,4 +113,4 @@ Trước Module 2, nộp:
 
 ## Ghi chú cập nhật so với video
 
-Bản thử nghiệm giữ nguyên baseline. Project mẫu chọn pnpm và khóa toolchain riêng vì nằm ngoài repo; các bước cấu hình, build/test và Devnet được ghi chi tiết ở Module 1. Yêu cầu hoàn thành nay bao gồm deploy/upgrade, IDL và test Devnet bên cạnh smoke test local.
+Baseline đã nâng lên Anchor 1.2.1, Solana CLI 4.1.2, Rust 1.89.0 và Node 24 LTS. Khác biệt chính so với video quay bằng Anchor 0.31: package TypeScript là `@anchor-lang/core` (thay cho `@coral-xyz/anchor`), `anchor test` chạy Surfpool thay cho `solana-test-validator`, và `anchor build` báo lỗi khi Program ID lệch nên cần chạy `anchor keys sync` trước lần build đầu tiên. Project mẫu chọn pnpm và khóa toolchain riêng vì nằm ngoài repo; các bước cấu hình, build/test và Devnet được ghi chi tiết ở Module 1. Yêu cầu hoàn thành nay bao gồm deploy/upgrade, IDL và test Devnet bên cạnh smoke test local.

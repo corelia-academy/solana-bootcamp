@@ -24,3 +24,10 @@ test-ledger/
 *-keypair.json
 wallet.json
 id.json
+
+# IDL do học viên tự build (program ID riêng)
+projects/voting-frontend/*/src/idl/*.json
+
+# Bài làm Rust của học viên (Module 2)
+curriculum/module-02-rust/*/practice/
+curriculum/module-02-rust/sandbox/

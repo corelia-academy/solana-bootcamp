@@ -1,6 +1,6 @@
 # Nội dung bài học — Module 1: Solana Setup & First Deployment
 
-Hướng dẫn dùng baseline trong [setup guide](../../docs/setup.md). Các command Anchor dưới đây được đối chiếu với [mã nguồn CLI Anchor 0.31.1](https://github.com/coral-xyz/anchor/blob/v0.31.1/cli/src/lib.rs). Tài liệu Anchor phiên bản mới có thể có workflow khác, đặc biệt phần IDL.
+Hướng dẫn dùng baseline trong [setup guide](../../docs/setup.md). Các command Anchor dưới đây được đối chiếu với [mã nguồn CLI Anchor 1.2.1](https://github.com/otter-sec/anchor/blob/v1.2.1/cli/src/lib.rs). Nếu video quay bằng Anchor 0.31, ưu tiên command trong tài liệu này: từ Anchor 1.0, `anchor deploy`/`anchor upgrade` chuyển thành `anchor program deploy`/`anchor program upgrade`, `anchor test` chạy Surfpool, và IDL được tải lên onchain ngay khi deploy.
 
 ## 1.1 Setup Development Environment
 
@@ -59,7 +59,7 @@ Từ terminal, tạo thư mục bài làm riêng bên ngoài repo khóa học. T
 ```bash
 mkdir -p ~/code/bootcamp-labs
 cd ~/code/bootcamp-labs
-anchor init hello-solana --package-manager pnpm --no-install
+anchor init hello-solana --package-manager pnpm --test-template mocha --no-install
 cd hello-solana
 ```
 
@@ -69,24 +69,25 @@ Project này nằm ngoài repo nên không tự kế thừa `rust-toolchain.toml
 
 ```toml
 [toolchain]
-channel = "1.87.0"
+channel = "1.89.0"
 components = ["rustfmt", "clippy"]
 profile = "minimal"
 ```
 
-Tạo `.nvmrc` chứa `22`; chọn Node 22 theo setup guide rồi kiểm tra `node --version` trong terminal hiện tại. File `.nvmrc` chỉ ghi phiên bản, không tự chuyển Node.
+Tạo `.nvmrc` chứa `24`; chọn Node 24 theo setup guide rồi kiểm tra `node --version` trong terminal hiện tại. File `.nvmrc` chỉ ghi phiên bản, không tự chuyển Node.
 
 Trong `Anchor.toml`, bổ sung vào section `[toolchain]` đã có, không tạo section trùng:
 
 ```toml
 [toolchain]
-anchor_version = "0.31.1"
+anchor_version = "1.2.1"
+solana_version = "4.1.2"
 package_manager = "pnpm"
 ```
 
-Trong `programs/hello-solana/Cargo.toml`, đặt dependency `anchor-lang` thành `"=0.31.1"`, giữ nguyên các section và feature do template sinh ra.
+Trong `programs/hello-solana/Cargo.toml`, đặt dependency `anchor-lang` thành `"=1.2.1"`, giữ nguyên các section và feature do template sinh ra.
 
-Trong `package.json`, đặt dependency `@coral-xyz/anchor` thành `"0.31.1"` để client khớp CLI/program. Giữ các dependency khác do template tạo. Chạy:
+Trong `package.json`, đặt dependency `@anchor-lang/core` thành `"1.2.1"` để client khớp CLI/program. Giữ các dependency khác do template tạo. Chạy:
 
 ```bash
 pnpm install
@@ -120,7 +121,7 @@ anchor build
 anchor test --provider.cluster localnet
 ```
 
-**Kết quả mong đợi:** build thành công, có `target/deploy/hello_solana.so` và `target/idl/hello_solana.json`; test mẫu báo passing và in transaction signature. Với Anchor 0.31.1, test local tự khởi động `solana-test-validator`; không để một validator khác chiếm port.
+**Kết quả mong đợi:** build thành công, có `target/deploy/hello_solana.so` và `target/idl/hello_solana.json`; test mẫu báo passing và in transaction signature. Với Anchor 1.2.1, `anchor test` tự khởi động Surfpool làm local validator; không để một validator khác chiếm port 8899. Muốn dùng `solana-test-validator` như video cũ, thêm `--validator legacy`.
 
 Solana CLI ở lesson 1.2 đang chọn Devnet, nhưng Anchor ở bước này chọn localnet bằng cấu hình/flag riêng. Signature của test local không thể tra trên Explorer Devnet.
 
@@ -167,7 +168,7 @@ solana balance --url devnet
 ### Deploy lần đầu
 
 ```bash
-anchor deploy --provider.cluster devnet
+anchor program deploy --provider.cluster devnet
 ```
 
 **Kết quả mong đợi:** command báo deploy thành công trên Devnet và Program ID khớp `anchor keys list`. Ghi lại địa chỉ này. Trong các command bên dưới, đặt biến bằng public Program ID của bạn:
@@ -191,7 +192,7 @@ Từ root project, build và upgrade:
 
 ```bash
 anchor build
-anchor upgrade target/deploy/hello_solana.so --program-id "$BOOTCAMP_PROGRAM_ID" --provider.cluster devnet
+anchor program upgrade "$BOOTCAMP_PROGRAM_ID" --program-filepath target/deploy/hello_solana.so --provider.cluster devnet
 solana program show "$BOOTCAMP_PROGRAM_ID" --url devnet
 ```
 
@@ -209,25 +210,24 @@ Trên [Explorer Devnet](https://explorer.solana.com/?cluster=devnet), tìm Progr
 
 Mở `target/idl/hello_solana.json`: `address` phải khớp Program ID; phần `instructions` có `initialize`. IDL mô tả interface để client gọi program, không phải binary `.so`. Ở module này chỉ cần đọc địa chỉ và instruction; cách viết account/constraint sẽ học sau.
 
-### Xuất bản và đọc IDL trên Devnet
+### Đọc IDL trên Devnet
 
-Trong root project, dùng cùng biến `BOOTCAMP_PROGRAM_ID` ở lesson 1.4:
+Từ Anchor 1.0, `anchor program deploy` tự tải IDL lên onchain qua Program Metadata Program; không cần bước `idl init` riêng như Anchor 0.31. Trong root project, dùng cùng biến `BOOTCAMP_PROGRAM_ID` ở lesson 1.4:
 
 ```bash
-anchor idl init --filepath target/idl/hello_solana.json "$BOOTCAMP_PROGRAM_ID" --provider.cluster devnet
 anchor idl fetch "$BOOTCAMP_PROGRAM_ID" --out /tmp/bootcamp-hello-solana-devnet-idl.json --provider.cluster devnet
 ```
 
-**Kết quả mong đợi:** IDL init thành công; file fetch có địa chỉ và danh sách instruction khớp IDL local. Anchor 0.31.1 không tự xuất bản IDL onchain khi chạy `anchor deploy`; IDL init là bước riêng và chỉ chạy một lần cho program này.
+**Kết quả mong đợi:** file fetch có `address` và danh sách instruction khớp `target/idl/hello_solana.json`.
 
-Nếu đã init IDL khi làm bài trước đó, fetch để kiểm tra. Khi IDL đã tồn tại và cần cập nhật, dùng `upgrade`, không chạy lại `init`:
+`anchor program upgrade` chỉ thay binary, không cập nhật IDL. Khi interface thay đổi (thêm instruction, account hoặc field), cập nhật IDL onchain rồi fetch lại:
 
 ```bash
 anchor idl upgrade --filepath target/idl/hello_solana.json "$BOOTCAMP_PROGRAM_ID" --provider.cluster devnet
 anchor idl fetch "$BOOTCAMP_PROGRAM_ID" --out /tmp/bootcamp-hello-solana-devnet-idl.json --provider.cluster devnet
 ```
 
-Thực hành lệnh upgrade IDL sau init để hiểu hai thao tác. Lần thay đổi log ở lesson 1.4 không đổi interface nên danh sách instruction vẫn như cũ. Nếu lệnh init lỗi vì nguyên nhân khác, đọc lỗi trước; không chuyển sang upgrade một cách máy móc. Wallet dùng cập nhật IDL cần có IDL authority.
+Thực hành lệnh upgrade IDL để hiểu thao tác này. Lần thay đổi log ở lesson 1.4 không đổi interface nên danh sách instruction vẫn như cũ. Nếu đã deploy với `--no-idl`, dùng `anchor idl init --filepath target/idl/hello_solana.json "$BOOTCAMP_PROGRAM_ID" --provider.cluster devnet` một lần trước. Wallet dùng cập nhật IDL cần có IDL authority.
 
 ### Test chương trình đã deploy
 
