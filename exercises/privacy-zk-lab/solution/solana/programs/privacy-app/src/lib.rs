@@ -46,7 +46,7 @@ pub mod privacy_app {
             PrivacyError::EmptyOutputCommitment
         );
 
-        let cpi_program = ctx.accounts.verifier_program.to_account_info();
+        let cpi_program = ctx.accounts.verifier_program.key();
         let cpi_accounts = mock_verifier::cpi::accounts::AssertContext {
             authority: ctx.accounts.authority.to_account_info(),
             verified_context: ctx.accounts.verified_context.to_account_info(),

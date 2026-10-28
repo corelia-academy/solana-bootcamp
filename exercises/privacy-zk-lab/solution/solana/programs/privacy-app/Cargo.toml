@@ -17,5 +17,5 @@ no-log-ix-name = []
 idl-build = ["anchor-lang/idl-build", "mock-verifier/idl-build"]
 
 [dependencies]
-anchor-lang = "0.31.1"
+anchor-lang = "1.2.1"
 mock-verifier = { path = "../mock-verifier", features = ["cpi"] }
