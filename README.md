@@ -75,6 +75,15 @@ Luôn bắt đầu từ `starter`. Checkpoint chỉ dùng để phục hồi khi
 
 Mỗi bài học đi theo trình tự `Khái niệm → Mô hình → Code → Kiểm thử`. Mỗi project đi kèm sơ đồ account, luồng instruction, cách derive PDA nếu có, danh sách account trong transaction và luồng từ client đến program.
 
+## Hỏi đáp và cộng đồng
+
+- [GitHub Discussions](https://github.com/corelia-academy/solana-bootcamp/discussions): hỏi về bài học, lỗi code và setup. Ưu tiên kênh này để câu trả lời được lưu lại cho người sau.
+- [Corelia Community (Telegram)](https://t.me/corelia_community): trao đổi nhanh với học viên và đội ngũ Corelia.
+- [Solana Devs Vietnam (Telegram)](https://t.me/solana_devs_vn): cộng đồng lập trình viên Solana tại Việt Nam.
+- [Corelia Builders (Facebook)](https://www.facebook.com/groups/corelia.builders): chia sẻ dự án, sự kiện và tài nguyên.
+
+Khi hỏi, gửi kèm hệ điều hành, lệnh bị lỗi, toàn bộ error và version công cụ. Không chia sẻ seed phrase, private key hoặc keypair file ở bất kỳ kênh nào.
+
 ## License
 
 Toàn bộ source code, tài liệu, bài tập và diagram trong repository được phát hành theo [MIT License](./LICENSE), copyright © 2026 Corelia Academy.

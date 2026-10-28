@@ -82,7 +82,14 @@ Dùng bộ phiên bản trong [setup guide](../../docs/setup.md#baseline-đượ
 
 ### Khi gặp lỗi
 
-Bạn sẽ cần phần này từ Module 1, khi bắt đầu chạy lệnh. Phần lớn lỗi có thể hỏi AI trước; nếu chưa xong, mở [troubleshooting](../../docs/troubleshooting.md). Dù hỏi AI hay hỏi người, hãy gửi kèm: lệnh đã chạy, thông báo lỗi đầy đủ, phiên bản công cụ và những cách đã thử.
+Bạn sẽ cần phần này từ Module 1, khi bắt đầu chạy lệnh. Phần lớn lỗi có thể hỏi AI trước; nếu chưa xong, mở [troubleshooting](../../docs/troubleshooting.md) hoặc đăng câu hỏi ở [GitHub Discussions](https://github.com/corelia-academy/solana-bootcamp/discussions) của khóa. Dù hỏi AI hay hỏi người, hãy gửi kèm: lệnh đã chạy, thông báo lỗi đầy đủ, phiên bản công cụ và những cách đã thử.
+
+**Hỏi đáp và cộng đồng:**
+
+- [GitHub Discussions](https://github.com/corelia-academy/solana-bootcamp/discussions): hỏi đáp về bài học, lỗi và bài tập.
+- [Telegram Corelia Community](https://t.me/corelia_community)
+- [Telegram Solana Devs VN](https://t.me/solana_devs_vn)
+- [Facebook Corelia Builders](https://www.facebook.com/groups/corelia.builders)
 
 Không đưa seed phrase, private key, file keypair, access token hoặc mật khẩu vào báo cáo, screenshot, chat hoặc khung hỏi AI. Public address, Program ID (địa chỉ của program) và transaction signature có thể chia sẻ.
 

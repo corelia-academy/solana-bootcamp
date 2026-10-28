@@ -34,7 +34,7 @@ GitHub docs được cập nhật trong lúc quay video và sau khi phát hành,
 
 Chuẩn bị laptop macOS, Linux hoặc Windows qua WSL2, editor và kiến thức terminal/Git cơ bản. Hoàn thành [readiness checklist](../curriculum/module-00-orientation/readiness-checklist.md) trước Module 1; chưa cần cài toolchain để hoàn thành Module 0.
 
-Khi gặp lỗi, đọc [troubleshooting](./troubleshooting.md), kiểm tra docs/version và ghi command, thư mục chạy lệnh, lỗi đầy đủ cùng các cách đã thử. Kênh hỏi đáp hiện có của repo là [GitHub Discussions](https://github.com/corelia-academy/solana-bootcamp/discussions). Không chia sẻ seed phrase, private key, keypair file hoặc access token; chỉ chạy đề xuất sửa lỗi khi hiểu tác động.
+Khi gặp lỗi, đọc [troubleshooting](./troubleshooting.md), kiểm tra docs/version và ghi command, thư mục chạy lệnh, lỗi đầy đủ cùng các cách đã thử. Đăng câu hỏi lên [GitHub Discussions](https://github.com/corelia-academy/solana-bootcamp/discussions); trao đổi nhanh ở [Corelia Community](https://t.me/corelia_community), [Solana Devs Vietnam](https://t.me/solana_devs_vn) hoặc nhóm [Corelia Builders](https://www.facebook.com/groups/corelia.builders). Không chia sẻ seed phrase, private key, keypair file hoặc access token; chỉ chạy đề xuất sửa lỗi khi hiểu tác động.
 
 ## Điều kiện hoàn thành khóa học
 

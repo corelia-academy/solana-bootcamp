@@ -1,6 +1,6 @@
 # Xử lý lỗi cài đặt
 
-Khi cần hỗ trợ, hãy cung cấp hệ điều hành, terminal, lệnh bị lỗi, toàn bộ error và version công cụ trong hướng dẫn cài đặt.
+Khi cần hỗ trợ, hãy cung cấp hệ điều hành, terminal, lệnh bị lỗi, toàn bộ error và version công cụ trong hướng dẫn cài đặt, rồi đăng lên [GitHub Discussions](https://github.com/corelia-academy/solana-bootcamp/discussions) hoặc hỏi nhanh ở [Corelia Community](https://t.me/corelia_community) và [Solana Devs Vietnam](https://t.me/solana_devs_vn).
 
 ## Các lỗi thường gặp
 

@@ -61,3 +61,5 @@ Nếu dùng checkpoint, hãy so sánh diff và giải thích phần mình thiế
 ## Khi cần hỗ trợ
 
 Chuẩn bị năm thông tin: hành vi mong đợi, hành vi thực tế, lỗi đầy đủ, version toolchain, và thay đổi nhỏ nhất có liên quan. Không chia sẻ seed phrase, private key hoặc keypair file.
+
+Đặt câu hỏi trên [GitHub Discussions](https://github.com/corelia-academy/solana-bootcamp/discussions); trao đổi nhanh ở [Corelia Community](https://t.me/corelia_community), [Solana Devs Vietnam](https://t.me/solana_devs_vn) hoặc nhóm [Corelia Builders](https://www.facebook.com/groups/corelia.builders).
