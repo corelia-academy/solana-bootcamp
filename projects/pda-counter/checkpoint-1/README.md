@@ -11,4 +11,4 @@ State, seeds, space và `initialize`.
 ## Học viên cần làm
 Thêm mutation bằng checked math và failure tests.
 ## Chạy và kiểm tra
-`pnpm install && anchor build && anchor test`
+`pnpm install && anchor keys sync && anchor build && anchor test`

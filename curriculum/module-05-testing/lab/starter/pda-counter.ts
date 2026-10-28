@@ -1,4 +1,4 @@
-import * as anchor from "@coral-xyz/anchor";
+import * as anchor from "@anchor-lang/core";
 import { expect } from "chai";
 
 describe("module 05 — PDA Counter testing lab", () => {

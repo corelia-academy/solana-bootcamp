@@ -16,9 +16,10 @@ Initialize, checked mutation, reset và authority/error tests.
 
 ```shell
 pnpm install
+anchor keys sync   # Anchor 1.x: đồng bộ Program ID trước khi build
 anchor build
 pnpm test
 ```
 
-Trước khi deploy, chạy `anchor keys sync` và kiểm tra program ID trong `declare_id!`/`Anchor.toml`.
+`anchor keys sync` ghi Program ID của keypair trong `target/deploy` vào `declare_id!` và `Anchor.toml`; Anchor 1.x không build khi hai giá trị lệch nhau.
 Test runner dùng wallet tạm trong `target/`, không phụ thuộc ví cá nhân.

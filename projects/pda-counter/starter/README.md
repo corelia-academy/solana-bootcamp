@@ -19,6 +19,7 @@ Anchor workspace, Counter schema, PDA contexts và test contract.
 
 ```shell
 pnpm install
+anchor keys sync   # Anchor 1.x: đồng bộ Program ID trước khi build
 anchor build
 anchor test
 ```

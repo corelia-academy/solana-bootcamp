@@ -1,11 +1,11 @@
-import * as anchor from "@coral-xyz/anchor";
-import { Program } from "@coral-xyz/anchor";
+import * as anchor from "@anchor-lang/core";
 import { expect } from "chai";
 
 describe("pda-counter", () => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
-  const program = anchor.workspace.pdaCounter as Program;
+  // `any` để test compile được trước khi có type sinh từ IDL (target/types).
+  const program: any = anchor.workspace.pdaCounter;
   const owner = provider.wallet.publicKey;
   const [counter] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("counter"), owner.toBuffer()],

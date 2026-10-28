@@ -1,9 +1,5 @@
 # PDA Counter
 
-![PDA derivation](../../notes/images/pda.png)
-
-[Excalidraw source](../../notes/images/pda.excalidraw)
-
 Project Anchor có state đầu tiên. Mỗi ví sở hữu một counter deterministic.
 
 ## Kết quả học tập
