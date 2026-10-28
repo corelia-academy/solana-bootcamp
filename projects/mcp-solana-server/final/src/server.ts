@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { SolanaTools, type RpcPort } from "./core.js";
+import { SolanaTools, type AuthPort, type RpcPort } from "./core.js";
 
 const demoKey = "11111111111111111111111111111111";
 const mockRpc: RpcPort = {
@@ -11,11 +11,20 @@ const mockRpc: RpcPort = {
   sendSol: async (_recipient, _lamports, key) => `mock-${key}`,
   confirm: async () => {},
 };
-const tools = new SolanaTools(mockRpc, {
-  allowedRecipients: new Set([demoKey]),
-  allowedPrograms: new Set([demoKey]),
-  maxLamportsPerAction: 10_000_000,
-});
+// Quyền ghi là config của server do người chạy host (Claude Desktop, IDE...) bật,
+// không phải tham số tool mà model có thể tự điền.
+// Ví dụ: SOLANA_MCP_WRITE_ENABLED=true pnpm start
+const writeEnabled = process.env.SOLANA_MCP_WRITE_ENABLED === "true";
+const auth: AuthPort = { canWrite: () => writeEnabled };
+const tools = new SolanaTools(
+  mockRpc,
+  {
+    allowedRecipients: new Set([demoKey]),
+    allowedPrograms: new Set([demoKey]),
+    maxLamportsPerAction: 10_000_000,
+  },
+  auth,
+);
 const server = new McpServer({ name: "solana-bootcamp", version: "1.0.0" });
 const output = (result: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(result) }],
@@ -42,12 +51,11 @@ server.registerTool(
 server.registerTool(
   "send_sol",
   {
-    description: "Gửi SOL trong mock mode, có authentication, allowlist và cap",
+    description: "Gửi SOL trong mock mode. Chỉ chạy khi server bật quyền ghi; có allowlist và cap",
     inputSchema: {
       recipient: z.string(),
       lamports: z.number().int().positive(),
       idempotencyKey: z.string().min(1),
-      authorized: z.boolean(),
     },
   },
   async (input) => output(await tools.sendSol(input)),
@@ -55,11 +63,10 @@ server.registerTool(
 server.registerTool(
   "call_program",
   {
-    description: "Mô phỏng program instruction sau policy gate",
+    description: "Mô phỏng program instruction sau policy gate. Chỉ chạy khi server bật quyền ghi",
     inputSchema: {
       program: z.string(),
       instruction: z.string().min(1),
-      authorized: z.boolean(),
     },
   },
   async (input) => output(await tools.callProgram(input)),

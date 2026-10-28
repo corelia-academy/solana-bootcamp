@@ -40,6 +40,8 @@ Prompt template giúp workflow nhất quán nhưng không được bypass tool v
 
 Tách read/write permissions, identify caller và không gửi signer secrets qua protocol messages.
 
+Quyền ghi luôn do server quyết định: config của host, session đã xác thực hoặc approval của người dùng. Không bao giờ đưa field kiểu `authorized: boolean` vào `inputSchema`, vì model điền mọi field trong schema và có thể tự gửi `true`. Trong project, `SolanaTools` nhận `AuthPort` lúc khởi tạo; bản `final` bật quyền ghi bằng `SOLANA_MCP_WRITE_ENABLED=true`. Test bắt buộc: gửi kèm `authorized: true` khi server tắt quyền ghi vẫn phải trả `UNAUTHORIZED` và không gọi RPC.
+
 ## 16.11 Rate/cost control
 
 Per-tool rate, concurrency, RPC budget, token budget và circuit breaker.

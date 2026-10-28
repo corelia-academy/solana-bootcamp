@@ -7,6 +7,6 @@ Balance/token holdings đã validate input, bound results và trả structured r
 ## Phần đã có
 Balance, holdings và structured retryable errors.
 ## Học viên cần làm
-Thêm authenticated writes, allowlist, cap và simulation.
+Thêm write tools có kiểm tra `AuthPort` phía server, allowlist, cap và simulation.
 ## Chạy và kiểm tra
 `pnpm install && pnpm run check && pnpm test`

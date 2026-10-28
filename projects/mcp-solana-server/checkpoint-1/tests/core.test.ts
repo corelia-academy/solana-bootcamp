@@ -1,1 +1,22 @@
-import{describe,expect,it,vi}from"vitest";import{SolanaTools,type RpcPort}from"../src/core.js";const key="11111111111111111111111111111111";const rpc:RpcPort={balance:vi.fn().mockResolvedValue(5),tokenHoldings:vi.fn().mockResolvedValue([]),simulate:vi.fn(),sendSol:vi.fn(),confirm:vi.fn()};const tools=new SolanaTools(rpc,{allowedRecipients:new Set(),allowedPrograms:new Set(),maxLamportsPerAction:1});describe("read tools",()=>{it("balance",async()=>expect(await tools.getAccountBalance(key)).toEqual({ok:true,data:{lamports:5}}));it("bounded",async()=>expect((await tools.getTokenHoldings(key,101)).ok).toBe(false));it.skip("Checkpoint 2: writes",()=>{})});
+import { describe, expect, it, vi } from "vitest";
+import { SolanaTools, type RpcPort } from "../src/core.js";
+
+const key = "11111111111111111111111111111111";
+const rpc: RpcPort = {
+  balance: vi.fn().mockResolvedValue(5),
+  tokenHoldings: vi.fn().mockResolvedValue([]),
+  simulate: vi.fn(),
+  sendSol: vi.fn(),
+  confirm: vi.fn(),
+};
+const tools = new SolanaTools(
+  rpc,
+  { allowedRecipients: new Set(), allowedPrograms: new Set(), maxLamportsPerAction: 1 },
+  { canWrite: () => false },
+);
+
+describe("read tools", () => {
+  it("balance", async () => expect(await tools.getAccountBalance(key)).toEqual({ ok: true, data: { lamports: 5 } }));
+  it("bounded", async () => expect((await tools.getTokenHoldings(key, 101)).ok).toBe(false));
+  it.skip("Checkpoint 2: writes", () => {});
+});

@@ -52,8 +52,14 @@ Kiểm thử schema, RPC failure, cấu trúc kết quả đọc, write không c
 | --- | --- | --- | --- |
 | `get_account_balance` | không cần signer | không có | public key hợp lệ, RPC timeout |
 | `get_token_holdings` | không cần signer | không có | public key và bounded limit |
-| `send_sol` | authenticated write capability | recipient balance/transaction | recipient allowlist, per-action cap, confirmation |
-| `call_program` | authenticated write capability | chỉ simulation trong core hiện tại | program allowlist, instruction schema, simulation |
+| `send_sol` | quyền ghi do server cấp (`AuthPort`) | recipient balance/transaction | recipient allowlist, per-action cap, confirmation |
+| `call_program` | quyền ghi do server cấp (`AuthPort`) | chỉ simulation trong core hiện tại | program allowlist, instruction schema, simulation |
+
+## Quyền ghi nằm ở đâu
+
+Quyền ghi là **config của server**, không phải tham số của tool. `SolanaTools` nhận một `AuthPort` lúc khởi tạo; bản `final` bật quyền ghi bằng biến môi trường `SOLANA_MCP_WRITE_ENABLED=true` do người cấu hình host đặt.
+
+Anti-pattern cần tránh: khai báo `authorized: z.boolean()` trong `inputSchema`. Model điền mọi field trong schema, nên nó có thể tự gửi `authorized: true` và bỏ qua toàn bộ guardrail. Mọi thứ model gửi lên đều là untrusted input.
 
 ## PDA rationale và trust boundary
 
