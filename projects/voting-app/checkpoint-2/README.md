@@ -9,4 +9,4 @@ Poll/Candidate flow và relationship constraints.
 ## Học viên cần làm
 VoteReceipt, active-window và duplicate-vote tests.
 ## Chạy và kiểm tra
-`pnpm install && anchor build && anchor test`
+`pnpm install && anchor keys sync && anchor build && anchor test`

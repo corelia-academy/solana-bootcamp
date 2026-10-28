@@ -9,4 +9,4 @@ Poll PDA và initialize test.
 ## Học viên cần làm
 Candidate authority/time constraints.
 ## Chạy và kiểm tra
-`pnpm install && anchor build && anchor test`
+`pnpm install && anchor keys sync && anchor build && anchor test`

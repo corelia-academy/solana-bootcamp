@@ -1,16 +1,17 @@
-import * as anchor from "@coral-xyz/anchor";
-import { BN, Program } from "@coral-xyz/anchor";
+import * as anchor from "@anchor-lang/core";
+import { BN } from "@anchor-lang/core";
 import { expect } from "chai";
 
 describe("voting checkpoint 2", () => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
-  const program = anchor.workspace.voting as Program;
+  // `any` để test compile được trước khi có type sinh từ IDL (target/types/voting.ts).
+  const program: any = anchor.workspace.voting;
   const authority = provider.wallet.publicKey;
   const pollId = new BN(Date.now());
   const candidateId = 1;
   const [poll] = anchor.web3.PublicKey.findProgramAddressSync(
-    [Buffer.from("poll"), pollId.toArrayLike(Buffer, "le", 8)],
+    [Buffer.from("poll"), provider.wallet.publicKey.toBuffer(), pollId.toArrayLike(Buffer, "le", 8)],
     program.programId,
   );
   const [candidate] = anchor.web3.PublicKey.findProgramAddressSync(

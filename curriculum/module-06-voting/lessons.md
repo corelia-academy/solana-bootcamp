@@ -10,7 +10,7 @@ Poll chứa authority, ID, title giới hạn, start/end và candidate count. Ca
 
 ## 6.3 PDA design
 
-Poll: `["poll", poll_id]`; Candidate: `["candidate", poll, candidate_id]`; Receipt: `["vote", poll, voter]`. Không dùng string không giới hạn làm seed.
+Poll: `["poll", authority, poll_id]` (có authority để không ai chiếm trước `poll_id` của người khác); Candidate: `["candidate", poll, candidate_id]`; Receipt: `["vote", poll, voter]`. Không dùng string không giới hạn làm seed.
 
 ## 6.4 Initialize poll
 
@@ -48,7 +48,7 @@ Hoàn thiện [Voting App](../../projects/voting-app/README.md) theo bốn repo 
 
 | Account | PDA seeds | Invariant |
 | --- | --- | --- |
-| Poll | `["poll", poll_id]` | authority, time window và candidate count là nguồn sự thật |
+| Poll | `["poll", authority, poll_id]` | authority, time window và candidate count là nguồn sự thật |
 | Candidate | `["candidate", poll, candidate_id]` | thuộc đúng Poll và votes không overflow |
 | VoteReceipt | `["vote", poll, voter]` | một voter chỉ có một receipt trên mỗi Poll |
 

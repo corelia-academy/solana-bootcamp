@@ -8,8 +8,8 @@ Tạo poll có time window, đăng ký candidate và ghi vote. Final dùng VoteR
 
 | Account | PDA seeds | Key fields |
 | --- | --- | --- |
-| Poll | `['poll', poll_id]` | authority, title, start/end, candidate count |
-| Candidate | `['candidate', poll, name/hash]` | poll, name, votes |
+| Poll | `['poll', authority, poll_id]` | authority, title, start/end, candidate count |
+| Candidate | `['candidate', poll, candidate_id]` | poll, name, votes |
 | Vote receipt | `['vote', poll, voter]` | poll, voter, candidate |
 
 ```mermaid
@@ -33,7 +33,7 @@ flowchart TB
 
 | Write path | Signer | State mutable | Owner/relationship |
 | --- | --- | --- | --- |
-| `initialize_poll` | authority | Poll | Voting Program; PDA theo `poll_id` |
+| `initialize_poll` | authority | Poll | Voting Program; PDA theo `authority` + `poll_id` |
 | `add_candidate` | authority | Poll, Candidate | `poll.authority == authority`; Candidate thuộc Poll |
 | `vote` | voter | Candidate, VoteReceipt | Candidate thuộc Poll; receipt theo Poll/Voter |
 

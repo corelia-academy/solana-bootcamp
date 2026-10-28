@@ -67,6 +67,8 @@ pub mod voting {
     }
 }
 
+/// Poll PDA gồm authority trong seeds: mỗi authority có namespace `poll_id` riêng,
+/// nên không ai chiếm trước `poll_id` của người khác.
 #[derive(Accounts)]
 #[instruction(poll_id: u64)]
 pub struct InitializePoll<'info> {
@@ -74,7 +76,7 @@ pub struct InitializePoll<'info> {
         init,
         payer = authority,
         space = 8 + Poll::INIT_SPACE,
-        seeds = [b"poll", poll_id.to_le_bytes().as_ref()],
+        seeds = [b"poll", authority.key().as_ref(), poll_id.to_le_bytes().as_ref()],
         bump
     )]
     pub poll: Account<'info, Poll>,
@@ -88,7 +90,7 @@ pub struct InitializePoll<'info> {
 pub struct AddCandidate<'info> {
     #[account(
         mut,
-        seeds = [b"poll", poll_id.to_le_bytes().as_ref()],
+        seeds = [b"poll", authority.key().as_ref(), poll_id.to_le_bytes().as_ref()],
         bump = poll.bump,
         has_one = authority
     )]
@@ -111,7 +113,7 @@ pub struct AddCandidate<'info> {
 #[instruction(poll_id: u64, candidate_id: u16)]
 pub struct Vote<'info> {
     #[account(
-        seeds = [b"poll", poll_id.to_le_bytes().as_ref()],
+        seeds = [b"poll", poll.authority.as_ref(), poll_id.to_le_bytes().as_ref()],
         bump = poll.bump
     )]
     pub poll: Account<'info, Poll>,

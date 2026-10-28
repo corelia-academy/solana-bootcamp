@@ -9,4 +9,4 @@ Workspace, state schemas, PDA seeds và test contract.
 ## Học viên cần làm
 Mở lần lượt initialize, candidate và vote flow.
 ## Chạy và kiểm tra
-`pnpm install && anchor build && anchor test`
+`pnpm install && anchor keys sync && anchor build && anchor test`

@@ -16,6 +16,7 @@ Poll, candidate, vote, time window và duplicate-vote coverage.
 
 ```shell
 pnpm install
+anchor keys sync   # Anchor 1.x: đồng bộ Program ID trước khi build
 anchor build
 anchor test
 ```
