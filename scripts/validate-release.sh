@@ -15,10 +15,10 @@ require_version() {
   fi
 }
 
-require_version "Rust" "$(rustc --version)" "rustc 1.87.0"
-require_version "Solana CLI" "$(solana --version)" "solana-cli 3.0.10"
-require_version "Anchor CLI" "$(anchor --version)" "anchor-cli 0.31.1"
-require_version "Node.js" "$(node --version)" "v22."
+require_version "Rust" "$(rustc --version)" "rustc 1.89.0"
+require_version "Solana CLI" "$(solana --version)" "solana-cli 4.1.2"
+require_version "Anchor CLI" "$(anchor --version)" "anchor-cli 1.2.1"
+require_version "Node.js" "$(node --version)" "v24."
 require_version "pnpm" "$(pnpm --version)" "9."
 
 ruby -rjson -e 'Dir.glob("**/package.json").reject { |p| p.include?("node_modules") }.each { |p| JSON.parse(File.read(p)) }'
@@ -77,6 +77,9 @@ run_pnpm() {
 }
 
 run_pnpm projects/pda-counter/final test
+run_pnpm projects/voting-app/final test
+run_pnpm projects/token-basics/final test
+run_pnpm projects/escrow/final test
 run_pnpm projects/voting-frontend/final test
 pnpm --dir projects/voting-frontend/final run build
 run_pnpm projects/stablecoin-lite/final test
@@ -85,4 +88,4 @@ run_pnpm projects/x402-paywall/final test
 run_pnpm projects/mcp-solana-server/final test
 run_pnpm projects/ai-agent-solana/final test
 
-echo "Instructor dry-run đạt cho Module 5, 9–11 và 15–17."
+echo "Instructor dry-run đạt cho Module 5–11 và 15–17."

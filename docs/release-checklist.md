@@ -12,20 +12,20 @@ Checklist này dùng trước khi instructor thu hình hoặc phát hành một 
 
 ## Dry-run bắt buộc
 
-- [ ] Module 0: đọc thử từ README repo đến readiness checklist và Module 1; không yêu cầu cài toolchain ở Module 0.
+- [ ] Module 0: đọc thử từ README repo qua định hướng, blockchain cơ bản, bài Phantom/Explorer, bài tự kiểm tra và readiness checklist đến Module 1; người mới nhận SOL Devnet và đọc được ví/giao dịch mà chưa cần cài toolchain.
 - [ ] Module 1: đúng baseline, build/test local, deploy/upgrade cùng Program ID, IDL init/upgrade/fetch và test Devnet có Explorer link/log sau upgrade.
 
 - [ ] Module 5: PDA Counter test lab chạy từ starter và học viên phân biệt logic/constraint/integration test.
 - [ ] Module 9: wallet disconnect, reject signature, failed confirmation, refetch và Explorer URL đúng cluster.
 - [ ] Module 10: Stablecoin integration test gồm role, pause, allowance/cap và burn.
 - [ ] Module 11: AMM integration test gồm liquidity, swap, slippage và account mismatch.
-- [ ] Module 15: x402 exact payment, expiry, replay, timeout và concurrent retry.
+- [ ] Module 15: x402 v2 (header PAYMENT-*, CAIP-2), so khớp accepted, replay, đồng thời, facilitator timeout; thử start:server/start:client trên Devnet.
 - [ ] Module 16: MCP read/write tools qua mock RPC, policy trước write và simulation.
 - [ ] Module 17: deterministic proposal/policy/execution loop, approval, session cap, kill switch và audit log.
 
 ## Clean-clone validation
 
-- [ ] Dùng Rust 1.87.0, Solana CLI 3.0.10, Anchor 0.31.1, Node 22 LTS và pnpm 9.
+- [ ] Dùng Rust 1.89.0, Solana CLI 4.1.2, Anchor 1.2.1, Surfpool ≥ 1.1.2, Node 24 LTS và pnpm 9.
 - [ ] Không dùng wallet mainnet; không có keypair, `.env`, `node_modules`, `target` hoặc `dist` trong Git.
 - [ ] Chạy đúng command được ghi trong từng README; không cần đoán working directory.
 - [ ] Rust/Anchor final: `cargo fmt --check`, `cargo check`, `anchor test`.
