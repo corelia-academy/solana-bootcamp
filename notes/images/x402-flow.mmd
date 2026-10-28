@@ -1,10 +1,17 @@
 sequenceDiagram
     participant C as Client
-    participant S as Paywall Server
+    participant S as Resource Server
+    participant F as Facilitator
     participant L as Solana
     C->>S: GET /resource
-    S-->>C: 402 + asset/amount/recipient/nonce/expiry
-    C->>L: Thanh toán token chính xác
-    C->>S: Retry + payment proof
-    S->>L: Verify transaction và chống replay
-    S-->>C: 200 + gated content
+    S-->>C: 402 + PAYMENT-REQUIRED (accepts: scheme, network, asset, amount, payTo)
+    Note over C: Ký transaction transferChecked<br/>(chưa gửi lên chain)
+    C->>S: GET /resource + PAYMENT-SIGNATURE (PaymentPayload)
+    S->>S: accepted khớp option đã công bố? payload chưa dùng?
+    S->>F: POST /verify
+    F-->>S: isValid
+    S->>F: POST /settle
+    F->>L: Submit transaction (facilitator là fee payer)
+    L-->>F: Confirmed signature
+    F-->>S: success + transaction
+    S-->>C: 200 + PAYMENT-RESPONSE + nội dung

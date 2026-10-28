@@ -8,62 +8,62 @@ Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/RE
 
 ## Thành phần
 
-- resource server trả về 402 challenge;
-- schema mô tả yêu cầu thanh toán;
-- client tạo, ký thanh toán và gửi lại request;
-- verifier/facilitator xác nhận settlement chính xác;
-- replay store cho nonce/idempotency;
-- test success, proof không hợp lệ, replay, expiry và concurrency.
+- `src/x402.ts`: lõi x402 v2 tự viết phía resource server (challenge, header, so khớp `accepted`, chống settle trùng, gọi facilitator), test offline;
+- `src/server.ts`: resource server thật với `@x402/express` + facilitator, Solana Devnet;
+- `src/client.ts`: paying client thật với `@x402/fetch` + `@x402/svm`;
+- tests: 402 schema, payment hợp lệ, `accepted` sai, payload hỏng, verify fail, replay, đồng thời, timeout.
 
 ```mermaid
 sequenceDiagram
     participant C as Client
     participant S as Server
-    participant V as Verifier
+    participant F as Facilitator
     participant L as Solana
     C->>S: GET /data
-    S-->>C: 402 requirements + nonce + expiry
-    C->>L: payment transaction
-    C->>S: retry + payment proof
-    S->>V: verify exact payment
-    V->>L: fetch transaction
-    V-->>S: valid and unused
-    S-->>C: 200 data
+    S-->>C: 402 + PAYMENT-REQUIRED
+    Note over C: Ký transferChecked (chưa gửi)
+    C->>S: GET /data + PAYMENT-SIGNATURE
+    S->>F: /verify rồi /settle
+    F->>L: Submit transaction
+    S-->>C: 200 + PAYMENT-RESPONSE
 ```
 
 ## Các trạng thái
 
-- `starter`: endpoint và challenge types
-- `checkpoint-1`: 402 response và paying client
-- `checkpoint-2`: onchain verifier và replay store
-- `final`: rate limit, concurrency test và client cho agent
+- `starter`: types theo spec v2, các hàm còn TODO
+- `checkpoint-1`: header base64, 402 challenge, so khớp `accepted`
+- `checkpoint-2`: verify/settle qua `FacilitatorPort`, chống settle trùng, request đồng thời, timeout
+- `final`: thêm server và client dùng SDK chính thức trên Devnet
 
 ## Security invariants
 
-Xác minh network, asset, amount, recipient, memo/nonce, expiry, confirmation, transaction thành công và tính single-use. Không tin một signature string nếu chưa kiểm tra transaction đã confirm.
+- `accepted` phải trùng một option server đã công bố (scheme, network, asset, amount, payTo);
+- claim payload **trước** khi gọi facilitator để request đồng thời chỉ settle một lần;
+- verify fail hoặc facilitator lỗi mạng thì nhả claim; settle đã có kết quả thì giữ claim;
+- chỉ trả nội dung sau khi settle thành công.
 
 ## Trust boundary và mutable state
 
 | Path | Authority/source | Mutable state | Không được tin trực tiếp |
 | --- | --- | --- | --- |
-| tạo challenge | resource server | nonce + expiry | client-supplied requirements |
-| submit proof | paying client | chưa consume nonce | signature string |
-| verify | verifier + RPC adapter | proof status | unconfirmed/failed transaction |
-| settle | replay store | nonce chuyển sang used | retry đồng thời hoặc proof đã dùng |
+| tạo challenge | resource server | không | không |
+| gửi payment | paying client (ký transaction) | không | `accepted` client tự khai |
+| verify/settle | facilitator | transaction lên chain | kết quả khi chưa có `success` |
+| chống trùng | `SettlementCache` | payload đã claim (TTL 120s) | retry đồng thời cùng payload |
 
 ## PDA rationale
 
-Mock/local verifier không cần custom PDA: replay state nằm sau `ReplayStore` interface. Adapter production có thể thay bằng durable database hoặc receipt program nhưng không được thay đổi verification contract.
+Không cần custom PDA: thanh toán là SPL `transferChecked` vào ATA của `payTo`. Cache chống trùng nằm sau `SettlementCache`; production có thể thay bằng Redis nhưng phải giữ claim nguyên tử.
 
 ## Test bắt buộc
 
-- request đầu tiên trả về đầy đủ yêu cầu 402;
-- thanh toán hợp lệ và chính xác mở khóa resource;
-- sai network, asset, amount hoặc recipient phải thất bại;
-- proof hết hạn hoặc bị replay phải thất bại;
-- transaction chưa confirm hoặc thất bại không được chấp nhận;
-- các retry đồng thời chỉ tạo một kết quả kinh tế;
-- verifier/RPC timeout trả về response có thể retry mà không đánh dấu payment đã dùng.
+- request đầu tiên trả 402 + `PAYMENT-REQUIRED` đúng schema;
+- payment hợp lệ: verify → settle → 200 + `PAYMENT-RESPONSE`;
+- `accepted` sai amount, payTo, asset hoặc network bị từ chối trước khi gọi facilitator;
+- payload hỏng hoặc sai version trả `invalid_payload`;
+- verify fail trả lý do của facilitator và không settle;
+- replay và request đồng thời cùng payload chỉ settle một lần;
+- facilitator timeout trả 502 retryable và cho retry cùng payload.
 
 ## Tài nguyên sơ đồ
 

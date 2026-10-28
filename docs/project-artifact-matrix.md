@@ -9,7 +9,7 @@
 | Voting Frontend | [README](../projects/voting-frontend/README.md) | Dùng PDAs của Voting, không tạo PDA | wallet → confirm → refetch | rejection, stale state, cluster |
 | Stablecoin Lite | [README](../projects/stablecoin-lite/README.md) | Config/Allowance PDAs | Admin/minter client | role, pause, allowance, cap |
 | Simple AMM | [README](../projects/simple-amm/README.md) | Pool PDA, vaults, LP mint | Liquidity/swap client | rounding, slippage, wrong vault |
-| x402 | [README](../projects/x402-paywall/README.md) | Không cần custom PDA trong mock verifier | HTTP challenge/payment/retry | exact payment, expiry, replay |
+| x402 | [README](../projects/x402-paywall/README.md) | Không cần custom PDA; thanh toán là SPL transferChecked | x402 v2: PAYMENT-REQUIRED → PAYMENT-SIGNATURE → facilitator verify/settle | so khớp accepted, replay, đồng thời, timeout |
 | MCP Server | [README](../projects/mcp-solana-server/README.md) | Không tạo PDA; RPC đọc state có sẵn | MCP host/tool transport | auth, allowlist, cap, simulation |
 | AI Agent | [README](../projects/ai-agent-solana/README.md) | AuditPort; onchain PDA là adapter mở rộng | observe → policy → execute | injection, stale, drain, duplicate |
 

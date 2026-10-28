@@ -1,12 +1,12 @@
-# Checkpoint 2 — Exact settlement
+# Checkpoint 2 — Verify và settle
 
-Verifier kiểm tra confirmed transaction, network, asset, amount, recipient và memo. Final bổ sung replay store, timeout và concurrency.
+Lõi resource server hoàn chỉnh: verify/settle qua `FacilitatorPort`, chống settle trùng, request đồng thời và timeout.
 
 ## Mục tiêu state
-Phân biệt signature string với proof đã settlement.
+Chỉ trả nội dung sau khi facilitator settle thành công, mỗi payload một lần.
 ## Phần đã có
-Exact confirmed-settlement verifier.
+`gate` đầy đủ, `SettlementCache` có TTL, test offline.
 ## Học viên cần làm
-Thêm replay store, retryable timeout và concurrent-request safety.
+Nối lõi với SDK chính thức: server `@x402/express`, client `@x402/fetch`, chạy trên Devnet.
 ## Chạy và kiểm tra
 `pnpm install && pnpm run check && pnpm test`

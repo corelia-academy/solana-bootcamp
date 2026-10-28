@@ -1,1 +1,27 @@
-{"license":"MIT","name":"x402-paywall-final","private":true,"type":"module","scripts":{"check":"tsc --noEmit","test":"vitest run"},"devDependencies":{"typescript":"^5.7.3","vitest":"^3.0.0"}}
+{
+  "license": "MIT",
+  "name": "x402-paywall-final",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "start:server": "tsx src/server.ts",
+    "start:client": "tsx src/client.ts"
+  },
+  "dependencies": {
+    "@solana/kit": "5.5.1",
+    "@x402/core": "2.28.0",
+    "@x402/express": "2.28.0",
+    "@x402/fetch": "2.28.0",
+    "@x402/svm": "2.28.0",
+    "express": "5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.0"
+  }
+}

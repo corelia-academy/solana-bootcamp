@@ -1,69 +1,63 @@
 # Nội dung bài học — Module 15
 
+Module bám theo x402 **v2** (scheme `exact` trên Solana). Code học nằm ở [x402 Paywall](../../projects/x402-paywall/README.md): `src/x402.ts` tự hiện thực phía resource server để thấy từng bước, `src/server.ts` và `src/client.ts` dùng SDK chính thức (`@x402/express`, `@x402/fetch`, `@x402/svm`).
+
 ## 15.1 HTTP 402
 
-402 Payment Required từng thiếu settlement primitives phù hợp. Blockchain/token cho phép machine client thanh toán theo request nhưng server vẫn cần protocol semantics chính xác.
+Mã 402 Payment Required có từ lâu nhưng thiếu cách thanh toán phù hợp cho máy. x402 định nghĩa cách server công bố giá và cách client trả tiền ngay trong HTTP, để cả người dùng lẫn agent trả theo từng request.
 
 ## 15.2 Request cycle
 
-Client GET → server 402 requirements → client thanh toán → retry với proof → server verify → 200.
+Client gọi resource → server trả 402 + `PAYMENT-REQUIRED` → client chọn một option trong `accepts`, ký transaction → gọi lại kèm `PAYMENT-SIGNATURE` → server nhờ facilitator `/verify` rồi `/settle` → trả 200 + `PAYMENT-RESPONSE`.
 
 ## 15.3 Payload
 
-Network, asset, raw amount, recipient, resource, nonce/memo và expiry phải được bind với cùng challenge.
+`PaymentRequirements` gồm `scheme`, `network` (CAIP-2), `asset` (mint), `amount` (atomic units), `payTo`, `maxTimeoutSeconds` và `extra.feePayer`. `PaymentPayload` gồm `accepted` (option client chọn) và `payload.transaction` (transaction đã ký một phần, base64). Server **luôn** so khớp `accepted` với option mình đã công bố: nếu chỉ đưa payload cho facilitator, client có thể tự hạ `amount` hoặc đổi `payTo`.
 
 ## 15.4 USDC settlement
 
-Kiểm tra mint, source/destination ATA, decimals và confirmed transfer; không tin label “USDC”.
+Transaction phải là `transferChecked` đúng mint, đúng decimals, vào ATA của `payTo`. ATA người nhận phải có sẵn: facilitator trả phí giao dịch nhưng không tạo ATA hay trả rent cho người nhận. Không tin chữ "USDC": kiểm tra mint address (Devnet: `4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU`).
 
-## 15.5 Paywall server
+## 15.5 Resource server
 
-Endpoint sinh challenge, lưu nonce, trả machine-readable requirements và không leak gated content.
+Dùng `paymentMiddleware` của `@x402/express` với `x402ResourceServer` + `HTTPFacilitatorClient` + `ExactSvmScheme`. Route config khai báo `accepts: [{ scheme: "exact", price: "$0.01", network, payTo }]`. Không trả nội dung khi settle chưa thành công.
 
-## 15.6 Paying client
+## 15.6 Facilitator
 
-Parse challenge, validate policy/spending cap, tạo exact payment, xin ký, confirm và retry idempotently.
+Facilitator verify chữ ký, layout instruction, amount, mint, ATA người nhận, transfer authority và quy tắc fee payer, rồi submit transaction. Server có thể self-facilitate; khi đó phải tự giữ cache payload khoảng 120 giây để chặn settle trùng.
 
-## 15.7 Onchain verification
+## 15.7 Paying client
 
-Fetch confirmed transaction và inspect successful token transfer đúng asset/recipient/amount/reference.
+Dùng `wrapFetchWithPayment` của `@x402/fetch` với `registerExactSvmScheme` và signer từ `@solana/kit`. Client chỉ ký, không tự gửi transaction. Dùng ví riêng có số dư nhỏ.
 
-## 15.8 Replay prevention
+## 15.8 Replay và đồng thời
 
-Nonce unique, expiry, consumed marker và atomic claim. Concurrent requests không được unlock nhiều economic actions ngoài ý muốn.
+Một transaction đã ký chỉ có một signature nên không lên chain hai lần, nhưng server vẫn phải tránh trả nội dung nhiều lần cho cùng payload. Claim payload trong cache **trước** khi gọi facilitator; nhả claim khi verify fail hoặc facilitator lỗi mạng, giữ claim khi settle trả kết quả.
 
 ## 15.9 dApp flow
 
-Wallet hiển thị human-readable resource/amount trước ký; handle reject/timeout/confirmed.
+Wallet hiển thị resource, amount và người nhận dễ đọc trước khi ký; xử lý từ chối ký, timeout và đã confirm.
 
 ## 15.10 Agent payer
 
-Agent chỉ trả trong allowlist, per-request/session cap và deterministic policy; LLM không tự chọn recipient/mint từ text không tin cậy.
+Agent chỉ trả trong allowlist, cap theo request/session và policy xác định trước. Model không tự chọn recipient hay mint từ text không tin cậy. `@x402/core/client` hỗ trợ payment policy để chặn option ngoài giới hạn.
 
 ## 15.11 Failure/security
 
-RPC timeout, late confirmation, refund policy, double submit, rate limiting và log privacy.
+Facilitator timeout (trả 502 retryable), settle fail, ATA người nhận chưa có, rate limit và log không lộ payload. Cân nhắc scheme `upto` khi giá phụ thuộc lượng dùng thực tế.
 
 ## 15.12 Tests
 
-402 schema, valid unlock, wrong fields, expired/replay, failed/unconfirmed transaction và concurrency.
+402 schema, payment hợp lệ, `accepted` sai amount/payTo/asset/network, payload hỏng, verify fail, replay, request đồng thời, facilitator timeout rồi retry.
 
 ## Wire contract
 
-PaymentRequirements chứa version, network, asset, amount base units, recipient, nonce, expiry và resource ID. PaymentProof chứa transaction signature và challenge binding. Server trả structured error cho invalid, expired, replayed, unconfirmed và retryable RPC failure.
-
-## Request lifecycle
-
-Client gọi resource → nhận 402 challenge → tạo/chuyển payment → retry với proof → verifier fetch confirmed transaction và kiểm tra exact settlement → replay store consume nonce nguyên tử → server trả resource.
-
-## Concurrency và failure policy
-
-Hai retry đồng thời cho cùng proof chỉ tạo một economic result. RPC timeout không consume nonce. Transaction failed/unconfirmed không được chấp nhận. Không tin signature string nếu chưa inspect instructions/balances, network, mint và recipient.
-
-## Test matrix
-
-Complete challenge, exact payment, wrong network/asset/amount/recipient, expiry, replay, failed transaction, timeout rồi retry và concurrent requests.
+```text
+PAYMENT-REQUIRED  = base64(JSON PaymentRequired { x402Version: 2, resource, accepts[] })
+PAYMENT-SIGNATURE = base64(JSON PaymentPayload  { x402Version: 2, accepted, payload: { transaction } })
+PAYMENT-RESPONSE  = base64(JSON SettleResponse  { success, transaction, network, payer })
+```
 
 ## Hoàn thành module khi
 
-Mock mode chạy không cần Devnet; verifier interface có Solana adapter; schema dùng base units; tests chứng minh replay safety và agent client nhận structured result.
+`pnpm test` xanh ở bản final (chạy offline với facilitator mock); giải thích được vì sao server phải so khớp `accepted` và claim payload trước khi verify; chạy được `start:server` + `start:client` trên Devnet với ví riêng có USDC Devnet.

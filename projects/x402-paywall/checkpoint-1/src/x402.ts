@@ -1,2 +1,173 @@
-export type PaymentRequirements={version:1;network:"solana-devnet";asset:string;amount:string;recipient:string;nonce:string;expiresAt:number;resourceId:string};
-export function createRequirements(input:Omit<PaymentRequirements,"version">):PaymentRequirements{if(BigInt(input.amount)<=0n||input.expiresAt<=0||!input.nonce)throw new Error("INVALID_REQUIREMENTS");return{version:1,...input}}
+/**
+ * Lõi giao thức x402 v2 (scheme `exact`, Solana) viết tay để học.
+ *
+ * Checkpoint 1: challenge 402, mã hóa header và so khớp `accepted`. Verify/settle ở checkpoint 2.
+ *
+ * Luồng v2:
+ *   1. Client gọi resource, không có header thanh toán.
+ *   2. Server trả 402 + header `PAYMENT-REQUIRED` (base64 JSON `PaymentRequired`).
+ *   3. Client chọn một mục trong `accepts`, KÝ (chưa gửi) một transaction SPL transferChecked,
+ *      rồi gọi lại kèm header `PAYMENT-SIGNATURE` (base64 JSON `PaymentPayload`).
+ *   4. Server gửi payload cho facilitator: `/verify` rồi `/settle`. Facilitator mới là bên
+ *      submit transaction lên Solana (và có thể trả phí với vai trò fee payer).
+ *   5. Server trả 200 + header `PAYMENT-RESPONSE` (base64 JSON `SettleResponse`).
+ */
+
+export const HEADERS = {
+  required: "PAYMENT-REQUIRED",
+  signature: "PAYMENT-SIGNATURE",
+  response: "PAYMENT-RESPONSE",
+} as const;
+
+/** CAIP-2 network id. Đây là định danh giao thức, không phải toàn bộ genesis hash. */
+export const SOLANA_DEVNET = "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1";
+export const SOLANA_MAINNET = "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp";
+/** USDC trên Devnet (Circle). */
+export const USDC_DEVNET = "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU";
+
+export type PaymentRequirements = {
+  scheme: "exact";
+  network: string;
+  /** Mint address của SPL token. */
+  asset: string;
+  /** Số lượng atomic units (USDC có 6 decimals: "10000" = 0.01 USDC). */
+  amount: string;
+  /** Ví nhận; transaction phải chuyển vào ATA của ví này. */
+  payTo: string;
+  maxTimeoutSeconds: number;
+  /** Với Solana `exact`, facilitator ghi `feePayer` vào đây. */
+  extra: Record<string, unknown>;
+};
+
+export type ResourceInfo = { url: string; description?: string; mimeType?: string };
+
+export type PaymentRequired = {
+  x402Version: 2;
+  error?: string;
+  resource: ResourceInfo;
+  accepts: PaymentRequirements[];
+};
+
+export type PaymentPayload = {
+  x402Version: 2;
+  resource?: ResourceInfo;
+  /** Mục client đã chọn trong `accepts`. Server phải so khớp lại, không tin client. */
+  accepted: PaymentRequirements;
+  /** Solana `exact`: transaction đã ký một phần, base64. */
+  payload: { transaction: string };
+};
+
+export type VerifyResponse = { isValid: boolean; invalidReason?: string; payer?: string };
+export type SettleResponse = {
+  success: boolean;
+  errorReason?: string;
+  payer?: string;
+  /** Signature của transaction đã settle. */
+  transaction: string;
+  network: string;
+};
+
+/** Cổng tới facilitator (HTTP `/verify`, `/settle`) hoặc logic self-facilitate. */
+export interface FacilitatorPort {
+  verify(payload: PaymentPayload, requirements: PaymentRequirements): Promise<VerifyResponse>;
+  settle(payload: PaymentPayload, requirements: PaymentRequirements): Promise<SettleResponse>;
+}
+
+export type RouteConfig = { resource: ResourceInfo; accepts: PaymentRequirements[] };
+
+export type GateResult =
+  | { status: 402; headers: Record<string, string>; body: PaymentRequired }
+  | { status: 200; headers: Record<string, string>; settlement: SettleResponse }
+  | { status: 502; headers: Record<string, string>; body: { error: string; retryable: true } };
+
+// ---------- Mã hóa header ----------
+
+export function encodeHeader(value: unknown): string {
+  return Buffer.from(JSON.stringify(value), "utf8").toString("base64");
+}
+
+export function decodeHeader<T>(value: string): T {
+  return JSON.parse(Buffer.from(value, "base64").toString("utf8")) as T;
+}
+
+// ---------- 402 challenge ----------
+
+export function buildPaymentRequired(route: RouteConfig, error?: string): PaymentRequired {
+  if (route.accepts.length === 0) throw new Error("Route cần ít nhất một payment option");
+  for (const option of route.accepts) {
+    if (!/^\d+$/.test(option.amount) || BigInt(option.amount) <= 0n) throw new Error("amount phải là số nguyên dương");
+    if (!option.network.startsWith("solana:")) throw new Error("network phải là CAIP-2, ví dụ solana:EtWT...");
+    if (option.maxTimeoutSeconds <= 0) throw new Error("maxTimeoutSeconds phải > 0");
+  }
+  return { x402Version: 2, ...(error ? { error } : {}), resource: route.resource, accepts: route.accepts };
+}
+
+function paymentRequired(route: RouteConfig, error?: string): GateResult {
+  const body = buildPaymentRequired(route, error);
+  return { status: 402, headers: { [HEADERS.required]: encodeHeader(body) }, body };
+}
+
+// ---------- Chống settle trùng ----------
+
+/**
+ * Tài liệu x402 yêu cầu server tự settle trên Solana giữ cache ngắn hạn các transaction
+ * payload và xóa sau 120 giây. Ta "claim" payload TRƯỚC khi gọi facilitator, nên nhiều
+ * request đồng thời mang cùng payload chỉ có một request đi tiếp.
+ */
+export class SettlementCache {
+  constructor(readonly ttlMs = 120_000) {}
+
+  claim(_transaction: string, _now: number): boolean {
+    throw new Error("Checkpoint 2: claim payload, hết hạn sau ttlMs");
+  }
+
+  release(_transaction: string): void {
+    throw new Error("Checkpoint 2: release payload");
+  }
+}
+
+// ---------- Resource server gate ----------
+
+const sameRequirements = (a: PaymentRequirements, b: PaymentRequirements) =>
+  a.scheme === b.scheme &&
+  a.network === b.network &&
+  a.asset === b.asset &&
+  a.amount === b.amount &&
+  a.payTo === b.payTo;
+
+export async function gate(input: {
+  paymentHeader: string | undefined;
+  route: RouteConfig;
+  facilitator: FacilitatorPort;
+  cache: SettlementCache;
+  now: number;
+}): Promise<GateResult> {
+  const { paymentHeader, route, facilitator, cache, now } = input;
+
+  // 1. Chưa thanh toán: trả challenge.
+  if (!paymentHeader) return paymentRequired(route);
+
+  // 2. Decode và kiểm tra hình dạng payload.
+  let payment: PaymentPayload;
+  try {
+    payment = decodeHeader<PaymentPayload>(paymentHeader);
+  } catch {
+    return paymentRequired(route, "invalid_payload");
+  }
+  if (payment?.x402Version !== 2 || typeof payment.payload?.transaction !== "string" || !payment.accepted) {
+    return paymentRequired(route, "invalid_payload");
+  }
+
+  // 3. `accepted` phải trùng một option server đã công bố. Không có bước này, client có thể
+  //    tự hạ amount hoặc đổi payTo/asset rồi facilitator vẫn verify "đúng" theo payload đó.
+  const requirements = route.accepts.find((option) => sameRequirements(option, payment.accepted));
+  if (!requirements) return paymentRequired(route, "requirements_mismatch");
+
+  // 4–6. Checkpoint 2: claim trong SettlementCache, facilitator.verify rồi settle,
+  //      trả 200 + PAYMENT-RESPONSE, 502 retryable khi facilitator lỗi mạng.
+  void facilitator;
+  void cache;
+  void now;
+  void requirements;
+  throw new Error("Checkpoint 2: verify/settle qua facilitator và chống settle trùng");
+}

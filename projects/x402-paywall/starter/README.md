@@ -1,12 +1,12 @@
 # Starter — x402
 
-Định nghĩa challenge schema và hoàn thiện validation trước khi xây verifier.
+Types theo spec x402 v2 (`PaymentRequired`, `PaymentRequirements`, `PaymentPayload`, `SettleResponse`) đã có. Hoàn thiện các hàm theo thứ tự TODO.
 
 ## Mục tiêu state
-Tạo requirements/proof schema không mơ hồ về unit hoặc network.
+Hiểu ba header v2 và hình dạng từng object trước khi viết logic.
 ## Phần đã có
-Typed challenge shell và test contract.
+Types, hằng số network CAIP-2/USDC Devnet và test contract (đang skip).
 ## Học viên cần làm
-Hoàn thiện validation cho network, asset, amount, recipient, nonce và expiry.
+TODO 1 encode/decode header base64, TODO 2 `buildPaymentRequired`, TODO 3 `gate` trả 402 và so khớp `accepted`, TODO 4 `SettlementCache`, TODO 5 verify/settle.
 ## Chạy và kiểm tra
 `pnpm install && pnpm run check && pnpm test`

@@ -1,12 +1,12 @@
 # Checkpoint 1 — Challenge
 
-402 requirements đã typed và validate. Tiếp theo inspect confirmed settlement thay vì tin signature string.
+Header base64, 402 challenge và bước so khớp `accepted` với option server đã công bố đã xong.
 
 ## Mục tiêu state
-Trả challenge hoàn chỉnh và deterministic.
+Trả challenge đúng spec v2 và chặn payload tự khai giá/người nhận.
 ## Phần đã có
-Requirements schema cùng validation.
+`encodeHeader`/`decodeHeader`, `buildPaymentRequired`, `gate` bước 1–3.
 ## Học viên cần làm
-Inspect confirmed transaction và exact settlement.
+`SettlementCache`, gọi `facilitator.verify` rồi `settle`, trả 200 + `PAYMENT-RESPONSE`, 502 retryable khi facilitator lỗi.
 ## Chạy và kiểm tra
 `pnpm install && pnpm run check && pnpm test`
