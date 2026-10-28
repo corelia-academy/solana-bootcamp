@@ -1,7 +1,5 @@
 # Account trên Solana
 
-![Sơ đồ Solana account](./images/account.png)
-
 Account trên Solana là một vùng dữ liệu được định danh bằng public key.
 
 ```mermaid
@@ -27,7 +25,3 @@ flowchart TB
 3. Account có cần ký không?
 4. Địa chỉ có được ràng buộc đúng với PDA hoặc token account không?
 5. Có đủ dung lượng cho dữ liệu đã serialize và discriminator không?
-
-## Tài nguyên sơ đồ
-
-[Mở bản Excalidraw](./images/account.excalidraw) để chỉnh sửa sơ đồ.

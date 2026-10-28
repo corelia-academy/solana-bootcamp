@@ -1,7 +1,5 @@
 # Program, instruction và transaction
 
-![Program, instruction và transaction](./images/program.png)
-
 ```mermaid
 flowchart LR
     Tx[Transaction] --> I1[Instruction 1]
@@ -17,7 +15,3 @@ flowchart LR
 - Nếu một instruction thất bại, toàn bộ thay đổi trạng thái của transaction được rollback.
 
 Trước khi gửi transaction, client cần recent blockhash, fee payer, các chữ ký bắt buộc và đầy đủ account của mọi instruction.
-
-## Tài nguyên sơ đồ
-
-[Mở bản Excalidraw](./images/program.excalidraw) để chỉnh sửa sơ đồ.

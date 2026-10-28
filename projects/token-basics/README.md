@@ -1,9 +1,5 @@
 # SPL Token cơ bản
 
-![SPL Token accounts](../../notes/images/spl-token.png)
-
-[Excalidraw source](../../notes/images/spl-token.excalidraw)
-
 Lab client thực hành mint, token account, ATA, authority, mint, transfer và burn.
 
 > Phần mã nguồn đã hoàn thiện đủ bốn trạng thái: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/README.md) → [checkpoint 2](./checkpoint-2/README.md) → [final](./final/README.md).

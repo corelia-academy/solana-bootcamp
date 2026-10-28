@@ -1,7 +1,5 @@
 # Mô hình SPL Token
 
-![Sơ đồ SPL Token](./images/spl-token.png)
-
 ```mermaid
 flowchart LR
     Mint[Mint account] -->|defines token| ATA1[Alice ATA]
@@ -16,7 +14,3 @@ flowchart LR
 - Token transfer thay đổi số dư token account, không thay đổi lamports của wallet account.
 
 Luôn xác minh đúng mint, authority của token account, token program dự kiến và decimals.
-
-## Tài nguyên sơ đồ
-
-[Mở bản Excalidraw](./images/spl-token.excalidraw) để chỉnh sửa sơ đồ.
