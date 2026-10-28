@@ -1,8 +1,8 @@
 # Những điều học viên cần biết trước khi bắt đầu
 
-Khóa học dành cho lập trình viên mới tiếp cận Solana, có kiến thức lập trình cơ bản. Bạn nên đọc được code, dùng terminal và hiểu Git ở mức cơ bản; Rust cần thiết được dạy ở Module 2.
+Khóa học dành cho lập trình viên mới tiếp cận Solana, có kiến thức lập trình cơ bản; không yêu cầu từng học blockchain hoặc có ví crypto. Bạn nên đọc được code, dùng terminal và hiểu Git ở mức cơ bản; Rust cần thiết được dạy ở Module 2.
 
-Bắt đầu với [Module 0 — Bootcamp Orientation](../curriculum/module-00-orientation/README.md) để hiểu lộ trình, tự kiểm tra prerequisite và biết cách dùng tài liệu trước khi cài môi trường ở Module 1.
+Bắt đầu với [Module 0 — Bootcamp Orientation & Blockchain Basics](../curriculum/module-00-orientation/README.md) để hiểu đối tượng học, lộ trình, cách dùng tài liệu và các khái niệm blockchain trước khi cài môi trường ở Module 1.
 
 ## Truy cập khóa học
 
@@ -18,9 +18,11 @@ Mở [Solana Bootcamp trên Corelia Academy](https://corelia.academy/learn/cours
 
 ## Lộ trình và cách học
 
-[Chương trình](../curriculum/README.md) gồm **Module 0 + 18 module**, tổng cộng 19 trang module. Sau phần định hướng là nền tảng Module 1–5, core projects Module 6–11, một nhánh tự chọn trong Module 12–14, AI/Agent track Module 15–17 và Security & Production ở Module 18.
+[Chương trình](../curriculum/README.md) gồm **Module 0 + 18 module**, tổng cộng 19 trang module. Sau phần định hướng và blockchain cơ bản là nền tảng Module 1–5, core projects Module 6–11, một nhánh tự chọn trong Module 12–14, AI/Agent track Module 15–17 và Security & Production ở Module 18.
 
 Đọc [Your Learning Roadmap](../curriculum/module-00-orientation/lessons.md#02-your-learning-roadmap) và [bản đồ phụ thuộc](./module-dependencies.md) để chọn hướng học. Mỗi bài thực hành đi theo nhịp **Xem → Dừng video → Code → Test → Đối chiếu**; [hướng dẫn dùng repo](../curriculum/module-00-orientation/lessons.md#04-how-to-use-the-github-repository) giải thích starter, checkpoint và final.
+
+Module 0 giải thích blockchain, ví và chữ ký, transaction, program, account, các mạng thực hành và luồng hoạt động của dApp. Cuối module, [dùng thử Phantom và Explorer](../curriculum/module-00-orientation/lessons.md#010-dùng-thử-phantom-và-đọc-explorer): tạo ví, nhận SOL Devnet và xem giao dịch, chưa cần code. Hoàn thành [bài tự kiểm tra](../curriculum/module-00-orientation/lessons.md#tự-kiểm-tra-trước-module-1) để chắc rằng bạn hiểu các thuật ngữ sẽ gặp khi setup. Mô hình account/transaction chuyên sâu nằm ở Module 3.
 
 ## Video, docs và phiên bản
 
@@ -41,7 +43,7 @@ Hoàn thành các module bắt buộc, một nhánh chuyên sâu tự chọn và
 ## Bắt đầu
 
 1. Truy cập [khóa Solana Bootcamp trên Corelia Academy](https://corelia.academy/learn/courses/solana-bootcamp).
-2. Đọc [Module 0 — Bootcamp Orientation](../curriculum/module-00-orientation/README.md).
+2. Đọc [Module 0 — Bootcamp Orientation & Blockchain Basics](../curriculum/module-00-orientation/README.md).
 3. Hoàn thành [readiness checklist](../curriculum/module-00-orientation/readiness-checklist.md).
 4. Mở [Module 1 — Solana Setup & First Deployment](../curriculum/module-01-orientation/README.md), làm setup theo docs và thực hành lab từng bước.
 

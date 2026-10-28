@@ -12,7 +12,7 @@ Học trên Corelia Academy và nhận **chứng nhận hoàn thành** khi đáp
 
 Truy cập [khóa Solana Bootcamp trên Corelia Academy](https://corelia.academy/learn/courses/solana-bootcamp) để học theo từng lesson cùng các nội dung bổ trợ của khóa học. Khi xem video trên YouTube, hãy kết hợp với nội dung khóa học và tài liệu/code trong repo để hoàn thành bài thực hành.
 
-- [Module 0 — Bootcamp Orientation](./curriculum/module-00-orientation/README.md)
+- [Module 0 — Bootcamp Orientation & Blockchain Basics](./curriculum/module-00-orientation/README.md)
 - [Những điều học viên cần biết trước khi bắt đầu](./docs/getting-started.md)
 - [Chương trình Module 0 + 18 module](./curriculum/README.md)
 - [Cài đặt khóa học](./docs/setup.md)

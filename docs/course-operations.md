@@ -2,7 +2,7 @@
 
 Repository này là tài liệu đồng hành cho khóa học quay sẵn. Các module thực hành đi theo nhịp `Xem → Dừng video → Code → Test → Đối chiếu`; học viên tự học từ `starter`, không bắt đầu từ `final`.
 
-Bắt đầu từ [Module 0](../curriculum/module-00-orientation/README.md). Module 0 là phần định hướng và readiness checklist; nhịp code-along áp dụng từ Module 1. Khi video khác cách thao tác trong docs, đọc [quy tắc video, docs và phiên bản](../curriculum/module-00-orientation/lessons.md#05-video-documentation--tool-versions).
+Bắt đầu từ [Module 0](../curriculum/module-00-orientation/README.md). Module 0 gồm định hướng, blockchain cơ bản và readiness checklist; nhịp code-along áp dụng từ Module 1. Khi video khác cách thao tác trong docs, đọc [quy tắc video, docs và phiên bản](../curriculum/module-00-orientation/lessons.md#05-video-documentation--tool-versions).
 
 ## Học trên Corelia Academy
 
@@ -14,7 +14,7 @@ GitHub repo cung cấp docs cập nhật, code thực hành và checklist. Sau m
 
 | Chặng | Module | Sản phẩm kiểm chứng | Thời lượng tự học gợi ý |
 | --- | --- | --- | ---: |
-| Định hướng | 0 | Mục tiêu học, lộ trình và readiness checklist | 30–45 phút |
+| Định hướng và blockchain cơ bản | 0 | Mục tiêu học, lộ trình, sơ đồ giao dịch và readiness checklist | 60–90 phút |
 | Setup và deploy đầu tiên | 1 | Hello Solana build/test local, deploy/upgrade, IDL và test Devnet | 2–3 giờ |
 | Nền tảng | 2–3 | Rust Poll Counter, Solana mental model | 6–8 giờ |
 | Anchor và testing | 4–5 | PDA Counter cùng test matrix | 6–8 giờ |

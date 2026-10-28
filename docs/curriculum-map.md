@@ -1,10 +1,10 @@
 # Curriculum source map
 
-The source curriculum used `Module 0`, `Modules 1-10`, optional `11A/11B/11C`, and `Modules 12-15`. The repository originally presented these as 18 sequential, independently navigable modules. The pilot adds a dedicated orientation Module 0 while retaining repository Modules 1–18, for 19 module pages in total.
+The source curriculum used `Module 0`, `Modules 1-10`, optional `11A/11B/11C`, and `Modules 12-15`. The repository originally presented these as 18 sequential, independently navigable modules. The pilot adds a dedicated orientation and blockchain basics Module 0 while retaining repository Modules 1–18, for 19 module pages in total.
 
 | Repository module | Source module | Topic |
 | ---: | --- | --- |
-| 0 | 0 (orientation portion) | Bootcamp Orientation |
+| 0 | 0 (orientation portion, expanded with blockchain basics) | Bootcamp Orientation & Blockchain Basics |
 | 1 | 0 (development environment portion, expanded lab) | Solana Setup & First Deployment |
 | 2 | 1 | Rust Survival Kit |
 | 3 | 2 | Solana Mental Model |
@@ -24,4 +24,4 @@ The source curriculum used `Module 0`, `Modules 1-10`, optional `11A/11B/11C`, a
 | 17 | 14 | AI Agents on Solana |
 | 18 | 15 | Security & Production |
 
-The initial renumbering preserved source topics and made the three optional tracks first-class modules. The pilot moves the bootcamp map and learning guidance from repository Module 1 into the new Module 0, then expands the Module 1 lab to include Devnet deploy/upgrade, IDL and testing, following the video workflow. Modules 2–18 retain their numbering and prerequisites. The existing `module-01-orientation` directory remains in place to preserve incoming links.
+The initial renumbering preserved source topics and made the three optional tracks first-class modules. The pilot moves the bootcamp map and learning guidance from repository Module 1 into the new Module 0, adds beginner blockchain concepts before setup, then expands the Module 1 lab to include Devnet deploy/upgrade, IDL and testing, following the video workflow. Modules 2–18 retain their numbering and prerequisites. The existing `module-01-orientation` directory remains in place to preserve incoming links.
