@@ -26,7 +26,7 @@ Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/RE
 
 | Write path | Signer/authority | State mutable | External owner/program |
 | --- | --- | --- | --- |
-| `initialize_config` | admin; config PDA phải là mint authority | Config | System Program, Token Program |
+| `initialize_config` | admin + keypair mint mới (cùng ký) | Mint (tạo mới, authority = Config PDA), Config | System Program, Token Program |
 | `set_minter` | Config admin | Allowance | System Program |
 | `set_paused` | Config admin | Config | Stablecoin Lite Program |
 | `authorized_mint` | minter | Allowance, Config, Mint, destination token account | Token Program qua checked CPI |

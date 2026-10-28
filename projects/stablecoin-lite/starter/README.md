@@ -1,6 +1,6 @@
 # Starter — Stablecoin Lite
 
-Account schema, PDA seeds và contexts đã có sẵn. Hoàn thiện năm TODO theo thứ tự; Config PDA phải là mint authority trước khi initialize.
+Account schema, PDA seeds và contexts đã có sẵn. Hoàn thiện năm TODO theo thứ tự; TODO 1 phải tạo mint mới với Config PDA làm mint authority ngay trong `initialize_config`, không nhận mint có sẵn.
 
 ## Mục tiêu state
 Hiểu Config/Allowance schema và mint-authority handoff.

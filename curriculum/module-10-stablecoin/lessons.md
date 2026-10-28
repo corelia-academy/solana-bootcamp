@@ -6,7 +6,7 @@ Tách protocol configuration khỏi wallet admin. Mọi privileged instruction �
 
 ## 10.2 Config account
 
-Lưu admin, mint, paused, cap và bump. Initialize một lần; validate mint authority relationship.
+Lưu admin, mint, paused, cap và bump. Initialize một lần và tạo mint ngay trong instruction đó, với Config PDA làm mint authority. Nếu nhận mint có sẵn rồi kiểm tra authority, giữa transaction chuyển authority và transaction initialize có một khoảng hở: bất kỳ ai gọi initialize trước sẽ thành admin.
 
 ## 10.3 Minter allowance
 
@@ -22,7 +22,7 @@ Validate minter, allowance, cap, mint và destination ATA; program/PDA làm mint
 
 ## 10.6 Burn
 
-Holder burn token của chính mình; cập nhật supply tự động qua Token Program. Không cần admin cho normal burn.
+Holder burn token của chính mình; cập nhật supply tự động qua Token Program. Không cần admin cho normal burn. Lưu ý: `burn` không trừ `minted_by_protocol`, nên `total_cap` là giới hạn tổng lượng mint trọn đời qua protocol, không phải giới hạn supply đang lưu hành. Muốn cap theo supply thì so sánh với `mint.supply` thay vì counter.
 
 ## 10.7 Freeze/force-transfer
 
@@ -46,7 +46,7 @@ Config PDA theo mint lưu admin, paused, total cap và minted-through-protocol. 
 
 ## Instruction flow
 
-`initialize_config` tiếp nhận mint authority; `set_minter` cấp/thu hồi allowance; `pause/unpause` chỉ admin; `mint` kiểm tra paused, allowance và cap trước CPI; `burn` yêu cầu holder ký. Freeze/force-transfer chỉ là thảo luận rủi ro, mặc định không triển khai.
+`initialize_config` tạo mint mới (authority = Config PDA, không có freeze authority) và Config trong cùng một instruction; `set_minter` cấp/thu hồi allowance; `pause/unpause` chỉ admin; `mint` kiểm tra paused, allowance và cap trước CPI; `burn` yêu cầu holder ký. Freeze/force-transfer chỉ là thảo luận rủi ro, mặc định không triển khai.
 
 ## Security và tests
 

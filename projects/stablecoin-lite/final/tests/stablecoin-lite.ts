@@ -1,4 +1,4 @@
-import * as anchor from "@coral-xyz/anchor";
+import * as anchor from "@anchor-lang/core";
 import BN from "bn.js";
 import {
   TOKEN_PROGRAM_ID,
@@ -46,14 +46,25 @@ describe("stablecoin-lite", () => {
       );
       await provider.connection.confirmTransaction(signature, "confirmed");
     }
-    await createMint(
-      provider.connection,
-      payer,
-      config,
-      null,
-      6,
-      mintKeypair,
-    );
+  });
+
+  it("tạo mint và config trong cùng instruction, Config PDA là mint authority", async () => {
+    await program.methods
+      .initializeConfig(6, new BN(1_000))
+      .accounts({
+        admin: admin.publicKey,
+        mint: mintKeypair.publicKey,
+        config,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      })
+      .signers([mintKeypair])
+      .rpc();
+
+    const mintState = await getMint(provider.connection, mintKeypair.publicKey);
+    expect(mintState.mintAuthority?.toBase58()).to.equal(config.toBase58());
+    expect(mintState.freezeAuthority).to.equal(null);
+    expect(mintState.decimals).to.equal(6);
+
     destination = await createAssociatedTokenAccount(
       provider.connection,
       payer,
@@ -62,15 +73,31 @@ describe("stablecoin-lite", () => {
     );
   });
 
-  it("khởi tạo config và cấp allowance", async () => {
-    await program.methods
-      .initializeConfig(new BN(1_000))
-      .accounts({
-        admin: admin.publicKey,
-        mint: mintKeypair.publicKey,
-        config,
-      })
-      .rpc();
+  it("không nhận mint đã tồn tại (chặn front-run lúc initialize)", async () => {
+    // Mint tạo sẵn ngoài program: kể cả khi authority đã là Config PDA tương ứng,
+    // initialize_config vẫn phải fail vì instruction tự tạo account mint.
+    const existing = Keypair.generate();
+    const [existingConfig] = PublicKey.findProgramAddressSync(
+      [Buffer.from("config"), existing.publicKey.toBuffer()],
+      program.programId,
+    );
+    await createMint(provider.connection, payer, existingConfig, null, 6, existing);
+    await expectFailure(
+      program.methods
+        .initializeConfig(6, new BN(1_000))
+        .accounts({
+          admin: outsider.publicKey,
+          mint: existing.publicKey,
+          config: existingConfig,
+          tokenProgram: TOKEN_PROGRAM_ID,
+        })
+        .signers([outsider, existing])
+        .rpc(),
+      /already in use|custom program error: 0x0/i,
+    );
+  });
+
+  it("cấp allowance cho minter", async () => {
     await program.methods
       .setMinter(new BN(700))
       .accounts({

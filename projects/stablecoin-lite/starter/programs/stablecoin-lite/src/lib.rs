@@ -1,7 +1,10 @@
 use anchor_lang::prelude::*;
-use anchor_lang::solana_program::program_option::COption;
+use anchor_lang::solana_program::program_pack::Pack;
+use anchor_lang::system_program::{create_account, CreateAccount};
+use anchor_spl::token::spl_token;
 use anchor_spl::token_interface::{
-    burn_checked, mint_to_checked, BurnChecked, Mint, MintToChecked, TokenAccount, TokenInterface,
+    burn_checked, initialize_mint2, mint_to_checked, BurnChecked, InitializeMint2, Mint,
+    MintToChecked, TokenAccount, TokenInterface,
 };
 
 declare_id!("Fg6PaFpoGXkYsidMpWxqSWYDLsh6d8JQRqWSZC9sDgG");
@@ -10,9 +13,13 @@ declare_id!("Fg6PaFpoGXkYsidMpWxqSWYDLsh6d8JQRqWSZC9sDgG");
 pub mod stablecoin_lite {
     use super::*;
 
-    pub fn initialize_config(ctx: Context<InitializeConfig>, total_cap: u64) -> Result<()> {
-        let _ = (ctx, total_cap);
-        todo!("TODO 1: validate mint authority và tạo Config")
+    pub fn initialize_config(
+        ctx: Context<InitializeConfig>,
+        decimals: u8,
+        total_cap: u64,
+    ) -> Result<()> {
+        let _ = (ctx, decimals, total_cap);
+        todo!("TODO 1: tạo mint với Config PDA làm mint authority rồi lưu Config, trong cùng instruction")
     }
 
     pub fn set_minter(ctx: Context<SetMinter>, allowance: u64) -> Result<()> {
@@ -40,9 +47,12 @@ pub mod stablecoin_lite {
 pub struct InitializeConfig<'info> {
     #[account(mut)]
     pub admin: Signer<'info>,
-    pub mint: InterfaceAccount<'info, Mint>,
+    /// Keypair mới cho mint; được tạo và khởi tạo bên trong instruction.
+    #[account(mut)]
+    pub mint: Signer<'info>,
     #[account(init, payer=admin, space=8+Config::INIT_SPACE, seeds=[b"config",mint.key().as_ref()], bump)]
     pub config: Account<'info, Config>,
+    pub token_program: Interface<'info, TokenInterface>,
     pub system_program: Program<'info, System>,
 }
 
@@ -124,6 +134,4 @@ pub enum StablecoinError {
     CapExceeded,
     #[msg("Arithmetic overflow")]
     Overflow,
-    #[msg("Config PDA phải là mint authority trước khi initialize")]
-    InvalidMintAuthority,
 }

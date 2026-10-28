@@ -1,7 +1,10 @@
 use anchor_lang::prelude::*;
-use anchor_lang::solana_program::program_option::COption;
+use anchor_lang::solana_program::program_pack::Pack;
+use anchor_lang::system_program::{create_account, CreateAccount};
+use anchor_spl::token::spl_token;
 use anchor_spl::token_interface::{
-    burn_checked, mint_to_checked, BurnChecked, Mint, MintToChecked, TokenAccount, TokenInterface,
+    burn_checked, initialize_mint2, mint_to_checked, BurnChecked, InitializeMint2, Mint,
+    MintToChecked, TokenAccount, TokenInterface,
 };
 
 declare_id!("Fg6PaFpoGXkYsidMpWxqSWYDLsh6d8JQRqWSZC9sDgG");
@@ -10,14 +13,45 @@ declare_id!("Fg6PaFpoGXkYsidMpWxqSWYDLsh6d8JQRqWSZC9sDgG");
 pub mod stablecoin_lite {
     use super::*;
 
-    pub fn initialize_config(ctx: Context<InitializeConfig>, total_cap: u64) -> Result<()> {
+    /// Tạo mint MỚI và Config trong cùng một instruction.
+    ///
+    /// Không nhận mint có sẵn: nếu admin chuyển mint authority sang Config PDA ở một
+    /// transaction riêng, kẻ khác có thể gọi `initialize_config` trước và trở thành admin.
+    /// Tạo mint ở đây với authority = Config PDA thì không còn khoảng hở đó.
+    pub fn initialize_config(
+        ctx: Context<InitializeConfig>,
+        decimals: u8,
+        total_cap: u64,
+    ) -> Result<()> {
         require!(total_cap > 0, StablecoinError::InvalidAmount);
-        require!(
-            ctx.accounts.mint.mint_authority == COption::Some(ctx.accounts.config.key()),
-            StablecoinError::InvalidMintAuthority
-        );
-        let config = &mut ctx.accounts.config;
-        config.set_inner(Config {
+        let config_key = ctx.accounts.config.key();
+
+        // 1. Cấp phát account cho mint, owner là token program đã chọn.
+        let space = spl_token::state::Mint::LEN;
+        create_account(
+            CpiContext::new(ctx.accounts.system_program.key(),
+                CreateAccount {
+                    from: ctx.accounts.admin.to_account_info(),
+                    to: ctx.accounts.mint.to_account_info(),
+                },
+            ),
+            Rent::get()?.minimum_balance(space),
+            space as u64,
+            &ctx.accounts.token_program.key(),
+        )?;
+        // 2. Khởi tạo mint: Config PDA là mint authority, không có freeze authority.
+        initialize_mint2(
+            CpiContext::new(ctx.accounts.token_program.key(),
+                InitializeMint2 {
+                    mint: ctx.accounts.mint.to_account_info(),
+                },
+            ),
+            decimals,
+            &config_key,
+            None,
+        )?;
+
+        ctx.accounts.config.set_inner(Config {
             admin: ctx.accounts.admin.key(),
             mint: ctx.accounts.mint.key(),
             paused: false,
@@ -57,9 +91,12 @@ pub mod stablecoin_lite {
 pub struct InitializeConfig<'info> {
     #[account(mut)]
     pub admin: Signer<'info>,
-    pub mint: InterfaceAccount<'info, Mint>,
+    /// Keypair mới cho mint; được tạo và khởi tạo bên trong instruction.
+    #[account(mut)]
+    pub mint: Signer<'info>,
     #[account(init, payer=admin, space=8+Config::INIT_SPACE, seeds=[b"config",mint.key().as_ref()], bump)]
     pub config: Account<'info, Config>,
+    pub token_program: Interface<'info, TokenInterface>,
     pub system_program: Program<'info, System>,
 }
 
@@ -141,6 +178,4 @@ pub enum StablecoinError {
     CapExceeded,
     #[msg("Arithmetic overflow")]
     Overflow,
-    #[msg("Config PDA phải là mint authority trước khi initialize")]
-    InvalidMintAuthority,
 }

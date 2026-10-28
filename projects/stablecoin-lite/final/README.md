@@ -2,7 +2,7 @@
 
 ## Mục tiêu state
 
-Config PDA là mint authority; admin quản lý minter allowance và pause, minter mint trong allowance/cap, holder tự burn. Freeze/force-transfer không được bật.
+`initialize_config` tạo mint mới với Config PDA làm mint authority trong cùng instruction (không nhận mint có sẵn để tránh front-run); admin quản lý minter allowance và pause, minter mint trong allowance/cap, holder tự burn. Freeze/force-transfer không được bật.
 
 ## Phần đã có
 
