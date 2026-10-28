@@ -1,4 +1,4 @@
-import * as anchor from "@coral-xyz/anchor";
+import * as anchor from "@anchor-lang/core";
 import BN from "bn.js";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -9,7 +9,7 @@ import {
   getAssociatedTokenAddressSync,
   mintTo,
 } from "@solana/spl-token";
-import { Keypair, PublicKey, SYSVAR_RENT_PUBKEY, SystemProgram } from "@solana/web3.js";
+import { PublicKey, SystemProgram } from "@solana/web3.js";
 import { expect } from "chai";
 
 describe("simple-amm", () => {
@@ -26,6 +26,14 @@ describe("simple-amm", () => {
   let lpMint: PublicKey;
   let vaultA: PublicKey;
   let vaultB: PublicKey;
+  let lockedLp: PublicKey;
+  const FEE_BPS = 30;
+  const MINIMUM_LIQUIDITY = 1_000n;
+  const feeSeed = (fee: number) => {
+    const buf = Buffer.alloc(2);
+    buf.writeUInt16LE(fee);
+    return buf;
+  };
 
   const expectFailure = async (promise: Promise<unknown>, message: RegExp) => {
     try {
@@ -39,17 +47,13 @@ describe("simple-amm", () => {
   before(async () => {
     const first = await createMint(provider.connection, payer, payer.publicKey, null, 6);
     const second = await createMint(provider.connection, payer, payer.publicKey, null, 6);
-    [mintA, mintB] = Buffer.compare(first.toBuffer(), second.toBuffer()) < 0
-      ? [first, second]
-      : [second, first];
+    [mintA, mintB] = Buffer.compare(first.toBuffer(), second.toBuffer()) < 0 ? [first, second] : [second, first];
     [pool] = PublicKey.findProgramAddressSync(
-      [Buffer.from("pool"), mintA.toBuffer(), mintB.toBuffer()],
+      [Buffer.from("pool"), mintA.toBuffer(), mintB.toBuffer(), feeSeed(FEE_BPS)],
       program.programId,
     );
-    [lpMint] = PublicKey.findProgramAddressSync(
-      [Buffer.from("lp"), pool.toBuffer()],
-      program.programId,
-    );
+    [lpMint] = PublicKey.findProgramAddressSync([Buffer.from("lp"), pool.toBuffer()], program.programId);
+    [lockedLp] = PublicKey.findProgramAddressSync([Buffer.from("locked_lp"), pool.toBuffer()], program.programId);
     vaultA = getAssociatedTokenAddressSync(mintA, pool, true);
     vaultB = getAssociatedTokenAddressSync(mintB, pool, true);
     providerA = await createAssociatedTokenAccount(provider.connection, payer, mintA, payer.publicKey);
@@ -59,9 +63,41 @@ describe("simple-amm", () => {
     await mintTo(provider.connection, payer, mintB, providerB, payer, 20_000_000n);
   });
 
+  it("từ chối fee ngoài các fee tier cho phép", async () => {
+    const badFee = 9_999;
+    const [badPool] = PublicKey.findProgramAddressSync(
+      [Buffer.from("pool"), mintA.toBuffer(), mintB.toBuffer(), feeSeed(badFee)],
+      program.programId,
+    );
+    const [badLp] = PublicKey.findProgramAddressSync([Buffer.from("lp"), badPool.toBuffer()], program.programId);
+    const [badLocked] = PublicKey.findProgramAddressSync(
+      [Buffer.from("locked_lp"), badPool.toBuffer()],
+      program.programId,
+    );
+    await expectFailure(
+      program.methods
+        .initializePool(badFee)
+        .accounts({
+          payer: payer.publicKey,
+          mintA,
+          mintB,
+          pool: badPool,
+          lpMint: badLp,
+          vaultA: getAssociatedTokenAddressSync(mintA, badPool, true),
+          vaultB: getAssociatedTokenAddressSync(mintB, badPool, true),
+          lockedLp: badLocked,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc(),
+      /InvalidFee|fee tier/i,
+    );
+  });
+
   it("khởi tạo canonical pool, vaults và LP mint", async () => {
     await program.methods
-      .initializePool(30)
+      .initializePool(FEE_BPS)
       .accounts({
         payer: payer.publicKey,
         mintA,
@@ -70,26 +106,66 @@ describe("simple-amm", () => {
         lpMint,
         vaultA,
         vaultB,
+        lockedLp,
         tokenProgram: TOKEN_PROGRAM_ID,
         associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
         systemProgram: SystemProgram.programId,
-        rent: SYSVAR_RENT_PUBKEY,
       })
       .rpc();
     const state = await program.account.pool.fetch(pool);
     expect(state.mintA.equals(mintA)).to.equal(true);
-    expect(state.feeBps).to.equal(30);
+    expect(state.feeBps).to.equal(FEE_BPS);
   });
 
-  it("thêm thanh khoản ban đầu và mint LP shares", async () => {
+  it("thêm thanh khoản ban đầu, khóa MINIMUM_LIQUIDITY shares", async () => {
     await createAssociatedTokenAccount(provider.connection, payer, lpMint, payer.publicKey);
     await program.methods
-      .addLiquidity(new BN(1_000_000), new BN(4_000_000), new BN(2_000_000))
-      .accounts({ provider: payer.publicKey, pool, mintA, mintB, lpMint, vaultA, vaultB, providerA, providerB, providerLp, tokenProgram: TOKEN_PROGRAM_ID })
+      .addLiquidity(new BN(1_000_000), new BN(4_000_000), new BN(1_999_000))
+      .accounts({
+        provider: payer.publicKey,
+        pool,
+        mintA,
+        mintB,
+        lpMint,
+        vaultA,
+        vaultB,
+        providerA,
+        providerB,
+        providerLp,
+        lockedLp,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      })
       .rpc();
     expect((await getAccount(provider.connection, vaultA)).amount).to.equal(1_000_000n);
     expect((await getAccount(provider.connection, vaultB)).amount).to.equal(4_000_000n);
-    expect((await getAccount(provider.connection, providerLp)).amount).to.equal(2_000_000n);
+    // sqrt(1e6 * 4e6) = 2e6 shares, trong đó 1_000 bị khóa vĩnh viễn.
+    expect((await getAccount(provider.connection, providerLp)).amount).to.equal(2_000_000n - MINIMUM_LIQUIDITY);
+    expect((await getAccount(provider.connection, lockedLp)).amount).to.equal(MINIMUM_LIQUIDITY);
+  });
+
+  it("lần nạp sau chỉ lấy phần đúng tỷ lệ, không lấy phần dư", async () => {
+    const beforeA = (await getAccount(provider.connection, providerA)).amount;
+    const beforeB = (await getAccount(provider.connection, providerB)).amount;
+    // Tỷ lệ pool là 1 A : 4 B. User đưa trần 100_000 A và 1_000_000 B (dư B).
+    await program.methods
+      .addLiquidity(new BN(100_000), new BN(1_000_000), new BN(1))
+      .accounts({
+        provider: payer.publicKey,
+        pool,
+        mintA,
+        mintB,
+        lpMint,
+        vaultA,
+        vaultB,
+        providerA,
+        providerB,
+        providerLp,
+        lockedLp,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      })
+      .rpc();
+    expect(beforeA - (await getAccount(provider.connection, providerA)).amount).to.equal(100_000n);
+    expect(beforeB - (await getAccount(provider.connection, providerB)).amount).to.equal(400_000n);
   });
 
   it("swap giữ constant-product direction và trả output", async () => {
@@ -97,7 +173,17 @@ describe("simple-amm", () => {
     const beforeB = (await getAccount(provider.connection, providerB)).amount;
     await program.methods
       .swap(new BN(100_000), new BN(300_000), true)
-      .accounts({ trader: payer.publicKey, pool, mintA, mintB, vaultA, vaultB, userA: providerA, userB: providerB, tokenProgram: TOKEN_PROGRAM_ID })
+      .accounts({
+        trader: payer.publicKey,
+        pool,
+        mintA,
+        mintB,
+        vaultA,
+        vaultB,
+        userA: providerA,
+        userB: providerB,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      })
       .rpc();
     expect((await getAccount(provider.connection, providerA)).amount).to.equal(beforeA - 100_000n);
     expect((await getAccount(provider.connection, providerB)).amount > beforeB + 300_000n).to.equal(true);
@@ -109,7 +195,17 @@ describe("simple-amm", () => {
     await expectFailure(
       program.methods
         .swap(new BN(100_000), new BN(4_000_000), true)
-        .accounts({ trader: payer.publicKey, pool, mintA, mintB, vaultA, vaultB, userA: providerA, userB: providerB, tokenProgram: TOKEN_PROGRAM_ID })
+        .accounts({
+          trader: payer.publicKey,
+          pool,
+          mintA,
+          mintB,
+          vaultA,
+          vaultB,
+          userA: providerA,
+          userB: providerB,
+          tokenProgram: TOKEN_PROGRAM_ID,
+        })
         .rpc(),
       /SlippageExceeded|Minimum output|6003/i,
     );
@@ -121,7 +217,17 @@ describe("simple-amm", () => {
     await expectFailure(
       program.methods
         .swap(new BN(1), new BN(1), true)
-        .accounts({ trader: payer.publicKey, pool, mintA, mintB, vaultA: providerA, vaultB, userA: providerA, userB: providerB, tokenProgram: TOKEN_PROGRAM_ID })
+        .accounts({
+          trader: payer.publicKey,
+          pool,
+          mintA,
+          mintB,
+          vaultA: providerA,
+          vaultB,
+          userA: providerA,
+          userB: providerB,
+          tokenProgram: TOKEN_PROGRAM_ID,
+        })
         .rpc(),
       /vault_a|ConstraintAssociated|ConstraintTokenOwner|associated/i,
     );
@@ -133,7 +239,19 @@ describe("simple-amm", () => {
     const bBefore = (await getAccount(provider.connection, providerB)).amount;
     await program.methods
       .removeLiquidity(new BN(1_000_000), new BN(1), new BN(1))
-      .accounts({ provider: payer.publicKey, pool, mintA, mintB, lpMint, vaultA, vaultB, providerA, providerB, providerLp, tokenProgram: TOKEN_PROGRAM_ID })
+      .accounts({
+        provider: payer.publicKey,
+        pool,
+        mintA,
+        mintB,
+        lpMint,
+        vaultA,
+        vaultB,
+        providerA,
+        providerB,
+        providerLp,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      })
       .rpc();
     expect((await getAccount(provider.connection, providerLp)).amount).to.equal(lpBefore - 1_000_000n);
     expect((await getAccount(provider.connection, providerA)).amount > aBefore).to.equal(true);

@@ -10,9 +10,10 @@ Mã nguồn: [starter](./starter/README.md) → [checkpoint 1](./checkpoint-1/RE
 
 | Account | Seeds | Purpose |
 | --- | --- | --- |
-| Pool | `['pool', mint_a, mint_b]` | mints, vaults, fee, bump |
+| Pool | `['pool', mint_a, mint_b, fee_bps (u16 LE)]` | mints, fee, bump |
 | Vault A/B | ATA of pool PDA | token reserves |
-| LP mint | controlled by pool PDA | liquidity shares |
+| LP mint | `['lp', pool]`, authority = pool PDA | liquidity shares |
+| Locked LP | `['locked_lp', pool]`, authority = pool PDA | `MINIMUM_LIQUIDITY` shares khóa vĩnh viễn |
 
 ```mermaid
 flowchart TB
@@ -35,7 +36,7 @@ flowchart TB
 
 | Write path | Signer | State mutable | Kiểm tra quan hệ quan trọng |
 | --- | --- | --- | --- |
-| `initialize_pool` | payer | Pool, vault A/B, LP mint | canonical mint order; vault/LP authority là Pool PDA |
+| `initialize_pool` | payer | Pool, vault A/B, LP mint, locked LP | canonical mint order; fee thuộc fee tier cho phép (5/30/100 bps); vault/LP authority là Pool PDA |
 | `add_liquidity` | provider | vault A/B, LP mint, provider accounts | đúng mint/vault; shares theo reserve hiện tại |
 | `remove_liquidity` | provider | vault A/B, LP mint, provider accounts | burn LP trước khi Pool PDA trả token |
 | `swap` | trader | input/output vault và trader token accounts | đúng direction, fee, `minimum_output` và checked math |
