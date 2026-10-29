@@ -41,7 +41,7 @@ Bạn chưa cần học toàn bộ Rust, validator internals hay cryptography tr
 
 ## 0.3 How to Use the GitHub Repository
 
-Video của khóa học được đăng chính trên [kênh YouTube chính thức của Solana](https://www.youtube.com/@solana). Bạn cũng có thể học trên [Solana Bootcamp tại Corelia Academy](https://corelia.academy/learn/courses/solana-bootcamp) và kênh của Corelia; đây là lựa chọn thêm. Dù xem ở đâu, hãy mở docs của lesson trong repo; sau video, hoàn thành bài thực hành và checklist tương ứng.
+Video của khóa học được đăng chính trên [kênh YouTube chính thức của Solana](https://www.youtube.com/@solana). Bạn cũng có thể học trên [Solana Bootcamp tại Corelia Academy](https://corelia.academy/learn/courses/solana-bootcamp) và kênh của Corelia; đây là lựa chọn thêm. Học trên nền tảng Corelia Academy, bạn có bài học xếp theo lộ trình và lưu tiến độ, có thể hỏi trợ giảng AI Cora ngay trong bài, và nhận **chứng nhận hoàn thành chương trình** (ghi nhận onchain qua OpenCampus) khi kết thúc khóa. Dù xem ở đâu, hãy mở docs của lesson trong repo; sau video, hoàn thành bài thực hành và checklist tương ứng.
 
 GitHub repo chứa tài liệu và code đồng hành với video. Bắt đầu từ [README của repo](../../README.md), mở [trang chương trình](../README.md), rồi đọc README và lessons của module đang học.
 
@@ -115,14 +115,14 @@ Web3 không thay thế Web2. Phần lớn ứng dụng Web3 vẫn có frontend v
 
 Hình dung một ứng dụng ghi nhận số dư của An và Bình. Với ứng dụng thông thường, backend của đơn vị vận hành kiểm tra yêu cầu và cập nhật database. Các bên sử dụng tin đơn vị đó quản lý bản ghi đúng.
 
-Blockchain cho phép nhiều bên duy trì và kiểm tra một lịch sử giao dịch theo quy tắc chung. **Sổ cái (ledger)** là lịch sử các bản ghi; **trạng thái (state)** là kết quả hiện tại sau khi áp dụng các giao dịch hợp lệ, như số dư hoặc số phiếu. Tham khảo [giới thiệu blockchain và trạng thái](https://ethereum.org/en/developers/docs/intro-to-ethereum/).
+Blockchain cho phép nhiều bên duy trì và kiểm tra một lịch sử giao dịch theo quy tắc chung: thay vì một server của một công ty, có rất nhiều server do nhiều bên khác nhau chạy, gọi là node, cùng giữ một bản sao. **Sổ cái (ledger)** là lịch sử các bản ghi; **trạng thái (state)** là kết quả hiện tại sau khi áp dụng các giao dịch hợp lệ, như số dư hoặc số phiếu. Tham khảo [giới thiệu blockchain và trạng thái](https://ethereum.org/en/developers/docs/intro-to-ethereum/).
 
 ### Block, hash và đồng thuận
 
 - **Transaction:** yêu cầu thực hiện một thay đổi, ví dụ chuyển tài sản.
 - **Block:** nhóm giao dịch được ghi vào lịch sử của mạng.
 - **Hash:** giá trị băm dùng như dấu vân tay của dữ liệu; dữ liệu đổi thì hash cũng thay đổi với xác suất rất cao. Các block liên kết bằng tham chiếu hash, giúp phát hiện việc thay đổi lịch sử. Hash không dùng để giấu nội dung giao dịch. Xem [Blocks](https://ethereum.org/en/developers/docs/blocks/).
-- **Node:** máy tính chạy phần mềm tham gia mạng. **Validator:** node tham gia kiểm tra và đồng thuận về các block.
+- **Node:** server chạy phần mềm của mạng blockchain và giữ một bản sao sổ cái. **Validator:** node tham gia kiểm tra và đồng thuận về các block.
 - **Consensus (đồng thuận):** cơ chế để các bên thống nhất lịch sử và trạng thái hợp lệ dù không có một database do một người toàn quyền sửa. Hash giúp kiểm tra dữ liệu; cơ chế đồng thuận quyết định lịch sử được mạng chấp nhận. Xem [Consensus mechanisms](https://ethereum.org/en/developers/docs/consensus-mechanisms/).
 
 Với blockchain công khai, dữ liệu onchain thường có thể được người khác đọc và kiểm chứng. Khi muốn cập nhật trạng thái, bạn gửi giao dịch mới theo quy tắc của mạng. Developer phải thiết kế quyền thay đổi dữ liệu và cách người dùng kiểm tra kết quả.

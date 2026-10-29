@@ -10,7 +10,7 @@ Không có module tiên quyết và không yêu cầu biết blockchain, crypto 
 
 ## Truy cập khóa học
 
-Video khóa học đăng chính trên [kênh YouTube chính thức của Solana](https://www.youtube.com/@solana). Bạn cũng có thể học trên [Solana Bootcamp tại Corelia Academy](https://corelia.academy/learn/courses/solana-bootcamp) và kênh của Corelia. Kết hợp video với docs, code và bài thực hành trong GitHub repo.
+Video khóa học đăng chính trên [kênh YouTube chính thức của Solana](https://www.youtube.com/@solana). Bạn cũng có thể học trên [Solana Bootcamp tại Corelia Academy](https://corelia.academy/learn/courses/solana-bootcamp) và kênh của Corelia. Học trên nền tảng, bạn được lưu tiến độ, hỏi trợ giảng AI Cora và nhận chứng nhận hoàn thành chương trình (ghi nhận onchain qua OpenCampus). Kết hợp video với docs, code và bài thực hành trong GitHub repo.
 
 ## Hỏi đáp và cộng đồng
 
