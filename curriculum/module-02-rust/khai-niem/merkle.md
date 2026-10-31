@@ -1,6 +1,6 @@
 # Merkle tree — Chứng minh một tên có trong danh sách
 
-Bạn đã biết giữ danh sách khách. Giờ muốn gửi bằng chứng cho một tên mà không phải gửi cả danh sách. Bài này đọc bằng giấy trước; code ở project vé.
+Merkle tree gom cả danh sách thành một hash gốc (root) và cho phép chứng minh một phần tử nằm trong danh sách mà không cần gửi cả danh sách.
 
 ## 1. Hash của một tên
 
@@ -47,6 +47,6 @@ Một cái tên trong danh sách không tự xác thực người đang cầm v�
 
 ## Tự làm trên giấy
 
-Từ cây trên, viết proof cho Lan, An và Bình, ghi cả hướng. Sau đó quay lại code để đối chiếu. Đổi tên trong verify nhưng giữ proof cũ: kết quả phải false.
+Từ cây trên, viết proof cho Lan, An và Bình, ghi cả hướng. Sau đó đối chiếu với code ở project vé. Đổi tên trong verify nhưng giữ proof cũ: kết quả phải false.
 
-**Quay lại:** [vé — tạo root](../03-ve-su-kien/README.md#ticket-3) · [vé — proof và verify](../03-ve-su-kien/README.md#ticket-4).
+**Dùng trong:** [vé — tạo root](../03-ve-su-kien/README.md#ticket-3) · [vé — proof và verify](../03-ve-su-kien/README.md#ticket-4).

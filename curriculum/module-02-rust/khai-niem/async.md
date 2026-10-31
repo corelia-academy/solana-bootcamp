@@ -1,6 +1,6 @@
 # Async/await — Tiến triển việc khác trong lúc chờ
 
-Đọc khi project cần lấy khách từ hai nguồn. Học xong quay lại nguồn dữ liệu, chưa cần tự viết executor.
+Async cho chương trình tiếp tục việc khác trong lúc chờ dữ liệu, như chờ mạng hay timer, thay vì giữ thread đứng yên.
 
 ## 1. Bài toán trước cú pháp
 
@@ -76,4 +76,4 @@ Nguồn API: [Tokio main](https://docs.rs/tokio/1.48.0/tokio/attr.main.html), [j
 
 Dùng select để đua nguồn dữ liệu và timer hết hạn. Đổi nguồn nhanh hơn/chậm hơn timeout để quan sát. Không assert thời gian chính xác theo đồng hồ thật vì lịch chạy còn tùy môi trường.
 
-**Quay lại:** [vé — nguồn khách](../03-ve-su-kien/README.md#ticket-1) · [vé — join/select](../03-ve-su-kien/README.md#ticket-2).
+**Dùng trong:** [vé — nguồn khách](../03-ve-su-kien/README.md#ticket-1) · [vé — join/select](../03-ve-su-kien/README.md#ticket-2).

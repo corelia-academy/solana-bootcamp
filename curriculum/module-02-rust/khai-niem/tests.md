@@ -1,6 +1,6 @@
 # Test — Cho code một đầu vào và kiểm tra điều đã hứa
 
-Project cần biết có đếm đúng, có từ chối input sai và có giữ dữ liệu khi lỗi không. Tests giúp kiểm tra lại các hành vi đó. Chạy trong [sandbox](./README.md#thu-muc-nhap).
+Test là hàm kiểm tra code cho ra kết quả mong đợi; `cargo test` chạy mọi hàm có `#[test]`.
 
 ## 1. Một hàm, một kiểm tra
 
@@ -55,4 +55,4 @@ Derive như `#[derive(Debug)]` sinh implementation trait. `#[test]` đánh dấu
 
 Thêm test cho hàm tính tiền với số ly bằng 0. Cố tình sửa công thức để test thất bại, rồi khôi phục. Đạt khi đọc được test báo đầu vào nào và mong kết quả gì.
 
-**Quay lại:** [giỏ hàng — test](../01-gio-hang/gio-hang-day-du.md#gio-5) · [bình chọn — test](../02-binh-chon/README.md#poll-5) · [vé — test](../03-ve-su-kien/README.md#ticket-5).
+**Dùng trong:** [giỏ hàng — test](../01-gio-hang/gio-hang-day-du.md#gio-5) · [bình chọn — test](../02-binh-chon/README.md#poll-5) · [vé — test](../03-ve-su-kien/README.md#ticket-5).

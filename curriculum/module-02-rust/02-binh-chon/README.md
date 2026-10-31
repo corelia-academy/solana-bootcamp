@@ -1,6 +1,6 @@
 # Project 2 — Tự viết bình chọn terminal
 
-Bạn sẽ viết chương trình nhận phiếu, báo lỗi khi nhập sai và in kết quả khi thoát. Bắt đầu bằng project trống; code cần gõ đều nằm trong README này.
+Chương trình nhận phiếu, báo lỗi khi nhập sai và in kết quả khi thoát. Bắt đầu bằng project trống; code cần gõ đều nằm trong README này.
 
 <a id="poll-0"></a>
 ## Bước 0 — Tạo project
@@ -19,7 +19,7 @@ Các lệnh sau chạy tại `practice`. Ta viết hai file: `src/poll.rs` xử 
 <a id="poll-1"></a>
 ## Bước 1 — Biến chữ người dùng nhập thành một lựa chọn
 
-**Các điểm rẽ:** [module và pub](../khai-niem/modules.md) khi tạo poll.rs; [enum Choice](../khai-niem/enums.md) khi khai báo lựa chọn; [Result](../khai-niem/errors.md) khi parse có thể sai; [FromStr](../khai-niem/traits.md) khi cài cách đọc chuỗi. Mở theo thứ đang đọc, rồi quay về đúng bước này.
+**Khái niệm:** [module và pub](../khai-niem/modules.md) · [enum](../khai-niem/enums.md) · [Result](../khai-niem/errors.md) · [FromStr](../khai-niem/traits.md)
 
 **Tạo `src/poll.rs`**, ghi toàn bộ đoạn sau:
 
@@ -78,7 +78,7 @@ Chạy `cargo run`: ba dòng đầu là Ok, dòng `maybe` là Err. Chuỗi sai l
 <a id="poll-2"></a>
 ## Bước 2 — Lưu và đếm phiếu
 
-**Mở theo phần đang gặp:** [struct/impl](../khai-niem/structs.md), [HashMap và Option](../khai-niem/collections.md), [checked_add và ?](../khai-niem/errors.md), [iterator tính tổng](../khai-niem/iterators.md). Khi đến title(), mở [lifetime](../khai-niem/lifetimes.md).
+**Khái niệm:** [struct/impl](../khai-niem/structs.md) · [HashMap và Option](../khai-niem/collections.md) · [checked_add và ?](../khai-niem/errors.md) · [iterator tính tổng](../khai-niem/iterators.md) · [lifetime](../khai-niem/lifetimes.md)
 
 **Thêm dòng này lên đầu `src/poll.rs`**, giữ phần đã viết:
 
@@ -159,7 +159,7 @@ Chạy `cargo run`: Yes bằng 2, tổng bằng 3. `Box<dyn Error>` cho main tr�
 <a id="poll-3"></a>
 ## Bước 3 — In lựa chọn thành chữ dễ đọc
 
-**Khái niệm mới:** [trait From và Display](../khai-niem/traits.md). [In dữ liệu](../khai-niem/printing.md) giải thích vì sao {} khác {:?}.
+**Khái niệm:** [trait From và Display](../khai-niem/traits.md) · [`{}` và `{:?}`](../khai-niem/printing.md)
 
 Hiện tại Choice in bằng Debug thành `Yes`. Ta muốn `println!("{}", choice)` ra `yes`.
 
@@ -201,7 +201,7 @@ impl Display for Choice {
 <a id="poll-4"></a>
 ## Bước 4 — Nhận input thật trong vòng lặp
 
-**Khái niệm mới:** [generic và trait bound](../khai-niem/traits.md) cho show; [vòng lặp và match](../khai-niem/control-flow.md) cho nhập nhiều phiếu; [in/flush](../khai-niem/printing.md) cho dấu nhắc terminal.
+**Khái niệm:** [generic và trait bound](../khai-niem/traits.md) · [vòng lặp và match](../khai-niem/control-flow.md) · [in và flush](../khai-niem/printing.md)
 
 **Thay toàn bộ `src/main.rs`** bằng đoạn này; giữ nguyên `poll.rs`:
 
@@ -272,7 +272,7 @@ Tổng: 4
 <a id="poll-5"></a>
 ## Bước 5 — Thêm kiểm tra tự động
 
-**Khái niệm mới:** [tests và attributes](../khai-niem/tests.md). Khi xem unwrap trong test, đối chiếu [xử lý lỗi](../khai-niem/errors.md). Học xong quay lại thêm tests.
+**Khái niệm:** [tests và attributes](../khai-niem/tests.md) · [unwrap và xử lý lỗi](../khai-niem/errors.md)
 
 **Thêm vào cuối `src/poll.rs`**:
 

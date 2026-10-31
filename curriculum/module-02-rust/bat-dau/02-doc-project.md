@@ -1,6 +1,6 @@
 # Tra cứu — Folder Rust có gì?
 
-Đọc khi cần tìm file. Nếu chưa chạy Hello World, [làm bài đầu trước](./01-cai-rust.md).
+Cấu trúc thư mục của một Cargo project và vai trò của từng file.
 
 Sau khi tạo và chạy project hello_rust, bạn thường thấy:
 
@@ -36,6 +36,4 @@ Gặp ở các bài sau mới cần tra bảng này:
 | src/bin/ | Các chương trình khác trong cùng package |
 | tests/ | Kiểm tra tự động dùng API của thư viện |
 
-Đọc [bài Module](../khai-niem/modules.md) khi bắt đầu tách code thành nhiều file.
-
-[Quay lại hóa đơn](../01-gio-hang/README.md#in-tien).
+Tách code thành nhiều file: xem [bài Module](../khai-niem/modules.md).

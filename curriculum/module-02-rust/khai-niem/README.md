@@ -1,8 +1,8 @@
-# Bài khái niệm — Mở khi project vừa dùng đến
+# Bài khái niệm
 
-Project là đường học chính. Khi gặp khái niệm mới, mở bài tương ứng, thử ví dụ rồi dùng liên kết **Quay lại** ở cuối bài để tiếp tục đúng bước project. Một số bài có liên kết quay lại ngay sau phần nhập môn, để lần đầu chỉ đọc phần cần dùng.
+Mỗi bài giải thích một khái niệm Rust dùng trong ba project, kèm ví dụ chạy độc lập.
 
-| Bạn vừa gặp | Mở bài |
+| Từ khóa | Bài |
 | --- | --- |
 | fn, main, tham số, kết quả, dấu ; | [Hàm](./functions.md) |
 | let, mut, shadowing, const | [Biến](./variables.md) |
@@ -36,7 +36,7 @@ Nếu sandbox đã tồn tại, chỉ cd vào đó. Mỗi block Rust trong bài 
 
 Block `compile_fail` là code cố tình sai để xem compiler giải thích; đọc nguyên nhân rồi chuyển sang bản sửa. Bài async có hướng dẫn bổ sung dependency ngay tại đó. Các ví dụ còn lại dùng thư viện chuẩn.
 
-Khi quay lại, chuyển terminal về thư mục project đang làm và tiếp tục code đang giữ ở đó. Nếu đang dùng hello_rust, mở terminal tại hello_rust. Với bản project đặt ở practice, ví dụ từ sandbox có thể chuyển về như sau:
+Để tiếp tục project, chuyển terminal về thư mục project đang làm. Nếu đang dùng hello_rust, mở terminal tại hello_rust. Với bản project đặt ở practice, ví dụ từ sandbox có thể chuyển về như sau:
 
 ```shell
 cd ../01-gio-hang/practice

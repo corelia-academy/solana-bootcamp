@@ -1,6 +1,6 @@
 # Enum — Một giá trị thuộc trường hợp nào?
 
-Một phiếu chọn Yes hoặc No hoặc Abstain. Enum biểu diễn đúng việc “chọn một trong số đó”. Ví dụ chạy ở [thư mục nháp](./README.md#thu-muc-nhap).
+Enum là kiểu chỉ nhận một trong các trường hợp đã liệt kê, ví dụ một phiếu là Yes, No hoặc Abstain.
 
 ## 1. Tạo tập lựa chọn
 
@@ -64,4 +64,4 @@ Debug cho in kiểm tra. PartialEq/Eq cho so sánh bằng. Hash cho băm làm kh
 
 Thêm Veto vào ví dụ đầu, chạy để đọc lỗi match thiếu, rồi bổ sung nhánh. Tiếp theo thử thêm lý do lỗi vào một trạng thái riêng.
 
-**Quay lại:** [bình chọn — Choice](../02-binh-chon/README.md#poll-1).
+**Dùng trong:** [bình chọn — Choice](../02-binh-chon/README.md#poll-1).

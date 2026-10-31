@@ -1,6 +1,6 @@
 # Ownership và borrowing — Ai giữ dữ liệu, ai được đọc/sửa?
 
-Bạn gặp String, `&cart`, `&self`, `&mut self`. Bài này dùng một cái tên để giải thích trước, rồi quay lại giỏ hàng. Chạy ví dụ riêng trong [thư mục nháp](./README.md#thu-muc-nhap).
+Mỗi giá trị trong Rust có đúng một chủ sở hữu. Code khác dùng giá trị bằng cách mượn qua reference: `&` để đọc, `&mut` để sửa.
 
 ## 1. String có người sở hữu
 
@@ -95,4 +95,4 @@ Chuỗi String thường có phần mô tả gồm con trỏ, độ dài, sức 
 
 Viết hàm nhận &str và in tên hai lần; gọi xong vẫn in tên ở main. Viết thêm hàm nhận &mut String để ghép chữ. Tự giải thích vì sao hai chữ ký khác nhau.
 
-**Quay lại:** [giỏ hàng — giữ giỏ sau khi tính](../01-gio-hang/gio-hang-day-du.md#gio-3) · [giỏ hàng — đổi tên món](../01-gio-hang/gio-hang-day-du.md#gio-4) · [bình chọn — mượn tiêu đề](../02-binh-chon/README.md#poll-2).
+**Dùng trong:** [giỏ hàng — giữ giỏ sau khi tính](../01-gio-hang/gio-hang-day-du.md#gio-3) · [giỏ hàng — đổi tên món](../01-gio-hang/gio-hang-day-du.md#gio-4) · [bình chọn — mượn tiêu đề](../02-binh-chon/README.md#poll-2).

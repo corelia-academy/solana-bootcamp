@@ -1,6 +1,6 @@
 # Option, Result và dấu ? — Kết quả có thể thiếu hoặc sai
 
-Khi nhập maybe vào chương trình bình chọn, chương trình cần báo lỗi và cho nhập lại. Dữ liệu sai là trường hợp phải biểu diễn, không phải luôn làm chương trình sập. Chạy ví dụ ở [thư mục nháp](./README.md#thu-muc-nhap).
+Rust biểu diễn giá trị có thể không có bằng `Option` và việc có thể thất bại bằng `Result`, thay cho exception. Dữ liệu sai là một kết quả cần xử lý, không phải lý do để chương trình sập.
 
 ## 1. Option: có hoặc không
 
@@ -31,7 +31,7 @@ fn main() {
 }
 ```
 
-Result<T,E> có Ok(T) hoặc Err(E). T là kết quả, E là kiểu lỗi. Map_err chuyển lỗi gốc thành thông báo mình chọn; `|_|` là closure bỏ qua giá trị lỗi đầu vào.
+Result<T,E> có Ok(T) hoặc Err(E). T là kết quả, E là kiểu lỗi. Map_err chuyển lỗi gốc thành thông báo tự chọn; `|_|` là closure bỏ qua giá trị lỗi đầu vào.
 
 Hàm trả Result chưa tự in gì. Caller chọn hiển thị, nhập lại hay dừng.
 
@@ -71,4 +71,4 @@ Main trong project trả `Result<(), Box<dyn std::error::Error>>` để nhận n
 
 Viết parser nhận điểm u8, từ chối điểm trên 100. Thử 0,100,101,abc,256. Dùng Result để phân biệt kết quả, không panic vì abc.
 
-**Quay lại:** [bình chọn — parser](../02-binh-chon/README.md#poll-1) · [bình chọn — checked counter](../02-binh-chon/README.md#poll-2) · [vé — Option root](../03-ve-su-kien/README.md#ticket-3) · [vé — index proof](../03-ve-su-kien/README.md#ticket-4).
+**Dùng trong:** [bình chọn — parser](../02-binh-chon/README.md#poll-1) · [bình chọn — checked counter](../02-binh-chon/README.md#poll-2) · [vé — Option root](../03-ve-su-kien/README.md#ticket-3) · [vé — index proof](../03-ve-su-kien/README.md#ticket-4).

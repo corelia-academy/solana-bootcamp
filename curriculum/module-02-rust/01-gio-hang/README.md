@@ -14,7 +14,7 @@ Mỗi bước dưới thay nội dung `src/main.rs`. Lưu file và chạy `cargo
 <a id="in-tien"></a>
 ## 1. Cho máy in một số tiền
 
-**Lần đầu gặp:** đọc [hàm main — mục 1](../khai-niem/functions.md#main) và [in ra màn hình](../khai-niem/printing.md). Mỗi bài có liên kết quay lại bước này.
+**Khái niệm:** [hàm main](../khai-niem/functions.md#main) · [in ra màn hình](../khai-niem/printing.md)
 
 Gõ:
 
@@ -33,12 +33,12 @@ Chạy `cargo run`. Dòng của chương trình cần là:
 Tiền cần trả: 25000đ
 ```
 
-**Tự đổi:** thay chữ `Tiền cần trả` thành `Hóa đơn của Lan`. Chạy lại để thấy chính dòng bạn sửa xuất hiện. Sau đó quay về ví dụ trên.
+**Tự đổi:** thay chữ `Tiền cần trả` thành `Hóa đơn của Lan`. Chạy lại để thấy chính dòng bạn sửa xuất hiện, rồi đổi lại như cũ.
 
 <a id="dat-ten"></a>
 ## 2. Đặt tên cho giá cà phê
 
-**Khái niệm mới:** [biến và let](../khai-niem/variables.md). Học phần đặt tên cho giá trị rồi quay lại viết dòng gia bên dưới.
+**Khái niệm:** [biến và let](../khai-niem/variables.md)
 
 Nếu số 25000 có tên là `gia`, ta có thể lấy nó ra dùng:
 
@@ -53,7 +53,7 @@ fn main() {
 Dòng mới duy nhất cần hiểu là `let gia = 25000;`:
 
 - `let`: tạo một tên để giữ giá trị.
-- `gia`: tên mình tự đặt; ở đây có nghĩa là giá một ly.
+- `gia`: tên tự đặt; ở đây có nghĩa là giá một ly.
 - `= 25000`: giá trị mà tên đó đang giữ.
 
 Tên giữ giá trị như vậy gọi là **biến**. `{gia}` trong dòng in nghĩa là: lấy giá trị của biến gia để chèn vào đây.
@@ -65,7 +65,7 @@ Tên giữ giá trị như vậy gọi là **biến**. `{gia}` trong dòng in ng
 
 Chạy: vẫn ra 25000đ.
 
-**Đoán trước khi chạy:** nếu đổi dòng đầu thành `let gia = 30000;`, dòng in có phải sửa nữa không? Thử rồi quay về 25000.
+**Thử:** nếu đổi dòng đầu thành `let gia = 30000;`, dòng in có phải sửa nữa không? Chạy để kiểm tra, rồi đổi lại 25000.
 
 <details>
 <summary>Đối chiếu</summary>
@@ -122,12 +122,12 @@ fn main() {
 
 Tính trước: tiền cà phê 50000, tiền trà 18000, tổng 68000. Chạy để đối chiếu.
 
-**Tự làm:** đổi giá trà thành 20000. Nếu tổng là 70000đ thì bạn đã sửa đúng chỗ. Quay về 18000 trước bước tiếp theo.
+**Tự làm:** đổi giá trà thành 20000. Nếu tổng là 70000đ thì bạn đã sửa đúng chỗ. Đổi lại 18000 trước bước tiếp theo.
 
 <a id="qua-tang"></a>
 ## 5. Đủ 60.000đ thì tặng nước
 
-**Khái niệm mới:** [if/else — mục 1](../khai-niem/control-flow.md). Đọc cách máy chọn một trong hai trường hợp rồi quay lại.
+**Khái niệm:** [if/else](../khai-niem/control-flow.md)
 
 Quán có quy định: tổng từ 60.000đ trở lên thì có quà. Máy cần kiểm tra điều kiện trước khi chọn câu để in.
 
@@ -162,7 +162,7 @@ Tiền cần trả: 68000đ
 Được tặng nước
 ```
 
-**Đoán rồi thử:** đổi so_ly thành 1. Tổng còn 43000đ nên phải in thông báo chưa đủ tiền. Quay về 2 khi đã hiểu.
+**Thử:** đổi so_ly thành 1. Tổng còn 43000đ nên phải in thông báo chưa đủ tiền. Đổi lại 2.
 
 <a id="tu-lam"></a>
 ## 6. Tự viết một đơn khác
@@ -173,7 +173,7 @@ Giữ chương trình ở bước 5, tự sửa để:
 - Trà giá 18.000đ, mua một ly.
 - Quy định quà vẫn là từ 60.000đ trở lên.
 
-Trước khi chạy, tự tính tổng và chọn thông báo quà. Không nhìn đáp án ngay.
+Tính tổng và chọn thông báo quà trước khi chạy.
 
 <details>
 <summary>Đối chiếu kết quả</summary>
@@ -182,16 +182,16 @@ Tổng là 58000đ; chưa đủ tiền nhận quà. Chỉ cần sửa gia_ca_phe
 
 </details>
 
-Bạn đã hiểu phần này khi tự chỉ được: dòng nào giữ giá, dòng nào giữ số lượng, dòng nào tính tiền, dòng nào quyết định có quà. Có thể dừng ở đây trong buổi đầu; bước 7 dùng lại phép tính để học hàm.
+Tự kiểm tra: chỉ ra được dòng nào giữ giá, dòng nào giữ số lượng, dòng nào tính tiền, dòng nào quyết định có quà.
 
-Để thử lại không nhìn mẫu: viết đơn một cà phê 25.000đ và một trà 18.000đ. Kết quả phải là 43000đ, chưa nhận quà.
+Bài thêm: viết đơn một cà phê 25.000đ và một trà 18.000đ. Kết quả phải là 43000đ, chưa nhận quà.
 
 <a id="ham-tinh-tien"></a>
 ## 7. Dùng cùng một phép tính cho nhiều món
 
 Giá nhân số lượng dùng được cho cả cà phê lẫn trà. Ta đặt tên công thức là tinh_tien để gọi lại với những số khác nhau.
 
-**Trước khi viết code:** mở [bài Hàm — từ mục 2: đầu vào và kết quả](../khai-niem/functions.md#tham-so). Bài giải thích tham số, lời gọi, dấu `->` và vì sao dòng trả kết quả không có `;`. Gặp u32 thì mở [kiểu số](../khai-niem/types.md#so). Học xong bấm “Quay lại hóa đơn — tự viết hàm” để về đây.
+**Khái niệm:** [hàm: tham số, `->` và giá trị trả về](../khai-niem/functions.md#tham-so) · [kiểu số](../khai-niem/types.md#so)
 
 Thay toàn bộ src/main.rs bằng:
 

@@ -1,6 +1,6 @@
 # Iterator và closure — Biến đổi từng phần tử
 
-Khi chuỗi `.iter().map(...).sum()` làm bạn rối, theo dõi **kiểu phần tử sau mỗi bước**. Chạy ví dụ ở [thư mục nháp](./README.md#thu-muc-nhap).
+Iterator đi qua từng phần tử của một dãy. Adaptor như `map`, `filter` biến đổi phần tử; `sum`, `collect` gom kết quả. Chuỗi iterator dễ đọc nhất khi theo dõi kiểu phần tử sau mỗi bước.
 
 ## 1. Từ vòng for đến iterator
 
@@ -67,4 +67,4 @@ Trong cây Merkle, `chunks(2)` duyệt các slice tối đa hai phần tử; map
 
 Viết cùng một phép tính “tổng gấp đôi từng giá” bằng for, rồi bằng map/sum. Vector gốc phải vẫn dùng được. Đạt khi chỉ ra được item đang là số hay reference tại mỗi bước.
 
-**Quay lại:** [giỏ hàng — tổng](../01-gio-hang/gio-hang-day-du.md#gio-3) · [bình chọn — tổng counter](../02-binh-chon/README.md#poll-2) · [vé — tầng mới](../03-ve-su-kien/README.md#ticket-3).
+**Dùng trong:** [giỏ hàng — tổng](../01-gio-hang/gio-hang-day-du.md#gio-3) · [bình chọn — tổng counter](../02-binh-chon/README.md#poll-2) · [vé — tầng mới](../03-ve-su-kien/README.md#ticket-3).

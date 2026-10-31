@@ -1,6 +1,6 @@
 # Module — Đi từ file main sang phần code khác
 
-Gặp `mod poll;`, `use poll::Choice` hoặc `pub` thì đọc bài này. Folder cơ bản nằm ở [đọc project Rust](../bat-dau/02-doc-project.md).
+Module chia code thành các phần có tên: `mod` khai báo module, `use` đưa tên vào phạm vi, `pub` cho code bên ngoài dùng.
 
 ## 1. Bắt đầu với code chung một file
 
@@ -65,4 +65,4 @@ File thư viện được quản lý bởi Cargo.toml, dùng từ code qua use; 
 
 Tách ví dụ parser thành hai file rồi chạy. Bỏ pub khỏi is_yes, đọc lỗi private; thêm lại để chạy được. Đạt khi giải thích được tại sao main tìm thấy hàm ở file khác.
 
-**Quay lại:** [đọc folder — các file bổ sung](../bat-dau/02-doc-project.md#file-sinh-ra) · [bình chọn — tạo poll.rs](../02-binh-chon/README.md#poll-1) · [vé — tạo tree.rs](../03-ve-su-kien/README.md#ticket-3).
+**Dùng trong:** [đọc folder — các file bổ sung](../bat-dau/02-doc-project.md#file-sinh-ra) · [bình chọn — tạo poll.rs](../02-binh-chon/README.md#poll-1) · [vé — tạo tree.rs](../03-ve-su-kien/README.md#ticket-3).

@@ -1,8 +1,6 @@
 # Hàm — Đặt tên cho một việc để gọi lại
 
-**Bạn đang gặp gì?** `fn main()`, `fn total(...)` hoặc một lời gọi như `tinh_tien(25000, 2)`.
-
-Nếu mới gặp `main` ở hóa đơn bước 1, đọc mục 1 rồi quay lại. Khi project cần tự viết hàm tính tiền, đọc tiếp từ mục 2. Các ví dụ là chương trình nhỏ độc lập; muốn tự chạy, dùng [thư mục nháp](./README.md#thu-muc-nhap).
+Hàm đặt tên cho một đoạn code nhận đầu vào và trả kết quả, để gọi lại nhiều lần; `main` là hàm chương trình chạy đầu tiên.
 
 <a id="main"></a>
 ## 1. Main là nơi bắt đầu
@@ -17,12 +15,10 @@ fn main() {
 
 Máy bắt đầu ở main, chạy dòng in, rồi kết thúc. Kết quả là `Bắt đầu bán hàng`.
 
-**Thử:** thêm một println ở dưới dòng cũ; nó chạy sau dòng cũ. Hiểu được main chứa các việc cần chạy là đủ cho lần gặp đầu tiên.
-
-[Quay lại hóa đơn — in tiền](../01-gio-hang/README.md#in-tien).
+**Thử:** thêm một println ở dưới dòng cũ; nó chạy sau dòng cũ. Main chứa các việc chương trình chạy theo thứ tự từ trên xuống.
 
 <a id="tham-so"></a>
-## 2. Vì sao mình cần tự viết một hàm?
+## 2. Vì sao cần tự viết hàm?
 
 Bạn đang tính hai đơn hàng. Công thức của cả hai đều là giá nhân số ly. Đặt tên công thức là `tinh_tien`, rồi đưa từng bộ số vào:
 
@@ -52,7 +48,7 @@ Kết quả: đơn A 50000đ, đơn B 54000đ. Một công thức, hai lần g�
 | `-> u32` | Kết quả trả về cũng là u32 |
 | `gia * so_ly` | Công thức tạo kết quả |
 
-Tên đầu vào trong khai báo gọi là **tham số**. Các số cụ thể 25000 và 2 khi gọi gọi là **đối số**. Thứ tự có ý nghĩa: đối số thứ nhất vào gia, thứ hai vào so_ly. Nếu chưa hiểu `u32`, đọc [kiểu số](./types.md#so) rồi quay lại bảng này.
+Tên đầu vào trong khai báo gọi là **tham số**. Các số cụ thể 25000 và 2 khi gọi gọi là **đối số**. Thứ tự có ý nghĩa: đối số thứ nhất vào gia, thứ hai vào so_ly. Kiểu `u32`: xem [kiểu số](./types.md#so).
 
 Công thức ví dụ dùng số nhỏ cố định. Khi nhận số lớn từ bên ngoài, phải xét miền giá trị và [overflow](./types.md#overflow).
 
@@ -136,4 +132,4 @@ Viết hàm `cong_tien(ca_phe: u32, tra: u32) -> u32`. Gọi với 50000 và 180
 
 Nguồn đối chiếu cú pháp: [Functions — Rust Book](https://doc.rust-lang.org/book/ch03-03-how-functions-work.html).
 
-**Quay lại:** [hóa đơn — tự viết hàm](../01-gio-hang/README.md#ham-tinh-tien) · [giỏ hàng — subtotal](../01-gio-hang/gio-hang-day-du.md#gio-2) · [bình chọn — methods](../02-binh-chon/README.md#poll-2).
+**Dùng trong:** [hóa đơn — tự viết hàm](../01-gio-hang/README.md#ham-tinh-tien) · [giỏ hàng — subtotal](../01-gio-hang/gio-hang-day-du.md#gio-2) · [bình chọn — methods](../02-binh-chon/README.md#poll-2).

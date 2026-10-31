@@ -2,7 +2,7 @@
 
 Bài này dùng struct, String, Vec và mượn dữ liệu. Hãy làm [bài hóa đơn đầu tiên](./README.md) trước.
 
-Bạn sẽ tự tạo project và gõ code theo README này. Mỗi bước đều chạy được; không cần mở `starter` hoặc `final`.
+Code của từng bước nằm trong README này và chạy được ngay; `starter` và `final` chỉ để đối chiếu.
 
 <a id="gio-0"></a>
 ## Bước 0 — Tạo project của mình
@@ -22,7 +22,7 @@ Thấy `Hello, world!` là được. Từ giờ, mọi lệnh `cargo` trong bài
 <a id="gio-1"></a>
 ## Bước 1 — Bán thử hai ly cà phê
 
-**Mở khi gặp mới:** [kiểu số và chuỗi](../khai-niem/types.md), [hàm main](../khai-niem/functions.md#main). Học xong quay về bước này.
+**Khái niệm:** [kiểu số và chuỗi](../khai-niem/types.md) · [hàm main](../khai-niem/functions.md#main)
 
 **Thay toàn bộ `src/main.rs`** bằng:
 
@@ -51,12 +51,12 @@ Chạy `cargo run`. Cần thấy:
 Cà phê x2 = 50000đ
 ```
 
-**Dừng 30 giây:** đổi quantity thành 3. Đoán số tiền, chạy lại, rồi đổi về 2.
+**Thử:** đổi quantity thành 3. Tính trước số tiền, chạy lại, rồi đổi về 2.
 
 <a id="gio-2"></a>
 ## Bước 2 — Gom một món thành một struct
 
-**Khái niệm mới:** [struct, impl, Self và method](../khai-niem/structs.md). Đọc thêm [hàm và kết quả](../khai-niem/functions.md#tra-ve) nếu chưa hiểu subtotal.
+**Khái niệm:** [struct, impl, Self và method](../khai-niem/structs.md) · [hàm và kết quả](../khai-niem/functions.md#tra-ve)
 
 Giờ tên, giá và số lượng đang rời nhau. Gom chúng thành một kiểu `CartItem` để mỗi món mang đủ dữ liệu.
 
@@ -98,7 +98,7 @@ Chạy `cargo run`: vẫn ra 50.000đ. Ta đổi cách tổ chức code, kết q
 <a id="gio-3"></a>
 ## Bước 3 — Thêm trà và tính tổng giỏ
 
-**Khái niệm mới:** [Vec và slice](../khai-niem/collections.md), [ownership/borrowing](../khai-niem/ownership.md). Khi đổi tổng sang map/sum thì mở [iterator](../khai-niem/iterators.md).
+**Khái niệm:** [Vec và slice](../khai-niem/collections.md) · [ownership/borrowing](../khai-niem/ownership.md) · [iterator](../khai-niem/iterators.md)
 
 **Thêm hàm sau vào cuối file, bên ngoài `main`**:
 
@@ -161,7 +161,7 @@ Giỏ vẫn còn 2 món
 <a id="gio-4"></a>
 ## Bước 4 — Đổi tên trà bằng mutable borrow
 
-**Để hiểu &mut self:** mở [borrowing — mục 3](../khai-niem/ownership.md). Từ bài đó quay lại bước đổi tên món.
+**Khái niệm:** [`&mut self` và mutable borrow](../khai-niem/ownership.md)
 
 **Thêm vào cuối file**, bên ngoài các hàm:
 
@@ -188,7 +188,7 @@ Chỉ số bắt đầu từ 0 nên `cart[1]` là món thứ hai. Chạy `cargo 
 <a id="gio-5"></a>
 ## Bước 5 — Tự kiểm tra rồi thêm món của bạn
 
-**Khái niệm mới:** [test, assert và attributes](../khai-niem/tests.md). Đọc cách viết một test rồi quay về chốt bài.
+**Khái niệm:** [test, assert và attributes](../khai-niem/tests.md)
 
 **Thêm vào cuối file**:
 

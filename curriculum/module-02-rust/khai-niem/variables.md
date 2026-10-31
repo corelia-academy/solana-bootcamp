@@ -1,6 +1,6 @@
 # Biến — Đặt tên cho giá trị
 
-Gặp `let gia = 25000;` trong project thì mở bài này. Biến giúp giữ và gọi lại một giá trị bằng tên có nghĩa. Ví dụ chạy độc lập trong [thư mục nháp](./README.md#thu-muc-nhap).
+Biến đặt tên cho một giá trị để dùng lại. Mặc định biến không đổi được; muốn gán giá trị mới phải khai báo `mut`.
 
 ## 1. Đọc một dòng let
 
@@ -14,7 +14,7 @@ fn main() {
 }
 ```
 
-`let` tạo binding giữa tên và giá trị. `gia` là tên mình chọn; `25000` là giá trị. `=` ở đây gắn tên cho giá trị, không phải câu hỏi “hai bên có bằng nhau không”. So sánh bằng nhau dùng `==`.
+`let` tạo binding giữa tên và giá trị. `gia` là tên tự chọn; `25000` là giá trị. `=` ở đây gắn tên cho giá trị, không phải câu hỏi “hai bên có bằng nhau không”. So sánh bằng nhau dùng `==`.
 
 Máy đọc từ trên xuống. Khi tính tong, nó đọc giá trị mà gia và so_ly đang có. Tên không chứa dấu cách; có thể viết `gia_ca_phe` để dễ đọc.
 
@@ -75,4 +75,4 @@ Const khai báo hằng, phải ghi kiểu và dùng biểu thức hợp lệ tro
 
 Tạo gia = 20000 và so_ly = 3. Tính tong. Sau đó tăng so_ly thêm 1, tính tổng mới vào một tên khác. Hai tổng phải là 60000 và 80000. Đạt khi giải thích được tại sao tổng cũ không tự đổi.
 
-**Quay lại:** [hóa đơn — đặt tên cho giá](../01-gio-hang/README.md#dat-ten) · [giỏ hàng — tổng giỏ](../01-gio-hang/gio-hang-day-du.md#gio-3).
+**Dùng trong:** [hóa đơn — đặt tên cho giá](../01-gio-hang/README.md#dat-ten) · [giỏ hàng — tổng giỏ](../01-gio-hang/gio-hang-day-du.md#gio-3).

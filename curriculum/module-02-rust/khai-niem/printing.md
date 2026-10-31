@@ -1,6 +1,6 @@
 # In ra màn hình — println và các dấu ngoặc
 
-Gặp `println!("Tiền: {tong}đ")` thì đọc bài này. Ví dụ chạy riêng trong [thư mục nháp](./README.md#thu-muc-nhap).
+`println!` in một dòng ra terminal; `{}` chèn giá trị ở dạng cho người dùng đọc, `{:?}` ở dạng debug.
 
 ## 1. In một câu cố định
 
@@ -46,7 +46,7 @@ fn main() {
 }
 ```
 
-Display với `{}` thường để trình bày cho người dùng. Debug với `{:?}` hoặc `{gia:?}` để xem cấu trúc dữ liệu; string có thể kèm dấu nháy, array hiện cả danh sách. Struct của mình có thể thêm `#[derive(Debug)]` nếu các field hỗ trợ. Muốn tự quyết cách in Choice bằng `{}`, xem [traits](./traits.md).
+Display với `{}` thường để trình bày cho người dùng. Debug với `{:?}` hoặc `{gia:?}` để xem cấu trúc dữ liệu; string có thể kèm dấu nháy, array hiện cả danh sách. Struct tự định nghĩa có thể thêm `#[derive(Debug)]` nếu các field hỗ trợ. Muốn tự quyết cách in Choice bằng `{}`, xem [traits](./traits.md).
 
 ## 4. Print, eprintln và flush
 
@@ -56,4 +56,4 @@ Display với `{}` thường để trình bày cho người dùng. Debug với `
 
 In “Lan mua 3 ly, tổng 75000đ”, giữ tên, số ly, tổng ở ba biến riêng. Đổi tên thành Minh mà không sửa nguyên câu format.
 
-**Quay lại:** [hóa đơn — in tiền](../01-gio-hang/README.md#in-tien) · [bình chọn — in Choice](../02-binh-chon/README.md#poll-3).
+**Dùng trong:** [hóa đơn — in tiền](../01-gio-hang/README.md#in-tien) · [bình chọn — in Choice](../02-binh-chon/README.md#poll-3).

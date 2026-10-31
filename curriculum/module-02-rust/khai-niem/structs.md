@@ -1,6 +1,6 @@
 # Struct và impl — Dữ liệu của một món và việc nó làm
 
-Project bắt đầu có tên, giá, số lượng của nhiều món. Struct gom những dữ liệu thuộc cùng một món; impl đặt các hành vi lên kiểu đó. Ví dụ chạy ở [thư mục nháp](./README.md#thu-muc-nhap).
+Struct gom các dữ liệu thuộc cùng một thứ, như tên, giá và số lượng của một món; `impl` gắn hành vi cho kiểu đó.
 
 ## 1. Từ ba biến rời đến một món
 
@@ -79,4 +79,4 @@ New là tên theo quy ước, không phải từ khóa đặc biệt. Method là
 
 Thêm field ten vào ví dụ method, truyền tên khi new. Thêm method chỉ đọc tên. Đạt khi tự chọn đúng receiver đọc hoặc sửa và giải thích được Self là gì.
 
-**Quay lại:** [giỏ hàng — gom một món](../01-gio-hang/gio-hang-day-du.md#gio-2) · [bình chọn — lưu poll](../02-binh-chon/README.md#poll-2).
+**Dùng trong:** [giỏ hàng — gom một món](../01-gio-hang/gio-hang-day-du.md#gio-2) · [bình chọn — lưu poll](../02-binh-chon/README.md#poll-2).

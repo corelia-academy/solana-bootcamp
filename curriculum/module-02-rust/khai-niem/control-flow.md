@@ -1,6 +1,6 @@
 # Điều kiện và vòng lặp — Máy chọn việc gì, lặp đến đâu?
 
-Đang viết if/else của quà tặng thì chỉ đọc mục 1. Khi gặp match hoặc loop trong bình chọn, đọc tiếp mục tương ứng. Chạy ví dụ trong [thư mục nháp](./README.md#thu-muc-nhap).
+`if`/`else` và `match` chọn đoạn code sẽ chạy; `for`, `while` và `loop` lặp lại một đoạn code.
 
 ## 1. If/else chọn theo điều kiện bool
 
@@ -90,4 +90,4 @@ If let dùng khi chỉ muốn xử lý một pattern. Let else giữ trường h
 
 Đổi tổng ở ví dụ đầu thành 60000 rồi 59999. Xác định mỗi trường hợp có nhận quà không. Sau đó viết vòng for cộng ba giá món do bạn tự chọn.
 
-**Quay lại:** [hóa đơn — quà tặng](../01-gio-hang/README.md#qua-tang) · [bình chọn — nhập nhiều lần](../02-binh-chon/README.md#poll-4) · [vé — thu gọn cây](../03-ve-su-kien/README.md#ticket-3).
+**Dùng trong:** [hóa đơn — quà tặng](../01-gio-hang/README.md#qua-tang) · [bình chọn — nhập nhiều lần](../02-binh-chon/README.md#poll-4) · [vé — thu gọn cây](../03-ve-su-kien/README.md#ticket-3).

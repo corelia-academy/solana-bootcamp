@@ -1,6 +1,6 @@
 # Project 3 — Tự viết kiểm tra vé bằng Merkle proof
 
-Bạn sẽ tự viết hai việc: lấy danh sách khách bằng async, rồi kiểm tra một cái tên có trong danh sách đã cam kết. Nguồn khách dùng timer giả lập; chưa có request mạng hoặc lưu vé đã dùng.
+Project gồm hai việc: lấy danh sách khách bằng async, rồi kiểm tra một cái tên có trong danh sách đã cam kết. Nguồn khách dùng timer giả lập; chưa có request mạng hoặc lưu vé đã dùng.
 
 <a id="ticket-0"></a>
 ## Bước 0 — Tạo project và thêm thư viện
@@ -35,7 +35,7 @@ Tokio lo runtime và timer async; sha2 cung cấp SHA-256. `features` bật ph�
 <a id="ticket-1"></a>
 ## Bước 1 — Chờ một nguồn khách
 
-**Khái niệm mới:** [Future và async/await](../khai-niem/async.md). Gặp Vec<&'static str> thì mở [lifetime](../khai-niem/lifetimes.md). Học xong quay lại nguồn khách.
+**Khái niệm:** [Future và async/await](../khai-niem/async.md) · [lifetime và `'static`](../khai-niem/lifetimes.md)
 
 **Thay toàn bộ `src/main.rs`**:
 
@@ -73,7 +73,7 @@ Chạy `cargo run`: sau dòng thông báo, thấy `Khách: ["Lan", "Minh"]`. Đ�
 <a id="ticket-2"></a>
 ## Bước 2 — Lấy cả hai nguồn, đua hai cổng
 
-**Đọc kỹ trước khi ghép:** [join/select và concurrency](../khai-niem/async.md). Bài có ví dụ độc lập và liên kết quay lại bước này.
+**Khái niệm:** [join/select và concurrency](../khai-niem/async.md)
 
 **Thêm vào cuối `src/main.rs`**, ngoài main:
 
@@ -128,7 +128,7 @@ Một thread vẫn làm nhiều việc **xen kẽ trong lúc chờ**: đó là c
 <a id="ticket-3"></a>
 ## Bước 3 — Băm danh sách thành một root
 
-**Đọc ý tưởng trước code:** [Merkle tree và root](../khai-niem/merkle.md). Khi đọc code, có thể rẽ sang [module](../khai-niem/modules.md), [iterator](../khai-niem/iterators.md) và [Option/Result](../khai-niem/errors.md).
+**Khái niệm:** [Merkle tree và root](../khai-niem/merkle.md) · [module](../khai-niem/modules.md) · [iterator](../khai-niem/iterators.md) · [Option/Result](../khai-niem/errors.md)
 
 Hash là dấu vân tay có độ dài cố định của dữ liệu. SHA-256 cho 32 byte; nó không phải mã hóa để giải ngược ra tên. Merkle tree băm từng tên thành leaf, ghép hash từng cặp rồi băm tiếp đến khi chỉ còn một root.
 
@@ -208,7 +208,7 @@ Chạy `cargo run`: thêm dòng `Root có 32 byte`. Chưa cần đọc chuỗi h
 <a id="ticket-4"></a>
 ## Bước 4 — Tạo proof cho Minh rồi xác minh
 
-**Đọc trên giấy trước:** [proof và hướng sibling](../khai-niem/merkle.md). Gặp ProofStep thì xem [struct](../khai-niem/structs.md); dấu ? trên Option nằm ở [xử lý lỗi](../khai-niem/errors.md).
+**Khái niệm:** [proof và hướng sibling](../khai-niem/merkle.md) · [struct](../khai-niem/structs.md) · [dấu ? trên Option](../khai-niem/errors.md)
 
 Cây bốn tên có dạng:
 
@@ -309,7 +309,7 @@ Root phải lấy từ nguồn đáng tin trước khi xác minh. Lab dùng SHA-
 <a id="ticket-5"></a>
 ## Bước 5 — Kiểm tra tên sai, cây lẻ và async
 
-**Khái niệm mới:** [tests và attributes](../khai-niem/tests.md). Các test async dùng runtime như giải thích ở [async](../khai-niem/async.md).
+**Khái niệm:** [tests và attributes](../khai-niem/tests.md) · [runtime cho test async](../khai-niem/async.md)
 
 **Thêm vào cuối `src/tree.rs`**:
 

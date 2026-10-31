@@ -1,6 +1,6 @@
 # Danh sách và bảng tra — Array, slice, Vec, HashMap
 
-Gặp `vec!`, `&[CartItem]` hoặc `HashMap<Choice, u64>` thì đọc đúng phần dưới. Chạy ví dụ trong [thư mục nháp](./README.md#thu-muc-nhap).
+Array, slice, `Vec` và `HashMap` giữ nhiều giá trị: dãy cố định, đoạn mượn của một dãy, danh sách thêm bớt được và bảng tra theo khóa.
 
 ## 1. Array và chỉ số
 
@@ -71,4 +71,4 @@ Trong poll, khóa là Choice nên Choice cần Eq/Hash. HashMap không hứa th�
 
 Tạo danh bạ tên → email. Thử tìm một tên không có, xử lý None bằng thông báo. Sau đó tạo vector ba món và in mà vẫn giữ vector dùng được sau vòng lặp.
 
-**Quay lại:** [giỏ hàng — thêm món](../01-gio-hang/gio-hang-day-du.md#gio-3) · [bình chọn — bảng đếm](../02-binh-chon/README.md#poll-2).
+**Dùng trong:** [giỏ hàng — thêm món](../01-gio-hang/gio-hang-day-du.md#gio-3) · [bình chọn — bảng đếm](../02-binh-chon/README.md#poll-2).

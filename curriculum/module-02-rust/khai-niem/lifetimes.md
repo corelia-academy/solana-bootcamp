@@ -1,6 +1,6 @@
 # Lifetime — Reference hợp lệ trong thời gian nào?
 
-Đọc bài này khi gặp `title(&self) -> &str`, `'a` hoặc `'static`. Bắt đầu bằng [ownership/borrowing](./ownership.md) nếu chưa hiểu reference. Ví dụ chạy ở [thư mục nháp](./README.md#thu-muc-nhap).
+Lifetime mô tả một reference còn hợp lệ trong bao lâu, viết bằng `'a` hoặc `'static`. Lifetime không kéo dài tuổi thọ dữ liệu; nó giúp compiler kiểm tra reference không sống lâu hơn dữ liệu nó trỏ tới.
 
 ## 1. Reference cần dữ liệu gốc còn sống
 
@@ -75,4 +75,4 @@ Dù có `'a`, ten cục bộ vẫn bị drop. Trả String nếu muốn chuyển
 
 Viết `struct View<'a> { name: &'a str }`, tạo nó từ một String. Thử đưa View ra khỏi scope owner rồi dùng để thấy lỗi; sửa để owner sống đủ lâu.
 
-**Quay lại:** [bình chọn — title](../02-binh-chon/README.md#poll-2) · [vé — nguồn khách literal](../03-ve-su-kien/README.md#ticket-1).
+**Dùng trong:** [bình chọn — title](../02-binh-chon/README.md#poll-2) · [vé — nguồn khách literal](../03-ve-su-kien/README.md#ticket-1).

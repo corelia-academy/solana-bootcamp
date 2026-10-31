@@ -1,6 +1,6 @@
 # Generics và traits — Kiểu này có thể làm gì?
 
-Bình chọn dùng FromStr để đọc chữ, Display để in và `show<T: Display>` để dùng chung hàm. Đọc từng phần theo thứ đang gặp. Ví dụ chạy ở [thư mục nháp](./README.md#thu-muc-nhap).
+Trait mô tả một hành vi nhiều kiểu cùng có, như đọc từ chuỗi (`FromStr`) hay in ra (`Display`). Generic cho một hàm dùng được với nhiều kiểu, miễn kiểu đó có hành vi cần thiết.
 
 ## 1. Generic là vị trí để điền kiểu
 
@@ -116,4 +116,4 @@ Debug/Clone/Copy/PartialEq/Eq/Hash trong derive tạo các implementation phù h
 
 Thêm một kiểu Gia(u32), implement Display để in “25000đ”. Truyền Gia vào show mà không sửa show. Đạt khi giải thích được vì sao T cần bound.
 
-**Quay lại:** [bình chọn — FromStr](../02-binh-chon/README.md#poll-1) · [bình chọn — From và Display](../02-binh-chon/README.md#poll-3) · [bình chọn — show generic](../02-binh-chon/README.md#poll-4).
+**Dùng trong:** [bình chọn — FromStr](../02-binh-chon/README.md#poll-1) · [bình chọn — From và Display](../02-binh-chon/README.md#poll-3) · [bình chọn — show generic](../02-binh-chon/README.md#poll-4).
