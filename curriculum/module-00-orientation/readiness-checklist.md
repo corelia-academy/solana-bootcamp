@@ -31,12 +31,13 @@ Checklist này xác nhận bạn hiểu cách học, kiến thức blockchain c�
 - [ ] Cài Phantom, tạo ví học tập và chọn Solana Devnet.
 - [ ] Nhận SOL thử từ faucet và kiểm tra số dư trong Phantom.
 - [ ] Mở được ví và giao dịch nhận SOL trên Explorer Devnet; phân biệt địa chỉ ví với signature.
-- [ ] Chỉ ra được số dư, trạng thái, người gửi/nhận và phí; lưu hai link Explorer công khai.
+- [ ] Gửi 0.01 SOL Devnet tới bạn học hoặc account thứ hai, kiểm tra mạng, người nhận, số lượng và phí trước khi xác nhận.
+- [ ] Chỉ ra được số dư, trạng thái, người gửi/nhận và ai trả phí; lưu ba link Explorer công khai (ví, giao dịch nhận, giao dịch gửi).
 - [ ] Biết bước tiếp theo là đọc Module 1 và thực hiện setup theo docs hiện hành.
 
 ## Minh chứng hoàn thành
 
-Lưu một ghi chú ngắn gồm mục tiêu học, hướng dự kiến, prerequisite cần ôn và đường dẫn setup/troubleshooting/code đã tìm. Thêm vài câu mô tả cách xử lý sai khác giữa video và docs, sơ đồ luồng bình chọn, câu trả lời bài tự kiểm tra và hai link Explorer của bài Phantom. Không cần nộp version output hoặc test output ở Module 0.
+Lưu một ghi chú ngắn gồm mục tiêu học, hướng dự kiến, prerequisite cần ôn và đường dẫn setup/troubleshooting/code đã tìm. Thêm vài câu mô tả cách xử lý sai khác giữa video và docs, sơ đồ luồng bình chọn, câu trả lời bài tự kiểm tra và ba link Explorer của bài Phantom (ví, giao dịch nhận, giao dịch gửi). Không cần nộp version output hoặc test output ở Module 0.
 
 ## Điều hướng
 

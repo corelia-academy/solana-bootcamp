@@ -179,7 +179,7 @@ Ví dụ trên giấy: An có 3 SOL thử nghiệm, muốn chuyển 1 SOL cho B�
 
 ## 0.8 Mạng thực hành và luồng hoạt động của dApp
 
-> **Tóm gọn:** cluster là một mạng Solana (Localnet, Devnet hoặc Mainnet). dApp là ứng dụng có phần logic hoặc dữ liệu trên blockchain. RPC là cổng để ứng dụng đọc dữ liệu và gửi transaction tới mạng. Explorer là trang tra cứu kết quả. Onchain là phần nằm trên blockchain; offchain là phần còn lại, như giao diện.
+> **Tóm gọn:** cluster là một mạng Solana hoàn chỉnh (Localnet, Devnet hoặc Mainnet), giống môi trường dev, staging và production ở Web2. dApp là ứng dụng có phần logic hoặc dữ liệu trên blockchain. RPC là API endpoint, giống URL backend mà frontend gọi tới để đọc dữ liệu và gửi transaction. Explorer giống trang tra cứu đơn hàng: dán địa chỉ ví hoặc mã giao dịch để xem kết quả. Onchain là phần nằm trên blockchain; offchain là phần còn lại, như giao diện.
 
 ### Localnet, Devnet và mainnet
 
@@ -226,7 +226,7 @@ Transaction signature giúp tra cứu giao dịch; nhận được signature ch�
 
 - **Program không giữ dữ liệu.** Như ở lesson 0.7, mọi trạng thái nằm trong account riêng. Một program có thể phục vụ hàng nghìn account, mỗi account là một bản ghi.
 - **Chạy song song.** Mỗi transaction ghi rõ trước các account sẽ đọc và ghi. Hai transaction không đụng cùng account có thể được xử lý cùng lúc, giống hai request không khóa cùng một dòng database. Xem [Transactions](https://solana.com/docs/core/transactions).
-- **Nhanh và phí thấp.** Phí cơ bản là 5.000 lamport cho mỗi chữ ký (1 SOL = 1 tỷ lamport). Tháng 10/2026, mainnet kích hoạt nâng cấp đồng thuận Alpenglow, nhắm thời gian chốt giao dịch khoảng 150 ms. Xem [Fees](https://solana.com/docs/core/fees).
+- **Nhanh và phí thấp.** Phí cơ bản là 5.000 lamport cho mỗi chữ ký. Lamport là đơn vị nhỏ nhất của SOL: 1 SOL = 1 tỷ lamport, nên 5.000 lamport chỉ là 0,000005 SOL. Tháng 10/2026, mainnet kích hoạt Alpenglow, nâng cấp cách các validator đồng thuận, nhắm thời gian chốt giao dịch khoảng 150 ms. Xem [Fees](https://solana.com/docs/core/fees).
 - **Lưu dữ liệu cần ký quỹ.** Account phải giữ một lượng SOL tối thiểu tùy theo kích thước dữ liệu; đóng account thì nhận lại. Xem [Accounts](https://solana.com/docs/core/accounts).
 
 ### Kiến trúc: ứng dụng Web2 và ứng dụng Web3
@@ -309,9 +309,11 @@ Khác biệt lớn nhất: program đã deploy là API công khai. Ai cũng gọ
 
 ### Bước 1 — Cài Phantom và tạo ví học tập
 
-Mở [trang tải Phantom chính thức](https://phantom.com/download), chọn trình duyệt và cài extension. Mở Phantom, chọn **Create a New Wallet → Create a Recovery Phrase Wallet**, đặt mật khẩu rồi làm theo hướng dẫn. Ghi recovery phrase ra giấy và giữ riêng; không chụp hoặc đưa vào bài nộp. Mật khẩu dùng để mở extension trên máy, recovery phrase dùng để khôi phục ví. Xem [hướng dẫn tạo ví của Phantom](https://phantom.com/learn/guides/how-to-create-a-new-wallet).
+Khóa học dùng Phantom dạng extension trên Chrome, vì khi build dApp bạn chạy app trên trình duyệt máy tính. Mở [trang tải Phantom chính thức](https://phantom.com/download) bằng Chrome, bấm **Add to Chrome**, rồi ghim extension lên thanh công cụ. Mở Phantom, chọn **Create a New Wallet**. Phantom cho tạo ví bằng đăng nhập email hoặc Google, Apple, nhưng trong khóa này hãy chọn **Create a Recovery Phrase Wallet** để thấy rõ seed phrase và cặp khóa đã học; đặt mật khẩu rồi làm theo hướng dẫn. Ghi recovery phrase ra giấy và giữ riêng; không chụp hoặc đưa vào bài nộp. Mật khẩu dùng để mở extension trên máy, recovery phrase dùng để khôi phục ví. Xem [hướng dẫn tạo ví của Phantom](https://phantom.com/learn/guides/how-to-create-a-new-wallet).
 
 **Bạn vừa làm gì?** Tạo khóa để ví ký giao dịch. Số dư ban đầu bằng 0 là bình thường.
+
+**Extension và app điện thoại:** Phantom còn có app trên điện thoại. Tạo ví mới ở mỗi nơi sẽ ra hai ví với hai địa chỉ khác nhau. Muốn dùng chung một ví trên cả hai, trong app điện thoại chọn nhập ví có sẵn bằng recovery phrase và nhập đúng dãy từ đã chép; cùng recovery phrase thì cùng địa chỉ. Chỉ nhập recovery phrase vào app Phantom chính thức.
 
 ### Bước 2 — Chọn Devnet và sao chép địa chỉ
 
@@ -321,7 +323,7 @@ Trong Phantom, bấm avatar → **Settings → Developer Settings → Testnet Mo
 
 ### Bước 3 — Nhận SOL thử nghiệm
 
-Mở [Solana Faucet](https://faucet.solana.com/), chọn **Devnet**, dán địa chỉ vừa sao chép, chọn lượng SOL nhỏ được trang cho phép và bấm **Confirm Airdrop**. Chờ giao dịch được xử lý rồi xem số dư trong Phantom. Faucet chỉ cần public address; không nhập recovery phrase hoặc private key vào trang này.
+Mở [Solana Faucet](https://faucet.solana.com/) và đăng nhập bằng tài khoản **GitHub** (faucet yêu cầu kết nối GitHub để giới hạn lượt xin, chống spam; chưa có thì tạo tài khoản GitHub miễn phí). Chọn **Devnet**, dán địa chỉ vừa sao chép, chọn lượng SOL nhỏ được trang cho phép và bấm **Confirm Airdrop**. Chờ giao dịch được xử lý rồi xem số dư trong Phantom. Faucet chỉ cần public address; không nhập recovery phrase hoặc private key vào trang này.
 
 **Bạn vừa làm gì?** Nhận SOL thử từ faucet, tức dịch vụ cấp tài sản thử nghiệm miễn phí. Nếu faucet giới hạn lượt, đợi rồi thử lại; chưa cần xử lý bằng CLI.
 
@@ -343,9 +345,15 @@ Với giao dịch nhận từ faucet, bên gửi cấp SOL và trả phí; bạn
 
 **Nếu chưa thấy dữ liệu:** kiểm tra Phantom và Explorer đều chọn Solana Devnet, địa chỉ có đúng không, rồi chờ và tải lại. Ví chưa nhận SOL có thể chưa có dữ liệu trên Explorer.
 
-**Thử thêm nếu học cùng bạn:** gửi **0.01 SOL Devnet** tới địa chỉ Solana Devnet của bạn học bằng **Send → SOL**. Trước khi xác nhận, kiểm tra mạng, người nhận, số lượng và phí. Sau đó tìm giao dịch trên Explorer để thấy lần này ví của bạn là bên gửi và trả phí. Xem [hướng dẫn gửi của Phantom](https://help.phantom.com/articles/how-to-send-crypto-from-phantom-5530158379539). Phần này không bắt buộc.
+### Bước 5: Gửi SOL Devnet
 
-**Hoàn thành:** lưu hai link Explorer Devnet — một link ví, một link giao dịch nhận SOL — và giải thích được số dư, trạng thái, người gửi/nhận và phí. Không cần chụp toàn bộ màn hình ví.
+Nếu học cùng bạn, xin địa chỉ Solana Devnet của bạn ấy. Nếu học một mình, tạo thêm một account thứ hai trong Phantom (bấm avatar, thêm account mới) và copy địa chỉ Solana của account đó.
+
+Ở account đầu, bấm **Send → SOL**, dán địa chỉ người nhận và nhập **0.01**. Trước khi xác nhận, kiểm tra mạng là Devnet, đúng người nhận, đúng số lượng và phí mạng; giao dịch blockchain không hủy được, gửi nhầm địa chỉ là mất. Xem [hướng dẫn gửi của Phantom](https://help.phantom.com/articles/how-to-send-crypto-from-phantom-5530158379539).
+
+**Bạn vừa làm gì?** Ví dùng private key ký transaction rồi gửi qua RPC lên Devnet. Mở giao dịch trên Explorer: lần này ví của bạn là bên gửi và là fee payer, số dư giảm 0.01 SOL cộng phí, bên nhận tăng đúng 0.01 SOL.
+
+**Hoàn thành:** lưu ba link Explorer Devnet: một link ví, một link giao dịch nhận SOL và một link giao dịch gửi SOL; giải thích được số dư, trạng thái, người gửi/nhận và ai trả phí trong mỗi giao dịch. Không cần chụp toàn bộ màn hình ví.
 
 Tên nút có thể thay đổi theo phiên bản Phantom; dùng các hướng dẫn chính thức ở trên nếu giao diện khác. Sang Module 1, bạn sẽ tạo ví CLI riêng để deploy; giữ ví Phantom này để dùng giao diện, không cần chuyển recovery phrase giữa hai ví.
 
