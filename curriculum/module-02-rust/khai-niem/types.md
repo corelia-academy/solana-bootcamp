@@ -1,6 +1,6 @@
 # Kiểu dữ liệu — Giá trị này là loại gì?
 
-Gặp `gia: u32`, `String`, `&str` thì đọc phần tương ứng. Kiểu cho Rust biết phép tính/thao tác nào phù hợp với giá trị. Ví dụ chạy ở [thư mục nháp](./README.md#thu-muc-nhap).
+Kiểu cho Rust biết một giá trị là gì và làm được phép tính nào: số nguyên, số thực, bool, ký tự, chuỗi, tuple, array.
 
 <a id="so"></a>
 ## 1. Số nguyên và bool
@@ -16,7 +16,20 @@ fn main() {
 }
 ```
 
-Dấu `: u32` ghi kiểu cho biến hoặc tham số. `u` là số nguyên không âm; số phía sau là số bit. `u8` chứa 0–255; u16/u32/u64 có miền lớn hơn. `i32` là số nguyên có dấu, chứa cả số âm. Khi viết `let gia = 25000`, compiler suy ra kiểu; không nhất thiết phải ghi mọi chỗ.
+Dấu `: u32` ghi kiểu cho biến hoặc tham số. `u` là số nguyên không âm; `i` là số nguyên có dấu, chứa cả số âm. Số phía sau là số bit: càng nhiều bit, miền giá trị càng rộng. Khi viết `let gia = 25000`, compiler suy ra kiểu `i32`; không nhất thiết phải ghi mọi chỗ.
+
+| Kiểu | Nhỏ nhất | Lớn nhất |
+| --- | --- | --- |
+| `u8` | 0 | 255 |
+| `u16` | 0 | 65.535 |
+| `u32` | 0 | khoảng 4,3 tỉ |
+| `u64` | 0 | khoảng 1,8 × 10¹⁹ |
+| `u128` | 0 | khoảng 3,4 × 10³⁸ |
+| `i8` | −128 | 127 |
+| `i32` | khoảng −2,1 tỉ | khoảng 2,1 tỉ |
+| `i64` | khoảng −9,2 × 10¹⁸ | khoảng 9,2 × 10¹⁸ |
+
+`i16` và `i128` theo cùng quy luật: một nửa miền dành cho số âm. Mỗi kiểu có hằng `MIN` và `MAX`, ví dụ `u8::MAX` là 255. Trên Solana, số lamport và số dư token dùng `u64`.
 
 Bool chỉ có true hoặc false. `usize` thường dùng cho chỉ số và độ dài trong bộ nhớ, như `items.len()`. `f32`/`f64` là số thực có sai số; để đếm tiền chính xác thường dùng số nguyên theo đơn vị nhỏ nhất.
 
@@ -29,10 +42,22 @@ Hai số khác kiểu không tự động cộng/nhân như mọi ngôn ngữ kh
 fn main() {
     assert_eq!(255_u8.checked_add(1), None);
     assert_eq!(254_u8.checked_add(1), Some(255));
+    assert_eq!(255_u8.saturating_add(1), 255);
+    assert_eq!(255_u8.wrapping_add(1), 0);
 }
 ```
 
-255 là giới hạn u8. Checked_add trả None khi không chứa vừa, Some khi thành công. Phép `+` tràn có thể panic khi bật kiểm tra overflow hoặc wrap khi tắt; chọn hành vi rõ ràng qua checked arithmetic. Xem [Option và Result](./errors.md) để xử lý kết quả này.
+255 là giới hạn u8. Kết quả vượt miền giá trị của kiểu gọi là tràn số (overflow). Với phép `+` thường, bản debug (`cargo run`) dừng chương trình bằng panic "attempt to add with overflow"; bản release (`cargo run --release`) mặc định không kiểm tra và quay vòng về 0, trừ khi bật `overflow-checks = true` trong `Cargo.toml` như project Anchor làm sẵn.
+
+Vì vậy hãy chọn hành vi rõ ràng:
+
+| Method | Khi tràn | Dùng khi |
+| --- | --- | --- |
+| `checked_add` | Trả `None` | Tiền, số dư, bộ đếm: cần biết để báo lỗi |
+| `saturating_add` | Dừng ở `MAX` | Giá trị chỉ cần chặn trên, như thanh tiến độ |
+| `wrapping_add` | Quay vòng về 0 | Hiếm khi cần, như một số thuật toán băm |
+
+Có `checked_sub`, `checked_mul`… tương tự. Khi audit, phép cộng trừ tiền không kiểm tra tràn là chỗ cần đặt câu hỏi. Xem [Option và Result](./errors.md) để xử lý kết quả `None`.
 
 ## 3. String và &str
 
@@ -78,4 +103,4 @@ Tuple gom các giá trị có thể khác kiểu; `.0` lấy giá trị đầu t
 
 Đổi giá và số ly trong ví dụ đầu; chỉ ra kiểu của từng biến. Viết thêm một tên học viên bằng String, truyền bằng cách mượn cho hàm chào, rồi in tên lần nữa.
 
-**Quay lại:** [bài Hàm — đọc tham số](./functions.md#tham-so) · [hóa đơn — hàm tính tiền](../01-gio-hang/README.md#ham-tinh-tien) · [giỏ hàng — kiểu số và chuỗi](../01-gio-hang/gio-hang-day-du.md#gio-1).
+**Dùng trong:** [bài Hàm — đọc tham số](./functions.md#tham-so) · [hóa đơn — hàm tính tiền](../01-gio-hang/README.md#ham-tinh-tien) · [giỏ hàng — kiểu số và chuỗi](../01-gio-hang/gio-hang-day-du.md#gio-1).
