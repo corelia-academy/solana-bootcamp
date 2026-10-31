@@ -115,6 +115,15 @@ fn total(items: &[CartItem]) -> u128 {
 
 `&[CartItem]` là một lát mượn của dãy món. `mut` cho phép sửa biến `amount`. `for` lấy từng món để cộng tiền; `u128` giữ tổng rộng hơn subtotal của một món.
 
+**Thêm lên đầu file** mốc tặng quà, giống `MUC_QUA` ở bài hóa đơn:
+
+<!-- file: src/main.rs; mode: prepend -->
+```rust
+const GIFT_THRESHOLD: u128 = 60_000;
+```
+
+Kiểu là `u128` để so sánh được với tổng giỏ.
+
 **Chỉ thay hàm `main`**, giữ nguyên struct, impl và hàm `total`:
 
 <!-- file: src/main.rs; mode: main -->
@@ -135,7 +144,7 @@ fn main() {
         println!("{} x{} = {}đ", item.name, item.quantity, item.subtotal());
     }
     let amount = total(&cart);
-    let gets_gift = amount >= 60_000;
+    let gets_gift = amount >= GIFT_THRESHOLD;
     let message = if gets_gift { "Được tặng nước" } else { "Chưa có quà" };
     let currency: char = 'đ';
     println!("Tổng: {amount}{currency} — {message}");

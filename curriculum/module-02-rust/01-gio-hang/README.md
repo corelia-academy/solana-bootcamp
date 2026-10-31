@@ -191,12 +191,14 @@ Bài thêm: viết đơn một cà phê 25.000đ và một trà 18.000đ. Kết 
 
 Giá nhân số lượng dùng được cho cả cà phê lẫn trà. Ta đặt tên công thức là tinh_tien để gọi lại với những số khác nhau.
 
-**Khái niệm:** [hàm: tham số, `->` và giá trị trả về](../khai-niem/functions.md#tham-so) · [kiểu số](../khai-niem/types.md#so)
+**Khái niệm:** [hàm: tham số, `->` và giá trị trả về](../khai-niem/functions.md#tham-so) · [kiểu số](../khai-niem/types.md#so) · [hằng số const](../khai-niem/variables.md#const)
 
 Thay toàn bộ src/main.rs bằng:
 
 <!-- file: src/main.rs; mode: replace -->
 ```rust
+const MUC_QUA: u32 = 60_000;
+
 fn tinh_tien(gia: u32, so_ly: u32) -> u32 {
     gia * so_ly
 }
@@ -206,13 +208,15 @@ fn main() {
     let tien_tra = tinh_tien(18000, 1);
     let tong = tien_ca_phe + tien_tra;
     println!("Tiền cần trả: {tong}đ");
-    if tong >= 60000 {
+    if tong >= MUC_QUA {
         println!("Được tặng nước");
     } else {
         println!("Chưa đủ tiền nhận quà");
     }
 }
 ```
+
+`const MUC_QUA: u32 = 60_000;` đặt tên cho mốc tặng quà. Hằng số viết hoa, bắt buộc ghi kiểu và không đổi trong suốt chương trình; muốn đổi mốc quà chỉ cần sửa một chỗ.
 
 Chạy cargo run: vẫn là 68000đ và được tặng nước. Code đã dùng chung công thức cho hai món.
 

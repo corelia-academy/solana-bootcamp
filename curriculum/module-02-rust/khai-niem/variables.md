@@ -56,6 +56,7 @@ fn main() {
 
 `+= 1` là cộng thêm một rồi gán lại. Dùng mut khi biến cần đổi trong lúc chương trình chạy. Việc bạn sửa số 2 thành 3 trong file rồi chạy lại là một lần chạy mới, không đòi mut.
 
+<a id="const"></a>
 ## 4. Shadowing và const
 
 ```rust
@@ -75,4 +76,4 @@ Const khai báo hằng, phải ghi kiểu và dùng biểu thức hợp lệ tro
 
 Tạo gia = 20000 và so_ly = 3. Tính tong. Sau đó tăng so_ly thêm 1, tính tổng mới vào một tên khác. Hai tổng phải là 60000 và 80000. Đạt khi giải thích được tại sao tổng cũ không tự đổi.
 
-**Dùng trong:** [hóa đơn — đặt tên cho giá](../01-gio-hang/README.md#dat-ten) · [giỏ hàng — tổng giỏ](../01-gio-hang/gio-hang-day-du.md#gio-3).
+**Dùng trong:** [hóa đơn — đặt tên cho giá](../01-gio-hang/README.md#dat-ten) · [hóa đơn — mốc quà const](../01-gio-hang/README.md#ham-tinh-tien) · [giỏ hàng — tổng giỏ](../01-gio-hang/gio-hang-day-du.md#gio-3).

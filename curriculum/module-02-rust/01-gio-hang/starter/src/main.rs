@@ -1,3 +1,5 @@
+const GIFT_THRESHOLD: u128 = 60_000;
+
 #[derive(Debug)]
 struct CartItem {
     name: String,
@@ -45,7 +47,7 @@ fn main() {
         println!("{} x{} = {}đ", item.name, item.quantity, item.subtotal());
     }
     let amount = total(&cart);
-    let gets_gift = amount >= 60_000;
+    let gets_gift = amount >= GIFT_THRESHOLD;
     let message = if gets_gift {
         "Được tặng nước"
     } else {
