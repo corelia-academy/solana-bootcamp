@@ -2,24 +2,32 @@
 
 ## 1. Cài Rust
 
-Trên macOS, cài Xcode Command Line Tools trước; Rust cần linker trong bộ này để build. Nếu máy báo đã cài thì bỏ qua:
+Cả module gõ lệnh trong terminal, cửa sổ gõ lệnh bằng chữ:
 
-```shell
-xcode-select --install
-```
+- **macOS:** app Terminal, mở bằng Spotlight (⌘ + Space, gõ "Terminal").
+- **Linux:** app Terminal của bản phân phối.
+- **Windows:** chọn một trong ba. **Git Bash** cài kèm [Git for Windows](https://git-scm.com/download/win), gõ lệnh y hệt bài; **WSL** là Linux chạy trong Windows, cũng gõ y hệt; **PowerShell** có sẵn, lệnh `cargo` và `rustup` chạy bình thường nhưng vài lệnh shell khác cú pháp.
 
-Trên macOS hoặc Linux, mở Terminal và chạy:
+Vào [rust-lang.org](https://rust-lang.org), bấm **Install** ở menu trên cùng. Trang tự nhận ra hệ điều hành và hiện cách cài phù hợp.
+
+Trên macOS, Linux hoặc WSL, trang hiện một lệnh. Copy, dán vào terminal và chạy:
 
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-Chọn cài mặc định khi được hỏi, rồi đóng và mở lại Terminal. Chạy `rustc --version`; thấy số phiên bản là xong. Nếu đã có Rust thì bỏ qua bước này.
+Chọn cài mặc định khi được hỏi, rồi đóng và mở lại terminal. Nếu đã có Rust thì bỏ qua lệnh trên. Trên Mac mới, lần đầu build code macOS có thể bật hộp thoại hỏi cài Command Line Tools; bấm Install vì Rust cần linker trong bộ này.
 
-Windows có hai cách:
+Trên Windows dùng Git Bash hoặc PowerShell, trang hiện nút tải `rustup-init.exe`; đa số máy chọn bản x64, máy chip ARM chọn ARM64. Có thể tải thẳng [bản x64](https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe). Chạy file vừa tải; khi bộ cài hỏi cài Visual Studio C++ Build Tools, chọn đồng ý. Cài xong, mở lại terminal.
 
-- **Khuyên dùng:** cài [WSL](https://learn.microsoft.com/windows/wsl/install) để có terminal Linux trong Windows, rồi làm theo hướng dẫn Linux ở trên. Mọi lệnh trong module gõ y hệt.
-- Cài trực tiếp: tải `rustup-init.exe` từ [trang cài Rust chính thức](https://rust-lang.org/tools/install). Khi bộ cài hỏi cài Visual Studio C++ Build Tools, chọn đồng ý. Sau đó chạy các lệnh `cargo` trong PowerShell.
+Module dùng Rust **1.89.0**, đúng phiên bản trong video. Trên mọi hệ điều hành, đặt phiên bản này làm mặc định để lỗi compiler và kết quả giống trong bài:
+
+```shell
+rustup default 1.89.0
+rustc --version
+```
+
+Cần thấy `rustc 1.89.0`.
 
 ## 2. Chạy chương trình đầu tiên
 
@@ -69,8 +77,8 @@ Lưu file. Trong terminal vẫn ở `hello_rust`, chạy lại `cargo run`. Th�
 - Windows báo thiếu `link.exe`: cài Visual Studio C++ Build Tools rồi mở lại terminal.
 - Không tìm thấy Cargo.toml: chuyển terminal vào thư mục hello_rust.
 - Nếu hello_rust đã tồn tại: dùng lại bằng `cd hello_rust`, không cần cargo new lần nữa.
+- <a id="phien-ban"></a>`rustc --version` không ra 1.89.0: chạy lại `rustup default 1.89.0`. Trong repo bootcamp, rust-toolchain.toml cũng tự chọn 1.89.0.
 
-<a id="phien-ban"></a>
-Khi làm trong repo bootcamp, rust-toolchain.toml tự chọn Rust 1.89.0 và có thể yêu cầu tải phiên bản này. Bài đầu chưa cần tự cấu hình toolchain. Xem thêm [hướng dẫn cài chính thức](https://doc.rust-lang.org/book/ch01-01-installation.html) nếu vẫn lỗi.
+Xem thêm [hướng dẫn cài chính thức](https://doc.rust-lang.org/book/ch01-01-installation.html) nếu vẫn lỗi.
 
 </details>

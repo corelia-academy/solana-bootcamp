@@ -38,7 +38,7 @@ Bài tổng kết trước khi sang Solana: [Rust Poll Counter](../../exercises/
 Module không giải thích lại những phần sau:
 
 - **Lập trình cơ bản:** biến, hàm, vòng lặp, hash map ở một ngôn ngữ bất kỳ như Python, JavaScript, C hay Java.
-- **Command line:** di chuyển thư mục và chạy lệnh trong terminal. Demo dùng terminal macOS; Linux gõ lệnh y hệt, Windows nên dùng WSL.
+- **Command line:** di chuyển thư mục và chạy lệnh trong terminal. Demo dùng terminal macOS; Linux gõ lệnh y hệt; Windows dùng Git Bash hoặc WSL để gõ y hệt, PowerShell cũng chạy được `cargo`.
 - **IDE:** demo dùng VSCode.
 
 Cần cài: Rust qua rustup, VSCode với extension rust-analyzer (nên thêm Even Better TOML), và git để tải repo. Chi tiết từng hệ điều hành ở [bài cài đặt](./bat-dau/01-cai-rust.md). Repo dùng Rust **1.89.0** qua `rust-toolchain.toml`. Module này không cần ví hoặc RPC.
