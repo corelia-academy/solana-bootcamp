@@ -87,5 +87,6 @@ run_pnpm projects/simple-amm/final test
 run_pnpm projects/x402-paywall/final test
 run_pnpm projects/mcp-solana-server/final test
 run_pnpm projects/ai-agent-solana/final test
+run_pnpm projects/secure-treasury/final test
 
-echo "Instructor dry-run đạt cho Module 5–11 và 15–17."
+echo "Instructor dry-run đạt cho Module 5–11 và 15–18."

@@ -30,9 +30,11 @@ Rust được khóa bằng `rust-toolchain.toml`; Node được khóa bằng `.n
 4. Cài Solana CLI 4.1.2: `sh -c "$(curl -sSfL https://release.anza.xyz/v4.1.2/install)"` (máy đã có Agave thì `agave-install init 4.1.2`).
 5. Cài AVM rồi Anchor 1.2.1:
    ```bash
-   cargo install --git https://github.com/otter-sec/anchor avm --tag v1.2.1 --locked --force
-   avm install 1.2.1 && avm use 1.2.1
+   rustup toolchain install stable
+   RUSTUP_TOOLCHAIN=stable cargo install --git https://github.com/otter-sec/anchor avm --tag v1.2.1 --locked --force
+   RUSTUP_TOOLCHAIN=stable avm install 1.2.1 && avm use 1.2.1
    ```
+   AVM 1.2.1 cần rustc 1.91 trở lên để build (`cargo-platform` trong lockfile), nên hai lệnh cài chạy bằng Rust stable. Chỉ công cụ CLI dùng stable; program vẫn build bằng Rust 1.89.0 theo `rust-toolchain.toml` của project.
 6. Cài Surfpool (local validator mặc định của `anchor test`) theo hướng dẫn tại surfpool.run.
 7. Cài Node.js 24 LTS, rồi bật pnpm 9 bằng Corepack: `corepack enable && corepack prepare pnpm@9 --activate`.
 
