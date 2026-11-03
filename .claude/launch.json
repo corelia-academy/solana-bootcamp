@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "voting-frontend-mock",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd projects/voting-app/frontend/final && VITE_USE_MOCK=true pnpm dev --port 5179 --strictPort"],
+      "port": 5179
+    }
+  ]
+}
