@@ -7,6 +7,19 @@ Cần làm xong [Module 1 lesson 1.3](../module-01-orientation/lessons.md#13-you
 <a id="vote-0"></a>
 ## Bước 0 — Tạo project
 
+Trước khi tạo project, kiểm tra công cụ đúng [baseline của khóa học](../../docs/setup.md#baseline-được-khóa). Nếu bạn cài theo video cũ (Rust 1.87.0, Solana CLI 4.1.1, Anchor 0.31.1, Yarn), các bước dưới sẽ lỗi.
+
+```bash
+rustup toolchain list
+solana --version
+anchor --version
+surfpool --version
+node --version
+pnpm --version
+```
+
+Cần thấy: danh sách toolchain có `1.89.0`, `solana-cli 4.1.2`, `anchor-cli 1.2.1`, `surfpool` từ 1.1.2 trở lên, `v24.x`, pnpm `9.x`. Lệnh nào lệch thì chạy lệnh nâng cấp tương ứng trong [Nâng cấp từ bản cài theo video cũ](../../docs/setup.md#nâng-cấp-từ-bản-cài-theo-video-cũ), rồi mở terminal mới và kiểm tra lại. Nếu dùng agent hỗ trợ code, cập nhật skill `solana-dev` và thêm Solana Developer MCP theo [Công cụ AI hỗ trợ code](../../docs/setup.md#công-cụ-ai-hỗ-trợ-code-tùy-chọn).
+
 Tạo project ngoài repo khóa học, cạnh `hello-solana` của Module 1. Trên Windows dùng filesystem của WSL như `~/code`, không dùng `/mnt/c`.
 
 ```bash
